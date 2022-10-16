@@ -352,7 +352,6 @@
 -r:"Library/Bee/artifacts/900b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/IntroScripts/IntroUiManger.cs"
 "Assets/Scripts/IntroScripts/Manager.cs"
-"Assets/Scripts/IntroScripts/NewBehaviourScript.cs"
 "Assets/Scripts/IntroScripts/OptionPopupManager.cs"
 "Assets/Scripts/IntroScripts/ResourceManager.cs"
 "Assets/Scripts/IntroScripts/SceneLoader.cs"
