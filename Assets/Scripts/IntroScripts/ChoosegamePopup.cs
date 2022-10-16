@@ -59,7 +59,7 @@ public class ChoosegamePopup : MonoBehaviour
 
     private void runGame()
     {
-        //  SceneLoader.Instace.LoadScene("SampleScene");
+        SceneLoader.Instace.LoadScene("RunGame");
         Debug.Log("런게임");
     }
     private void groundGame()
