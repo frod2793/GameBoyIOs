@@ -350,6 +350,7 @@
 -r:"Library/Bee/artifacts/900b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/900b0aE.dag/UnityEngine.UI.ref.dll"
+"Assets/Scripts/IntroScripts/ChoosegamePopup.cs"
 "Assets/Scripts/IntroScripts/IntroUiManger.cs"
 "Assets/Scripts/IntroScripts/Manager.cs"
 "Assets/Scripts/IntroScripts/OptionPopupManager.cs"

@@ -62,6 +62,7 @@
     <Compile Include="Assets/Scripts/IntroScripts/ResourceManager.cs" />
     <Compile Include="Assets/Scripts/IntroScripts/IntroUiManger.cs" />
     <Compile Include="Assets/Scripts/IntroScripts/OptionPopupManager.cs" />
+    <Compile Include="Assets/Scripts/IntroScripts/ChoosegamePopup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
