@@ -327,8 +327,8 @@
 -r:"/Users/yunseungjong/Desktop/Unity/Editor/2021.3.10f1/Unity.app/Contents/NetStandard/compat/2.1.0/shims/netstandard/System.Xml.XPath.XDocument.dll"
 -r:"/Users/yunseungjong/Desktop/Unity/Editor/2021.3.10f1/Unity.app/Contents/NetStandard/Extensions/2.0.0/System.Runtime.InteropServices.WindowsRuntime.dll"
 -r:"/Users/yunseungjong/Desktop/Unity/Editor/2021.3.10f1/Unity.app/Contents/NetStandard/ref/2.1.0/netstandard.dll"
--r:"/Users/yunseungjong/Desktop/Unity/Project/iosGame1/GameBoyIOs/Library/PackageCache/com.unity.nuget.newtonsoft-json@3.0.2/Runtime/Newtonsoft.Json.dll"
--r:"/Users/yunseungjong/Desktop/Unity/Project/iosGame1/GameBoyIOs/Library/PackageCache/com.unity.visualscripting@1.7.8/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
+-r:"/Users/yunseungjong/Desktop/Unity/Project/iosGame1/BACK UP/GameBoyIOs/Library/PackageCache/com.unity.nuget.newtonsoft-json@3.0.2/Runtime/Newtonsoft.Json.dll"
+-r:"/Users/yunseungjong/Desktop/Unity/Project/iosGame1/BACK UP/GameBoyIOs/Library/PackageCache/com.unity.visualscripting@1.7.8/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
 -r:"Library/Bee/artifacts/900b0aE.dag/Unity.PlasticSCM.Editor.ref.dll"
 -r:"Library/Bee/artifacts/900b0aE.dag/Unity.Rider.Editor.ref.dll"
 -r:"Library/Bee/artifacts/900b0aE.dag/Unity.Services.Core.Analytics.ref.dll"
@@ -357,6 +357,11 @@
 "Assets/Scripts/IntroScripts/ResourceManager.cs"
 "Assets/Scripts/IntroScripts/SceneLoader.cs"
 "Assets/Scripts/IntroScripts/Soundmanager.cs"
+"Assets/Scripts/Rungame/GroundScroll.cs"
+"Assets/Scripts/Rungame/MobBase.cs"
+"Assets/Scripts/Rungame/Playercontroll.cs"
+"Assets/Scripts/Rungame/ReSpawnManager.cs"
+"Assets/Scripts/Rungame/RunGameUiManager.cs"
 -langversion:9.0
 
 /deterministic

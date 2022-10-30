@@ -63,6 +63,11 @@
     <Compile Include="Assets/Scripts/IntroScripts/ResourceManager.cs" />
     <Compile Include="Assets/Scripts/IntroScripts/IntroUiManger.cs" />
     <Compile Include="Assets/Scripts/IntroScripts/OptionPopupManager.cs" />
+    <Compile Include="Assets/Scripts/Rungame/Playercontroll.cs" />
+    <Compile Include="Assets/Scripts/Rungame/RunGameUiManager.cs" />
+    <Compile Include="Assets/Scripts/Rungame/GroundScroll.cs" />
+    <Compile Include="Assets/Scripts/Rungame/MobBase.cs" />
+    <Compile Include="Assets/Scripts/Rungame/ReSpawnManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
