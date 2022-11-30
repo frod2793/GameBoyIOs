@@ -25,7 +25,7 @@ public class GroundScroll : MonoBehaviour
         temp =tiles[0];
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (gameUiManager.isPlay)
         {
