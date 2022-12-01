@@ -1,15 +1,16 @@
 ﻿<Properties StartupConfiguration="{34600BE2-EA6B-B937-CDBD-6F6F696BB227}|">
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="66ade3db-9ed6-4f67-a658-893d6fb856bd" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Rungame/Playercontroll.cs">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="fcff8c7d-b055-4aeb-8866-b747ddbbc117" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Rungame/RunGameUiManager.cs">
     <Files>
       <File FileName="Assets/Scripts/IntroScripts/Manager.cs" Line="11" Column="1" />
       <File FileName="Assets/Scripts/Rungame/Playercontroll.cs" Line="9" Column="19" />
+      <File FileName="Assets/Scripts/Rungame/RunGameUiManager.cs" Line="34" Column="26" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

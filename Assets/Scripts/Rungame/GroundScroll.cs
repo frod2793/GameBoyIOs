@@ -11,6 +11,17 @@ public class GroundScroll : MonoBehaviour
     private SpriteRenderer[] tiles;
     SpriteRenderer temp;
     private float groundSpeed;
+
+
+
+
+
+    float leftPosX = 0f;
+    float rightPosX = 0f;
+    float xScreenHalfSize;
+    float yScreenHalfSize;
+
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -23,34 +34,30 @@ public class GroundScroll : MonoBehaviour
     private void Start()
     {
         temp =tiles[0];
+
+        yScreenHalfSize = Camera.main.orthographicSize;
+        xScreenHalfSize = yScreenHalfSize * Camera.main.aspect;
+
+        leftPosX = -(xScreenHalfSize * 1.7f);
+        rightPosX = xScreenHalfSize * 1.6f * tiles.Length;
     }
     
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (gameUiManager.isPlay)
         {
 
-
-
             for (int i = 0; i < tiles.Length; i++)
             {
-                if (-6 >= tiles[i].transform.position.x)
+                tiles[i].transform.position += new Vector3(-groundSpeed, 0, 0) * Time.deltaTime;
+
+                if (tiles[i].transform.position.x < leftPosX-5)
                 {
-                    for (int q = 0; q < tiles.Length; q++)
-                    {
-                        if (temp.transform.position.x < tiles[q].transform.position.x)
-                        {
-                            temp = tiles[q];
-                        }
-                        tiles[i].transform.position = new Vector2(5 + 1, -0.3f);
-                        tiles[i].sprite = groundimag[Random.Range(0, groundimag.Length)];
-                    }
+                    Vector3 nextPos = tiles[i].transform.position;
+                    nextPos = new Vector3(nextPos.x + rightPosX, nextPos.y, nextPos.z);
+                    tiles[i].transform.position = nextPos;
                 }
-            }
-            for (int i = 0; i < tiles.Length; i++)
-            {
-                tiles[i].transform.Translate(new Vector2(-1, 0) * Time.deltaTime * groundSpeed);
             }
         }
     }

@@ -33,11 +33,14 @@ public class RunGameUiManager : MonoBehaviour
 
     public int score = 0;
 
+
+    public bool IsDead;
     private void Func_playBtn()
     {
         JumpBtn.gameObject.SetActive(true);
         PlayBtn.gameObject.SetActive(false);
         isPlay = true;
+        IsDead = false;
         onPlay.Invoke(isPlay);
         score = 0;
         Scoretext.text = score.ToString();
@@ -67,6 +70,7 @@ public class RunGameUiManager : MonoBehaviour
     {
         PlayBtn.gameObject.SetActive(true);
         isPlay = false;
+        IsDead = true;
         onPlay.Invoke(isPlay);
         StopCoroutine(addScore());
     }

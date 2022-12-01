@@ -16,35 +16,52 @@ public class Playercontroll : MonoBehaviour
 
     Vector2 startPosition;
     Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         rungameUimanager.JumpBtn.onClick.AddListener(Func_jump);
+        rungameUimanager.PlayBtn.onClick.AddListener(Init);
         jumpHight = rungameUimanager.JumpHight;
         jumpSpeed = rungameUimanager.JumpSpeed;
 
         startPosition = transform.position;
     }
 
-     void Update()
+    private void Init()//restart init
     {
-        if (rungameUimanager.isPlay)
-        {
+        animator.SetBool("isDead", false);
+        rungameUimanager.JumpBtn.gameObject.SetActive(true);
+    }
 
-
-            animator.SetBool("isRun", true);
-        }
-        else
+    void Update()
+    {
+        if (!isTop)
         {
-            animator.SetBool("isRun", false);
+            if (rungameUimanager.isPlay)
+            {
+                animator.SetBool("isRun", true);
+            }
+            else
+            {
+                animator.SetBool("isRun", false);
+            }
         }
-        jump();
+
+        
+          jump();
+       
+       
     }
     // Update is called once per frame
     private void Func_jump()
     {
+
+
         isJump = true;
+
+      
         Debug.Log("player jump");
 
     }
@@ -52,13 +69,15 @@ public class Playercontroll : MonoBehaviour
     void jump()
     {
        
-
         if (isJump)
         {
+            animator.SetBool("isJump", true);
             if (transform.position.y <= jumpHight - 0.1f && !isTop)
             {
-                transform.position = Vector2.Lerp(transform.position,
-                    new Vector2(transform.position.x, jumpHight), jumpSpeed * Time.deltaTime);
+              
+               transform.position = Vector2.Lerp(transform.position,
+                  new Vector2(transform.position.x, jumpHight), jumpSpeed * Time.deltaTime);
+              
             }
             else
             {
@@ -70,11 +89,13 @@ public class Playercontroll : MonoBehaviour
             }
 
         }
+        
 
         if (isJump && transform.position.y <= startPosition.y)
         {
-            isJump = false;
+            isJump = false;//jump
             isTop = false;
+            animator.SetBool("isJump", isTop);
             transform.position = startPosition;
         }
 
@@ -86,7 +107,10 @@ public class Playercontroll : MonoBehaviour
     {
         if (collision.CompareTag("Mob"))
         {
+            rungameUimanager.JumpBtn.gameObject.SetActive(false);
+            animator.SetBool("isDead", true);
             rungameUimanager.Gameover();
+        
             Debug.Log("colider");
         }
     }
