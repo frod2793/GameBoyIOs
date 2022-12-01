@@ -10,7 +10,8 @@ public class ChoosegamePopup : MonoBehaviour
     private List<Button> CgameBtn = new List<Button>();
     [SerializeField]
     private Button exitBtn;
-
+    [SerializeField]
+    private MessageManager messageManager;
 
 
     private void Start()
@@ -48,6 +49,7 @@ public class ChoosegamePopup : MonoBehaviour
                 shootingGame();
                 break;
             default:
+               messageManager.OnEmptyGameMessage();
                 break;
         }
     }
@@ -64,10 +66,12 @@ public class ChoosegamePopup : MonoBehaviour
     }
     private void groundGame()
     {
-        Debug.Log("땅따먹기");
+        messageManager.OnEmptyGameMessage();
+        Debug.Log("땅따먹기");
     }
     private void shootingGame()
     {
+        messageManager.OnEmptyGameMessage();
         Debug.Log("슈팅게임");
     }
 
