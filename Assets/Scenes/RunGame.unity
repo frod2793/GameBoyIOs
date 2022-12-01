@@ -350,6 +350,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &418589584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 418589585}
+  m_Layer: 0
+  m_Name: object Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &418589585
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418589584}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &462835576
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,7 +593,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -954,7 +985,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1236586890
 RectTransform:
   m_ObjectHideFlags: 0
@@ -973,8 +1004,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -604.98987, y: -281}
-  m_SizeDelta: {x: 160, y: 100}
+  m_AnchoredPosition: {x: 1002.3181, y: -326.41812}
+  m_SizeDelta: {x: 231.3638, y: 171.3638}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1236586891
 MonoBehaviour:
@@ -1271,11 +1302,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpBtn: {fileID: 1236586891}
-  JumpHight: 1.5
+  JumpHight: 2
   JumpSpeed: 6
   MobPool: []
   Mobs:
-  - {fileID: 1133576599175426870, guid: e1d8ad3dc6da946d9a1f3c42d0d43c1d, type: 3}
+  - {fileID: 9094800793300024012, guid: 99fd0d9426a018f49babe57c429e4c02, type: 3}
+  - {fileID: 3094815592197783859, guid: aa5797dc6e89f794fa45c57b12c36138, type: 3}
+  - {fileID: 563471518986961843, guid: 8fb91ffb6202e4746bcccaf84bf217e4, type: 3}
+  - {fileID: 3368078775589695337, guid: 3d8e4a1f7e5bebe499da10ee07399459, type: 3}
+  - {fileID: 4311952735703388985, guid: 56ffd58ddbfcde84fa68baf86abc33f5, type: 3}
+  - {fileID: 4460724338279782774, guid: d44ff0e6e3a367f459824dbf5380c198, type: 3}
+  - {fileID: 1605421864997414199, guid: 361a379b1d535aa4fac0cb777ba54ec7, type: 3}
+  - {fileID: 7211519906228003269, guid: 75f58cedfe9c0c64fa71be45ae0e58bd, type: 3}
   Objcount: 5
   MobSpeed: 4
   startpoint: {x: 5, y: 0}
@@ -1622,8 +1660,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.03, y: 0}
-  m_Size: {x: 0.33, y: 1}
+  m_Offset: {x: 0.07, y: 0.52}
+  m_Size: {x: 5.2248015, y: 5.2248015}
   m_Direction: 0
 --- !u!1 &1574965487
 GameObject:
