@@ -16,6 +16,7 @@ public class ReSpawnManager : MonoBehaviour
             for (int j = 0; j < gameUiManager.Objcount; j++)
             {
                 gameUiManager.MobPool.Add(Createobj(gameUiManager.Mobs[i], transform));
+                gameUiManager.MobPool[i].transform.position = gameUiManager.Mobs[i].transform.position;
             }
         }
     }

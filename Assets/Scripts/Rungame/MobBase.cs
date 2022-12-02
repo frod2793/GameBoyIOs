@@ -20,16 +20,18 @@ public class MobBase : MonoBehaviour
 
     private void OnEnable()
     {
-        transform.position = UImanager.startpoint;
+        Vector2 vector = new Vector2(UImanager.startpoint.x, transform.position.y);
+        transform.position = vector;
+
     }
 
-  
 
     // Update is called once per frame
     void Update()
     {
         if (UImanager.isPlay)
         {
+          
 
 
             transform.Translate(Vector2.left * Time.deltaTime * mobSpeed);
