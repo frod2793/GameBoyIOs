@@ -31,9 +31,6 @@ public class MobBase : MonoBehaviour
     {
         if (UImanager.isPlay)
         {
-          
-
-
             transform.Translate(Vector2.left * Time.deltaTime * mobSpeed);
 
             if (transform.position.x < -6)

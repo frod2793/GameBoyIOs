@@ -11,6 +11,13 @@ public class RunGameUiManager : MonoBehaviour
     public float JumpSpeed;
 
 
+    [Header("점수 오브젝트 ")]
+    public float CoinSpeed;
+    public List<GameObject> CoinPool = new List<GameObject>();
+    public GameObject[] Coins;
+    public int Coin_Objcount;
+    public Vector2 C_startpoint;
+
     [Header("장애물")]
     public List<GameObject> MobPool = new List<GameObject>();
     public GameObject[] Mobs;
@@ -58,7 +65,7 @@ public class RunGameUiManager : MonoBehaviour
     {
         while (isPlay)
         {
-            score++;
+           // score++;
             Scoretext.text = score.ToString();
             yield return new WaitForSeconds(0.1f);
         }

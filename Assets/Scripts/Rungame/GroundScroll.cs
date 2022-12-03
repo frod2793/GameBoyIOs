@@ -34,7 +34,7 @@ public class GroundScroll : MonoBehaviour
     private void Start()
     {
         temp =tiles[0];
-
+     
         // yScreenHalfSize = Camera.main.orthographicSize;
         yScreenHalfSize = 12.64f;
         xScreenHalfSize = -12.64f;///yScreenHalfSize;//* Camera.main.aspect;
@@ -44,7 +44,7 @@ public class GroundScroll : MonoBehaviour
     }
     
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if (gameUiManager.isPlay)
         {

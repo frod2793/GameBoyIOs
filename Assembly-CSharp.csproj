@@ -59,6 +59,7 @@
     <Compile Include="Assets/Scripts/Rungame/data/SystemPath.cs" />
     <Compile Include="Assets/Scripts/Rungame/MobBase.cs" />
     <Compile Include="Assets/Scripts/Rungame/RunGameUiManager.cs" />
+    <Compile Include="Assets/Scripts/Rungame/Object/CoinObj.cs" />
     <Compile Include="Assets/Scripts/IntroScripts/MessageManager.cs" />
     <Compile Include="Assets/Scripts/Rungame/ReSpawnManager.cs" />
     <Compile Include="Assets/Scripts/IntroScripts/Manager.cs" />

@@ -16,9 +16,19 @@ public class ReSpawnManager : MonoBehaviour
             for (int j = 0; j < gameUiManager.Objcount; j++)
             {
                 gameUiManager.MobPool.Add(Createobj(gameUiManager.Mobs[i], transform));
-                gameUiManager.MobPool[i].transform.position = gameUiManager.Mobs[i].transform.position;
+              
             }
         }
+
+
+        for (int i = 0; i < gameUiManager.Coins.Length; i++)
+        {
+            for (int j = 0; j < gameUiManager.Coin_Objcount; j++)
+            {
+                gameUiManager.CoinPool.Add(Createobj(gameUiManager.Coins[i], transform));
+            }
+        }
+
     }
 
 
@@ -44,6 +54,7 @@ public class ReSpawnManager : MonoBehaviour
                
             }
         StartCoroutine(createMob());
+        StartCoroutine(createCoin());
         }
         else
         {
@@ -80,6 +91,39 @@ public class ReSpawnManager : MonoBehaviour
         return x;
 
     }
+
+
+
+    IEnumerator createCoin()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+
+        List<int> num = new List<int>();
+     //   int x = 0;
+        for (int i = 0; i < gameUiManager.CoinPool.Count; i++)
+        {
+            if (!gameUiManager.CoinPool[i].activeSelf)
+            {
+                num.Add(i);
+            }
+        }
+        while (gameUiManager.isPlay)
+        {
+            if (gameUiManager.isPlay)
+            {
+                for (int i = 0; i < num.Count - 1; i++)
+                {
+                    gameUiManager.CoinPool[i].SetActive(true);
+                    yield return new WaitForSeconds(0.1f);
+                }
+            }
+        }
+
+       
+    }
+
+
     GameObject Createobj(GameObject obj,Transform parent)
     {
         GameObject copy = Instantiate(obj);
