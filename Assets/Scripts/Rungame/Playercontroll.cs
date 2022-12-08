@@ -6,10 +6,17 @@ public class Playercontroll : MonoBehaviour
 {
     [SerializeField]
     private RunGameUiManager rungameUimanager;
+   
     [SerializeField]
     private float jumpHight;
     [SerializeField]
     private float jumpSpeed;
+    [SerializeField]
+    private float maxHp;
+    [SerializeField]
+    private float currenthp;
+
+    float hit;
     bool isJump;
     bool isTop;
 
@@ -31,8 +38,10 @@ public class Playercontroll : MonoBehaviour
 
     private void Init()//restart init
     {
+        currenthp = 100;
         animator.SetBool("isDead", false);
         rungameUimanager.JumpBtn.gameObject.SetActive(true);
+      
     }
 
     void Update()
@@ -51,7 +60,9 @@ public class Playercontroll : MonoBehaviour
 
         
           jump();
-       
+
+
+        rungameUimanager.Hpbar.value = currenthp / maxHp;
        
     }
     // Update is called once per frame
@@ -107,9 +118,17 @@ public class Playercontroll : MonoBehaviour
     {
         if (collision.CompareTag("Mob"))
         {
-            rungameUimanager.JumpBtn.gameObject.SetActive(false);
+            hit = collision.GetComponent<MobBase>().Damage;
+
+            currenthp = currenthp- hit ;
+
+            if (currenthp <0)
+            {
             animator.SetBool("isDead", true);
+            rungameUimanager.JumpBtn.gameObject.SetActive(false);
             rungameUimanager.Gameover();
+
+            }
         
             Debug.Log("colider");
         }

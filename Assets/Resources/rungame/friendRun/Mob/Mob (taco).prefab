@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UImanager: {fileID: 0}
+  Damage: 10
 --- !u!61 &4852429748884730066
 BoxCollider2D:
   m_ObjectHideFlags: 0

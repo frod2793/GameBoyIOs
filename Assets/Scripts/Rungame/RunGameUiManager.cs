@@ -7,6 +7,7 @@ public class RunGameUiManager : MonoBehaviour
 {
     [Header("플레이어")]
     public Button JumpBtn;
+    public Slider Hpbar;
     public float JumpHight;
     public float JumpSpeed;
 
@@ -30,6 +31,7 @@ public class RunGameUiManager : MonoBehaviour
     public Sprite[] GroundImage;
     public float Groundspeed;
 
+   
 
     public Button PlayBtn;
     public Text Scoretext;

@@ -361,7 +361,7 @@
 "Assets/Scripts/Rungame/data/ScvReader.cs"
 "Assets/Scripts/Rungame/data/SystemPath.cs"
 "Assets/Scripts/Rungame/GroundScroll.cs"
-"Assets/Scripts/Rungame/MobBase.cs"
+"Assets/Scripts/Rungame/Mob/MobBase.cs"
 "Assets/Scripts/Rungame/Object/CoinObj.cs"
 "Assets/Scripts/Rungame/Playercontroll.cs"
 "Assets/Scripts/Rungame/ReSpawnManager.cs"

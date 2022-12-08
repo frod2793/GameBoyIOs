@@ -7,7 +7,8 @@ public class MobBase : MonoBehaviour
     private float mobSpeed;
     [SerializeField]
     RunGameUiManager UImanager;
-
+   
+    public float Damage;
   
    
     // Start is called before the first frame update
