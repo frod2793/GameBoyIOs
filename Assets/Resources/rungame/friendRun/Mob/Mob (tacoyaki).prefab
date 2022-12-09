@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UImanager: {fileID: 0}
   Damage: 10
+  name: Takoyaki
 --- !u!61 &6845076890245082293
 BoxCollider2D:
   m_ObjectHideFlags: 0

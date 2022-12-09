@@ -123,6 +123,82 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &8574209
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8574211}
+  - component: {fileID: 8574210}
+  m_Layer: 0
+  m_Name: MobDamageManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &8574210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8574209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9abdbc4250d1a4fe481d439eb990e4dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mobinfo:
+  - Name: Doldom
+    Damage: 10
+  - Name: Gaori
+    Damage: 10
+  - Name: Icecream
+    Damage: 10
+  - Name: Puding
+    Damage: 10
+  - Name: Rabbit
+    Damage: 10
+  - Name: Dragon
+    Damage: 20
+  - Name: Squid
+    Damage: 10
+  - Name: Sudal
+    Damage: 10
+  - Name: Tako
+    Damage: 10
+  - Name: Takoyaki
+    Damage: 10
+  mobList:
+  - {fileID: 4426176091652609517, guid: 99fd0d9426a018f49babe57c429e4c02, type: 3}
+  - {fileID: 3954864450231761443, guid: aa5797dc6e89f794fa45c57b12c36138, type: 3}
+  - {fileID: 5512440600961220048, guid: 8fb91ffb6202e4746bcccaf84bf217e4, type: 3}
+  - {fileID: 4483261306127445286, guid: 3d8e4a1f7e5bebe499da10ee07399459, type: 3}
+  - {fileID: 1693248661684063621, guid: 56ffd58ddbfcde84fa68baf86abc33f5, type: 3}
+  - {fileID: 6566306734797275757, guid: 59ffb32dc963347b7b1a9732d05fa738, type: 3}
+  - {fileID: 3585706205484877292, guid: 7bd3eb80921634a0a9e61f752e7a3588, type: 3}
+  - {fileID: 2688738510613840263, guid: d44ff0e6e3a367f459824dbf5380c198, type: 3}
+  - {fileID: 8623282661846962463, guid: 361a379b1d535aa4fac0cb777ba54ec7, type: 3}
+  - {fileID: 7639758543610482040, guid: 75f58cedfe9c0c64fa71be45ae0e58bd, type: 3}
+--- !u!4 &8574211
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8574209}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.515625, y: 1.0755209, z: 90}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &316293267
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,7 +401,7 @@ Transform:
   - {fileID: 353481764}
   - {fileID: 1889770170}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &418589584
 GameObject:
@@ -356,7 +432,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &621822117
 GameObject:
@@ -424,7 +500,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &651929311
 GameObject:
@@ -911,7 +987,7 @@ RectTransform:
   - {fileID: 1506323784}
   - {fileID: 2060079542}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1083,7 +1159,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1236586889
 GameObject:
@@ -1237,7 +1313,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1302966772
 MonoBehaviour:

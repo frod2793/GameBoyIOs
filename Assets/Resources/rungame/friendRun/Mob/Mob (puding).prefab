@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UImanager: {fileID: 0}
   Damage: 10
+  name: Puding
 --- !u!61 &778270230498069739
 BoxCollider2D:
   m_ObjectHideFlags: 0

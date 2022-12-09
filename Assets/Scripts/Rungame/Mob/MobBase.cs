@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 
 public class MobBase : MonoBehaviour
@@ -9,11 +10,12 @@ public class MobBase : MonoBehaviour
     RunGameUiManager UImanager;
    
     public float Damage;
-  
-   
+    public string name;
+
     // Start is called before the first frame update
     void Awake()
     {
+      
         UImanager = GameObject.FindObjectOfType<RunGameUiManager>();
 
         mobSpeed = UImanager.MobSpeed;

@@ -1,21 +1,31 @@
 ﻿<Properties StartupConfiguration="{34600BE2-EA6B-B937-CDBD-6F6F696BB227}|">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/IntroScripts/ChoosegamePopup.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Rungame/Playercontroll.cs">
     <Files>
-      <File FileName="Assets/Scripts/Rungame/RunGameUiManager.cs" Line="1" Column="1" IsPinned="True" />
-      <File FileName="Assets/Scripts/Rungame/MobBase.cs" Line="34" Column="75" />
+      <File FileName="Assets/Scripts/Rungame/RunGameUiManager.cs" Line="34" Column="4" IsPinned="True" />
+      <File FileName="Assets/Scripts/Rungame/MobBase.cs" Line="12" Column="3" />
       <File FileName="Assets/Scripts/Rungame/Object/CoinObj.cs" Line="37" Column="31" NotebookId="1" IsPinned="True" />
       <File FileName="Assets/Scripts/Rungame/ReSpawnManager.cs" Line="99" Column="44" NotebookId="1" IsPinned="True" />
       <File FileName="Assets/Scripts/IntroScripts/Manager.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/Rungame/Playercontroll.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/Rungame/GroundScroll.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/Playercontroll.cs" Line="37" Column="6" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/GroundScroll.cs" Line="1" Column="1" NotebookId="1" />
       <File FileName="Assets/Scripts/IntroScripts/SceneLoader.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/IntroScripts/ChoosegamePopup.cs" Line="45" Column="20" NotebookId="1" />
+      <File FileName="Assets/Scripts/IntroScripts/ChoosegamePopup.cs" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="GameBoyIOs" expanded="True" />
+          <Node name="GameBoyIOs" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="IntroScripts" expanded="True" />
+                <Node name="Rungame" expanded="True">
+                  <Node name="Mob" expanded="True" />
+                  <Node name="Playercontroll.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>

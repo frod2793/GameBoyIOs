@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UImanager: {fileID: 0}
   Damage: 10
+  name: Sudal
 --- !u!61 &1273137360819626058
 BoxCollider2D:
   m_ObjectHideFlags: 0

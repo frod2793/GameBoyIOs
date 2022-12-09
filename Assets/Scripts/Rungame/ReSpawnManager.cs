@@ -9,7 +9,7 @@ public class ReSpawnManager : MonoBehaviour
 
 
 
-    private void Awake()
+    private void Start()
     {
         for (int i = 0; i < gameUiManager.Mobs.Length; i++)
         {
@@ -29,15 +29,17 @@ public class ReSpawnManager : MonoBehaviour
             }
         }
 
-    }
-
-
-
-    private void Start()
-    {
         gameUiManager.onPlay += playgame;
-        
+
     }
+
+
+
+    //private void Start()
+    //{
+    //    
+    //    
+    //}
 
     private void playgame(bool isPlay)
     {
