@@ -358,6 +358,8 @@
 "Assets/Scripts/IntroScripts/ResourceManager.cs"
 "Assets/Scripts/IntroScripts/SceneLoader.cs"
 "Assets/Scripts/IntroScripts/Soundmanager.cs"
+"Assets/Scripts/Rungame/data/ScvReader.cs"
+"Assets/Scripts/Rungame/data/SystemPath.cs"
 "Assets/Scripts/Rungame/GroundScroll.cs"
 "Assets/Scripts/Rungame/MobBase.cs"
 "Assets/Scripts/Rungame/Playercontroll.cs"

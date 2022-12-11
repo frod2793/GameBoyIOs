@@ -1,0 +1,4 @@
+#Sat Dec 03 02:34:02 KST 2022
+base.0=/Users/yunseungjong/Desktop/Unity/Project/GameBoyIOs/Library/Bee/Android/Prj/Mono2x/Gradle/launcher/build/intermediates/dex/release/mergeDexRelease/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

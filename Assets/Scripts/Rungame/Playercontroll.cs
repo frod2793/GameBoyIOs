@@ -6,13 +6,17 @@ public class Playercontroll : MonoBehaviour
 {
     [SerializeField]
     private RunGameUiManager rungameUimanager;
+
     [SerializeField]
     private float jumpHight;
     [SerializeField]
     private float jumpSpeed;
+ 
+
+    
+    float hit;
     bool isJump;
     bool isTop;
-
 
     Vector2 startPosition;
     Animator animator;
@@ -31,8 +35,10 @@ public class Playercontroll : MonoBehaviour
 
     private void Init()//restart init
     {
+        rungameUimanager.currenthp = 100;
         animator.SetBool("isDead", false);
         rungameUimanager.JumpBtn.gameObject.SetActive(true);
+      
     }
 
     void Update()
@@ -51,8 +57,22 @@ public class Playercontroll : MonoBehaviour
 
         
           jump();
-       
-       
+
+
+        rungameUimanager.Hpbar.value = rungameUimanager.currenthp / rungameUimanager.maxHp;
+
+        if (rungameUimanager.isPlay)
+        {
+            rungameUimanager.currenthp = rungameUimanager.currenthp - rungameUimanager.discountHp;
+
+            if (rungameUimanager.currenthp < 0)
+            {
+                animator.SetBool("isDead", true);
+                rungameUimanager.JumpBtn.gameObject.SetActive(false);
+                rungameUimanager.Gameover();
+            }
+        }
+
     }
     // Update is called once per frame
     private void Func_jump()
@@ -107,12 +127,25 @@ public class Playercontroll : MonoBehaviour
     {
         if (collision.CompareTag("Mob"))
         {
-            rungameUimanager.JumpBtn.gameObject.SetActive(false);
+            hit = collision.GetComponent<MobBase>().Damage;
+
+            rungameUimanager.currenthp = rungameUimanager.currenthp - hit ;
+
+            if (rungameUimanager.currenthp < 0)
+            {
             animator.SetBool("isDead", true);
+            rungameUimanager.JumpBtn.gameObject.SetActive(false);
             rungameUimanager.Gameover();
-        
+            }
+
             Debug.Log("colider");
         }
+
+        if (collision.CompareTag("Heal"))
+        {
+            rungameUimanager.currenthp = rungameUimanager.currenthp + 50f;
+        }
+
     }
 
 }

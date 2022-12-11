@@ -1,16 +1,17 @@
 ﻿<Properties StartupConfiguration="{34600BE2-EA6B-B937-CDBD-6F6F696BB227}|">
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="fcff8c7d-b055-4aeb-8866-b747ddbbc117" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Rungame/RunGameUiManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/IntroScripts/Manager.cs" Line="11" Column="1" />
-      <File FileName="Assets/Scripts/Rungame/Playercontroll.cs" Line="9" Column="19" />
-      <File FileName="Assets/Scripts/Rungame/RunGameUiManager.cs" Line="34" Column="26" />
+      <File FileName="Assets/Scripts/Rungame/RunGameUiManager.cs" Line="57" Column="24" IsPinned="True" />
+      <File FileName="Assets/Scripts/Rungame/Object/CoinObj.cs" Line="37" Column="28" NotebookId="1" IsPinned="True" />
+      <File FileName="Assets/Scripts/Rungame/ReSpawnManager.cs" Line="149" Column="20" NotebookId="1" IsPinned="True" />
+      <File FileName="Assets/Scripts/IntroScripts/Manager.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/Playercontroll.cs" Line="26" Column="6" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/GroundScroll.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/IntroScripts/SceneLoader.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/IntroScripts/ChoosegamePopup.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/Mob/MobBase.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/Mob/MobDamageManager.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/Object/HealObj.cs" Line="1" Column="1" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -18,14 +19,13 @@
           <Node name="GameBoyIOs" expanded="True" selected="True" />
         </State>
       </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="Unity" selected="True" />
-        </State>
-      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bb77dbac-de33-4d78-b52b-d2b3e844f95b" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

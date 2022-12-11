@@ -34,16 +34,17 @@ public class GroundScroll : MonoBehaviour
     private void Start()
     {
         temp =tiles[0];
+     
+        // yScreenHalfSize = Camera.main.orthographicSize;
+        yScreenHalfSize = 12.64f;
+        xScreenHalfSize = -12.64f;///yScreenHalfSize;//* Camera.main.aspect;
 
-        yScreenHalfSize = Camera.main.orthographicSize;
-        xScreenHalfSize = yScreenHalfSize * Camera.main.aspect;
-
-        leftPosX = -(xScreenHalfSize * 1.7f);
-        rightPosX = xScreenHalfSize * 1.6f * tiles.Length;
+        leftPosX = (xScreenHalfSize * 1f);
+        rightPosX = 43.35f;//-xScreenHalfSize * 1f * tiles.Length;
     }
     
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if (gameUiManager.isPlay)
         {
@@ -52,7 +53,7 @@ public class GroundScroll : MonoBehaviour
             {
                 tiles[i].transform.position += new Vector3(-groundSpeed, 0, 0) * Time.deltaTime;
 
-                if (tiles[i].transform.position.x < leftPosX-5)
+                if (tiles[i].transform.position.x < leftPosX)
                 {
                     Vector3 nextPos = tiles[i].transform.position;
                     nextPos = new Vector3(nextPos.x + rightPosX, nextPos.y, nextPos.z);

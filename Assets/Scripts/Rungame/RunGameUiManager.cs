@@ -7,9 +7,27 @@ public class RunGameUiManager : MonoBehaviour
 {
     [Header("플레이어")]
     public Button JumpBtn;
+    public Slider Hpbar;
     public float JumpHight;
     public float JumpSpeed;
+    [Header("초당 깎이는 Hp")]
+    public float discountHp;
 
+    public float maxHp;
+ 
+    public float currenthp;
+
+    [Header("점수 오브젝트 ")]
+    public float CoinSpeed;
+    public List<GameObject> CoinPool = new List<GameObject>();
+    public GameObject[] Coins;
+    public int Coin_Objcount;
+    public Vector2 C_startpoint;
+
+    [Header("체력 회복 오브젝트")]
+    public GameObject HealObj;
+    public float PointHp;//체력 회복 아이템이 스폰되는 기준 hp
+    public List<GameObject> Healpool;
 
     [Header("장애물")]
     public List<GameObject> MobPool = new List<GameObject>();
@@ -23,6 +41,7 @@ public class RunGameUiManager : MonoBehaviour
     public Sprite[] GroundImage;
     public float Groundspeed;
 
+ 
 
     public Button PlayBtn;
     public Text Scoretext;
@@ -30,9 +49,10 @@ public class RunGameUiManager : MonoBehaviour
     
     public delegate void Onplay(bool isPlay);
     public Onplay onPlay;
-
+    [Header("힐 아이템 목표 점")]
     public int score = 0;
-
+    public int NextHealScore;//목표점수 
+    public int HealScore;//더할점수
 
     public bool IsDead;
     private void Func_playBtn()
@@ -43,6 +63,7 @@ public class RunGameUiManager : MonoBehaviour
         IsDead = false;
         onPlay.Invoke(isPlay);
         score = 0;
+        NextHealScore = 0;
         Scoretext.text = score.ToString();
 
         StartCoroutine(addScore());
@@ -58,7 +79,7 @@ public class RunGameUiManager : MonoBehaviour
     {
         while (isPlay)
         {
-            score++;
+           // score++;
             Scoretext.text = score.ToString();
             yield return new WaitForSeconds(0.1f);
         }

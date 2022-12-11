@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Mob
+  - Ground
+  - Coin
+  - Heal
   layers:
   - Default
   - TransparentFX
@@ -14,7 +17,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - OverUI
   - 
   - 
   - 
