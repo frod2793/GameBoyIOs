@@ -137,6 +137,10 @@ public class Playercontroll : MonoBehaviour
             rungameUimanager.JumpBtn.gameObject.SetActive(false);
             rungameUimanager.Gameover();
             }
+            else
+            {
+                animator.SetTrigger("isHit");
+            }
 
             Debug.Log("colider");
         }
