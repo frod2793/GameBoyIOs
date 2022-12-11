@@ -7,7 +7,7 @@ public class ReSpawnManager : MonoBehaviour
     [SerializeField]   
    private RunGameUiManager gameUiManager;
 
-
+    bool isHeal;
 
     private void Start()
     {
@@ -19,7 +19,7 @@ public class ReSpawnManager : MonoBehaviour
               
             }
         }
-
+        gameUiManager.Healpool.Add(Createobj(gameUiManager.HealObj,transform));
 
         for (int i = 0; i < gameUiManager.Coins.Length; i++)
         {
@@ -33,13 +33,13 @@ public class ReSpawnManager : MonoBehaviour
 
     }
 
-
-
-    //private void Start()
-    //{
-    //    
-    //    
-    //}
+    private void FixedUpdate()
+    {
+        if (gameUiManager.Hpbar.value < gameUiManager.PointHp)
+        {
+            StartCoroutine(CreateHealObj());
+        }
+    }
 
     private void playgame(bool isPlay)
     {
@@ -51,12 +51,14 @@ public class ReSpawnManager : MonoBehaviour
                 {
                     gameUiManager.MobPool[i].SetActive(false);
                
-
                 }
                
             }
         StartCoroutine(createMob());
         StartCoroutine(createCoin());
+        StartCoroutine(CreateHealObj());
+          
+
         }
         else
         {
@@ -100,7 +102,6 @@ public class ReSpawnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
-
         List<int> num = new List<int>();
      //   int x = 0;
         for (int i = 0; i < gameUiManager.CoinPool.Count; i++)
@@ -125,6 +126,25 @@ public class ReSpawnManager : MonoBehaviour
        
     }
 
+
+
+    IEnumerator CreateHealObj()
+    {
+        while (gameUiManager.currenthp < gameUiManager.PointHp && !isHeal && gameUiManager.score > gameUiManager.NextHealScore)
+        {
+            gameUiManager.Healpool[0].SetActive(true);
+            gameUiManager.NextHealScore = gameUiManager.score;
+            gameUiManager.NextHealScore += gameUiManager.HealScore;
+            isHeal = true;
+            yield return new WaitForSeconds(0.1f);
+        }
+
+
+        if (gameUiManager.currenthp > gameUiManager.PointHp)
+        {
+            isHeal = false;
+        }
+    }
 
     GameObject Createobj(GameObject obj,Transform parent)
     {

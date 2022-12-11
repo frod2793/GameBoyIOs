@@ -6,20 +6,17 @@ public class Playercontroll : MonoBehaviour
 {
     [SerializeField]
     private RunGameUiManager rungameUimanager;
-   
+
     [SerializeField]
     private float jumpHight;
     [SerializeField]
     private float jumpSpeed;
-    [SerializeField]
-    private float maxHp;
-    [SerializeField]
-    private float currenthp;
+ 
 
+    
     float hit;
     bool isJump;
     bool isTop;
-
 
     Vector2 startPosition;
     Animator animator;
@@ -38,7 +35,7 @@ public class Playercontroll : MonoBehaviour
 
     private void Init()//restart init
     {
-        currenthp = 100;
+        rungameUimanager.currenthp = 100;
         animator.SetBool("isDead", false);
         rungameUimanager.JumpBtn.gameObject.SetActive(true);
       
@@ -62,8 +59,20 @@ public class Playercontroll : MonoBehaviour
           jump();
 
 
-        rungameUimanager.Hpbar.value = currenthp / maxHp;
-       
+        rungameUimanager.Hpbar.value = rungameUimanager.currenthp / rungameUimanager.maxHp;
+
+        if (rungameUimanager.isPlay)
+        {
+            rungameUimanager.currenthp = rungameUimanager.currenthp - rungameUimanager.discountHp;
+
+            if (rungameUimanager.currenthp < 0)
+            {
+                animator.SetBool("isDead", true);
+                rungameUimanager.JumpBtn.gameObject.SetActive(false);
+                rungameUimanager.Gameover();
+            }
+        }
+
     }
     // Update is called once per frame
     private void Func_jump()
@@ -120,18 +129,23 @@ public class Playercontroll : MonoBehaviour
         {
             hit = collision.GetComponent<MobBase>().Damage;
 
-            currenthp = currenthp- hit ;
+            rungameUimanager.currenthp = rungameUimanager.currenthp - hit ;
 
-            if (currenthp <0)
+            if (rungameUimanager.currenthp < 0)
             {
             animator.SetBool("isDead", true);
             rungameUimanager.JumpBtn.gameObject.SetActive(false);
             rungameUimanager.Gameover();
-
             }
-        
+
             Debug.Log("colider");
         }
+
+        if (collision.CompareTag("Heal"))
+        {
+            rungameUimanager.currenthp = rungameUimanager.currenthp + 50f;
+        }
+
     }
 
 }

@@ -1,39 +1,31 @@
 ﻿<Properties StartupConfiguration="{34600BE2-EA6B-B937-CDBD-6F6F696BB227}|">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Rungame/Playercontroll.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Rungame/RunGameUiManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Rungame/RunGameUiManager.cs" Line="34" Column="4" IsPinned="True" />
-      <File FileName="Assets/Scripts/Rungame/MobBase.cs" Line="12" Column="3" />
-      <File FileName="Assets/Scripts/Rungame/Object/CoinObj.cs" Line="37" Column="31" NotebookId="1" IsPinned="True" />
-      <File FileName="Assets/Scripts/Rungame/ReSpawnManager.cs" Line="99" Column="44" NotebookId="1" IsPinned="True" />
+      <File FileName="Assets/Scripts/Rungame/RunGameUiManager.cs" Line="57" Column="24" IsPinned="True" />
+      <File FileName="Assets/Scripts/Rungame/Object/CoinObj.cs" Line="37" Column="28" NotebookId="1" IsPinned="True" />
+      <File FileName="Assets/Scripts/Rungame/ReSpawnManager.cs" Line="149" Column="20" NotebookId="1" IsPinned="True" />
       <File FileName="Assets/Scripts/IntroScripts/Manager.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/Rungame/Playercontroll.cs" Line="37" Column="6" NotebookId="1" />
-      <File FileName="Assets/Scripts/Rungame/GroundScroll.cs" Line="1" Column="1" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/Playercontroll.cs" Line="26" Column="6" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/GroundScroll.cs" NotebookId="1" />
       <File FileName="Assets/Scripts/IntroScripts/SceneLoader.cs" NotebookId="1" />
       <File FileName="Assets/Scripts/IntroScripts/ChoosegamePopup.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/Mob/MobBase.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/Mob/MobDamageManager.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/Object/HealObj.cs" Line="1" Column="1" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="GameBoyIOs" expanded="True">
-            <Node name="Assets" expanded="True">
-              <Node name="Scripts" expanded="True">
-                <Node name="IntroScripts" expanded="True" />
-                <Node name="Rungame" expanded="True">
-                  <Node name="Mob" expanded="True" />
-                  <Node name="Playercontroll.cs" selected="True" />
-                </Node>
-              </Node>
-            </Node>
-          </Node>
+          <Node name="GameBoyIOs" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bb77dbac-de33-4d78-b52b-d2b3e844f95b" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5cf30ad5-3006-4fe2-b5e0-34a087976eff" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

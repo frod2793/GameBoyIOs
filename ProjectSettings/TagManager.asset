@@ -7,6 +7,7 @@ TagManager:
   - Mob
   - Ground
   - Coin
+  - Heal
   layers:
   - Default
   - TransparentFX

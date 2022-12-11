@@ -37,6 +37,12 @@ public class CoinObj : MonoBehaviour
             Uimanager.score++;
             gameObject.SetActive(false);
         }
+
+
+        if (other.CompareTag("Heal"))
+        {
+            gameObject.SetActive(false);
+        }
     }
     // Update is called once per frame
     void Update()
