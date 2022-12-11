@@ -1374,7 +1374,7 @@ MonoBehaviour:
   isPlay: 0
   score: 0
   NextHealScore: 0
-  HealScore: 100
+  HealScore: 200
   IsDead: 0
 --- !u!1 &1427783657
 GameObject:
