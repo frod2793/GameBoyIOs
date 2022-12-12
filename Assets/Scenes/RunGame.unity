@@ -170,7 +170,7 @@ MonoBehaviour:
   - Name: Sudal
     Damage: 10
   - Name: Tako
-    Damage: 70
+    Damage: 10
   - Name: Takoyaki
     Damage: 10
   mobList:
@@ -1473,7 +1473,7 @@ GameObject:
   - component: {fileID: 1506323783}
   - component: {fileID: 1506323782}
   m_Layer: 5
-  m_Name: SCore
+  m_Name: Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
