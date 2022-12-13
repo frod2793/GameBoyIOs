@@ -134,7 +134,7 @@ public class Playercontroll : MonoBehaviour
             if (rungameUimanager.currenthp < 0)
             {
             animator.SetBool("isDead", true);
-            rungameUimanager.JumpBtn.gameObject.SetActive(false);
+            
             rungameUimanager.Gameover();
             }
             else

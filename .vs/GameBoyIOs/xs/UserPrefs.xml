@@ -1,17 +1,21 @@
 ﻿<Properties StartupConfiguration="{34600BE2-EA6B-B937-CDBD-6F6F696BB227}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Rungame/Playercontroll.cs">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f59f9bea-37e9-4b46-b1a7-cb1fc191e5d1" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Rungame/RunGameUiManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Rungame/RunGameUiManager.cs" Line="57" Column="24" IsPinned="True" />
-      <File FileName="Assets/Scripts/Rungame/Object/CoinObj.cs" Line="37" Column="28" NotebookId="1" IsPinned="True" />
-      <File FileName="Assets/Scripts/Rungame/ReSpawnManager.cs" Line="149" Column="20" NotebookId="1" IsPinned="True" />
+      <File FileName="Assets/Scripts/Rungame/RunGameUiManager.cs" Line="120" Column="45" IsPinned="True" />
+      <File FileName="Assets/Scripts/Rungame/Object/CoinObj.cs" Line="50" Column="23" NotebookId="1" IsPinned="True" />
+      <File FileName="Assets/Scripts/Rungame/ReSpawnManager.cs" Line="73" Column="30" NotebookId="1" IsPinned="True" />
       <File FileName="Assets/Scripts/IntroScripts/Manager.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/Rungame/Playercontroll.cs" Line="141" Column="14" NotebookId="1" />
-      <File FileName="Assets/Scripts/Rungame/GroundScroll.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/Playercontroll.cs" Line="137" Column="13" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/GroundScroll.cs" Line="49" Column="27" NotebookId="1" />
       <File FileName="Assets/Scripts/IntroScripts/SceneLoader.cs" NotebookId="1" />
       <File FileName="Assets/Scripts/IntroScripts/ChoosegamePopup.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/Rungame/Mob/MobBase.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/Mob/MobBase.cs" Line="35" Column="23" NotebookId="1" />
       <File FileName="Assets/Scripts/Rungame/Mob/MobDamageManager.cs" NotebookId="1" />
-      <File FileName="Assets/Scripts/Rungame/Object/HealObj.cs" NotebookId="1" />
+      <File FileName="Assets/Scripts/Rungame/Object/HealObj.cs" Line="44" Column="23" NotebookId="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -30,8 +34,4 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="90d28ffd-4861-4b9d-9122-00342f315914" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MultiItemStartupConfigurations />
 </Properties>

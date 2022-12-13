@@ -41,12 +41,16 @@ public class RunGameUiManager : MonoBehaviour
     public Sprite[] GroundImage;
     public float Groundspeed;
 
- 
-
+    [Header("UI 버튼 & PopUP")]
+    public Button PuseBtn;
     public Button PlayBtn;
     public Text Scoretext;
     public bool isPlay = false;
-    
+    public Image PusePopup;
+    public Button PopUp_playBtn;
+    public Button PopUp_ResetBtn;
+   // public bool isPuse = false;
+
     public delegate void Onplay(bool isPlay);
     public Onplay onPlay;
     [Header("힐 아이템 목표 점")]
@@ -68,10 +72,34 @@ public class RunGameUiManager : MonoBehaviour
 
         StartCoroutine(addScore());
     }
+
+    private void Puse()
+    {
+        isPlay = false;
+        PusePopup.gameObject.SetActive(true);
+    }
+
+    private void PopUp_Reset()
+    {
+        Gameover();
+        PusePopup.gameObject.SetActive(false);
+    }
+    private void Popup_Play()
+    {
+        isPlay = true;
+        PusePopup.gameObject.SetActive(false);
+        //추후 카운트다운 기능 넣을것
+
+    }
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         PlayBtn.onClick.AddListener(Func_playBtn);
+        PuseBtn.onClick.AddListener(Puse);
+        PopUp_playBtn.onClick.AddListener(Popup_Play);
+        PopUp_ResetBtn.onClick.AddListener(PopUp_Reset);
+        PusePopup.gameObject.SetActive(false);
+
     }
 
 
@@ -89,6 +117,7 @@ public class RunGameUiManager : MonoBehaviour
     // Update is called once per frame
    public void Gameover()
     {
+        JumpBtn.gameObject.SetActive(false);
         PlayBtn.gameObject.SetActive(true);
         isPlay = false;
         IsDead = true;
