@@ -2,10 +2,13 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - ChoosegamePopup
+    - CoinObj
     - GroundScroll
+    - HealObj
     - IntroUiManger
     - MessageManager
     - MobBase
+    - MobDamageManager
     - OptionPopupManager
     - Playercontroll
     - ReSpawnManager
@@ -17,10 +20,8 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
@@ -37,6 +38,8 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.Slider
     - UnityEngine.UI.Text
   serializedClasses:
+    Assembly-CSharp:
+    - Mobinfo
     UnityEngine.CoreModule:
     - UnityEngine.Events.PersistentCallGroup
     - UnityEngine.RectOffset
@@ -64,6 +67,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
+    - Class: 50
+      Script: {instanceID: 0}
     - Class: 61
       Script: {instanceID: 0}
     - Class: 70
@@ -74,6 +79,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 91
       Script: {instanceID: 0}
+    - Class: 95
+      Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
@@ -81,35 +88,39 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1524}
     - Class: 114
-      Script: {instanceID: 2276}
+      Script: {instanceID: 2250}
     - Class: 114
-      Script: {instanceID: 2602}
+      Script: {instanceID: 2576}
     - Class: 114
-      Script: {instanceID: 2816}
+      Script: {instanceID: 2790}
     - Class: 114
-      Script: {instanceID: 3110}
+      Script: {instanceID: 3080}
     - Class: 114
-      Script: {instanceID: 3922}
+      Script: {instanceID: 3362}
     - Class: 114
-      Script: {instanceID: 4322}
+      Script: {instanceID: 3886}
     - Class: 114
-      Script: {instanceID: 4790}
+      Script: {instanceID: 4288}
     - Class: 114
-      Script: {instanceID: 5054}
+      Script: {instanceID: 4756}
     - Class: 114
-      Script: {instanceID: 5734}
+      Script: {instanceID: 5018}
     - Class: 114
-      Script: {instanceID: 6144}
+      Script: {instanceID: 5684}
     - Class: 114
-      Script: {instanceID: 6216}
+      Script: {instanceID: 6096}
     - Class: 114
-      Script: {instanceID: 6266}
+      Script: {instanceID: 6162}
     - Class: 114
-      Script: {instanceID: 7518}
+      Script: {instanceID: 6182}
     - Class: 114
-      Script: {instanceID: 7662}
+      Script: {instanceID: 6212}
     - Class: 114
-      Script: {instanceID: 34774}
+      Script: {instanceID: 7456}
+    - Class: 114
+      Script: {instanceID: 7598}
+    - Class: 114
+      Script: {instanceID: 27056}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -164,25 +175,33 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1524}
     - Class: 114
-      Script: {instanceID: 2276}
+      Script: {instanceID: 2250}
     - Class: 114
-      Script: {instanceID: 2602}
+      Script: {instanceID: 2576}
     - Class: 114
-      Script: {instanceID: 2816}
+      Script: {instanceID: 2790}
     - Class: 114
-      Script: {instanceID: 3110}
+      Script: {instanceID: 3080}
     - Class: 114
-      Script: {instanceID: 3288}
+      Script: {instanceID: 3256}
     - Class: 114
-      Script: {instanceID: 3970}
+      Script: {instanceID: 3362}
     - Class: 114
-      Script: {instanceID: 4752}
+      Script: {instanceID: 3934}
     - Class: 114
-      Script: {instanceID: 5734}
+      Script: {instanceID: 4298}
     - Class: 114
-      Script: {instanceID: 6216}
+      Script: {instanceID: 4718}
     - Class: 114
-      Script: {instanceID: 7984}
+      Script: {instanceID: 5018}
+    - Class: 114
+      Script: {instanceID: 5684}
+    - Class: 114
+      Script: {instanceID: 6162}
+    - Class: 114
+      Script: {instanceID: 6182}
+    - Class: 114
+      Script: {instanceID: 7918}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -306,7 +325,7 @@ ScriptsOnlyBuild:
     className: SystemPath
   - hash:
       serializedVersion: 2
-      Hash: f93f228265095981e51d65abf5569e31
+      Hash: e71d496acb26138f4be7f36ab5ced317
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MobBase
@@ -462,7 +481,7 @@ ScriptsOnlyBuild:
     className: ContentSizeFitter
   - hash:
       serializedVersion: 2
-      Hash: b85907af493ec9cc9310d1923be513ca
+      Hash: 1ca1cb742829321ca59547e007e84779
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: RunGameUiManager
@@ -484,6 +503,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core.dll
     namespaceName: Unity.VisualScripting
     className: UnityOnSelectMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 1f2364202e63ec806a5526d85f05e643
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: CoinObj
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -634,6 +659,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ChoosegamePopup
+  - hash:
+      serializedVersion: 2
+      Hash: 41fa5578694eeade91e404e8cc6a8ff3
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MobDamageManager
   - hash:
       serializedVersion: 2
       Hash: fd68d84f33fad85aac38f2739c0ee270
@@ -826,6 +857,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Scrollbar
+  - hash:
+      serializedVersion: 2
+      Hash: 1f2364202e63ec806a5526d85f05e643
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: HealObj
   - hash:
       serializedVersion: 2
       Hash: 5dea360fb0b147724ac344e6f399c2f3
