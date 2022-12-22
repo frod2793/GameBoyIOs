@@ -20,7 +20,7 @@ m_EmbeddedPackageManifests:
 m_LocalPackages:
   m_LocalFileStatus: []
 m_ProjectPath: /Users/yunseungjong/Desktop/Unity/Project/GameBoyIOs/Packages
-m_EditorVersion: 2021.3.15f1 (e8e88683f834)
+m_EditorVersion: 2021.3.16f1 (4016570cf34f)
 m_ResolvedPackages:
 - packageId: com.unity.collab-proxy@1.17.7
   testable: 0
