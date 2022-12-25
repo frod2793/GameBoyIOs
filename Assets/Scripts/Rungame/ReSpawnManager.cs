@@ -20,7 +20,7 @@ public class ReSpawnManager : MonoBehaviour
             }
         }
         gameUiManager.Healpool.Add(Createobj(gameUiManager.HealObj,transform));
-
+        gameUiManager.Biggerpool.Add(Createobj(gameUiManager.Biggerobj,transform));
         for (int i = 0; i < gameUiManager.Coins.Length; i++)
         {
             for (int j = 0; j < gameUiManager.Coin_Objcount; j++)
@@ -57,7 +57,7 @@ public class ReSpawnManager : MonoBehaviour
         StartCoroutine(createMob());
         StartCoroutine(createCoin());
         StartCoroutine(CreateHealObj());
-          
+        StartCoroutine(CreateBiggerObj());
 
         }
         else
@@ -146,6 +146,21 @@ public class ReSpawnManager : MonoBehaviour
         }
     }
 
+
+    IEnumerator CreateBiggerObj()
+    {
+
+       while (true)
+       {
+           gameUiManager.Biggerpool[0].SetActive(true);
+           gameUiManager.NextHealScore = gameUiManager.score;
+           gameUiManager.NextHealScore += gameUiManager.HealScore;
+         
+         yield return new WaitForSeconds(0.1f);
+       }
+
+
+    }
     GameObject Createobj(GameObject obj,Transform parent)
     {
         GameObject copy = Instantiate(obj);

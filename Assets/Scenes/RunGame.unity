@@ -1879,6 +1879,8 @@ MonoBehaviour:
   HealObj: {fileID: 3666157395051966247, guid: 7e576d58c6d034857b004aa5d41c9f6c, type: 3}
   PointHp: 20
   Healpool: []
+  Biggerobj: {fileID: 4141914667705497266, guid: 595025486ad164e56a0fcc3fcb7c3b09, type: 3}
+  Biggerpool: []
   MobPool: []
   Mobs:
   - {fileID: 8878980561939924299, guid: 99fd0d9426a018f49babe57c429e4c02, type: 3}
@@ -1913,7 +1915,7 @@ MonoBehaviour:
   PopUp_ResetBtn: {fileID: 724296689}
   score: 0
   NextHealScore: 0
-  HealScore: 200
+  HealScore: 100
   IsDead: 0
 --- !u!1 &1427783657
 GameObject:
@@ -2216,7 +2218,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &1553427612
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2233,7 +2235,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!50 &1553427613
 Rigidbody2D:
   serializedVersion: 4

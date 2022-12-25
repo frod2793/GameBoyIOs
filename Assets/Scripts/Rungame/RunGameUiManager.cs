@@ -29,6 +29,12 @@ public class RunGameUiManager : MonoBehaviour
     public float PointHp;//체력 회복 아이템이 스폰되는 기준 hp
     public List<GameObject> Healpool;
 
+    [Header("거인화 오브젝트 ")]
+    public GameObject Biggerobj;
+  
+    public List<GameObject> Biggerpool;
+
+
     [Header("장애물")]
     public List<GameObject> MobPool = new List<GameObject>();
     public GameObject[] Mobs;

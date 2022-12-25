@@ -74,6 +74,7 @@
     <Compile Include="Assets/Scripts/IntroScripts/IntroUiManger.cs" />
     <Compile Include="Assets/Scripts/IntroScripts/OptionPopupManager.cs" />
     <Compile Include="Assets/Scripts/Rungame/Playercontroll.cs" />
+    <Compile Include="Assets/Scripts/Rungame/Object/BiggerObj.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
