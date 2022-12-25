@@ -65,8 +65,10 @@
     <Compile Include="Assets/Scripts/IntroScripts/Manager.cs" />
     <Compile Include="Assets/Scripts/IntroScripts/ChoosegamePopup.cs" />
     <Compile Include="Assets/Scripts/Rungame/Mob/MobDamageManager.cs" />
+    <Compile Include="Assets/Scripts/Rungame/ObjEffectManager.cs" />
     <Compile Include="Assets/Scripts/Rungame/data/ScvReader.cs" />
     <Compile Include="Assets/Scripts/Rungame/GroundScroll.cs" />
+    <Compile Include="Assets/Scripts/Rungame/Object/BiggerObj.cs" />
     <Compile Include="Assets/Scripts/IntroScripts/Soundmanager.cs" />
     <Compile Include="Assets/Scripts/Rungame/Object/HealObj.cs" />
     <Compile Include="Assets/Scripts/IntroScripts/SceneLoader.cs" />
@@ -74,7 +76,6 @@
     <Compile Include="Assets/Scripts/IntroScripts/IntroUiManger.cs" />
     <Compile Include="Assets/Scripts/IntroScripts/OptionPopupManager.cs" />
     <Compile Include="Assets/Scripts/Rungame/Playercontroll.cs" />
-    <Compile Include="Assets/Scripts/Rungame/Object/BiggerObj.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

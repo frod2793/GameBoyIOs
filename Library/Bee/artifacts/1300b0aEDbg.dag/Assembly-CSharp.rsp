@@ -362,6 +362,7 @@
 "Assets/Scripts/Rungame/Object/BiggerObj.cs"
 "Assets/Scripts/Rungame/Object/CoinObj.cs"
 "Assets/Scripts/Rungame/Object/HealObj.cs"
+"Assets/Scripts/Rungame/ObjEffectManager.cs"
 "Assets/Scripts/Rungame/Playercontroll.cs"
 "Assets/Scripts/Rungame/ReSpawnManager.cs"
 "Assets/Scripts/Rungame/RunGameUiManager.cs"

@@ -4,26 +4,16 @@ using UnityEngine;
 
 public class BiggerObj : MonoBehaviour
 {
-    [SerializeField]
-    Transform player;
-    private float biggersize = 0.74f;
-    private float smallersize = 0.24f;
-    public float speed = 1f;
-
     private float movespeed;
     private Rigidbody2D rigidbody;
     [SerializeField]
     RunGameUiManager Uimanager;
 
-    private float time=1;
-    private Vector2 originalscale;
+    ObjEffectManager ObjEffect;
     // Update is called once per frame
     private void Awake()
     {
-        player = GameObject.FindObjectOfType<Playercontroll>().GetComponent<Transform>();
-        originalscale = player.localScale;
-
-
+        ObjEffect = GameObject.FindObjectOfType<ObjEffectManager>();
         Uimanager = GameObject.FindObjectOfType<RunGameUiManager>();
         rigidbody = GetComponent<Rigidbody2D>();
         movespeed = Uimanager.CoinSpeed;
@@ -34,7 +24,7 @@ public class BiggerObj : MonoBehaviour
 #if UNITY_EDITOR
         if (Input.GetKey(KeyCode.Q))
         {
-            StartCoroutine(Bigger());
+            //ObjEffect.Effect_Bigger();
             Debug.Log("bigger");
         }
 #endif
@@ -66,7 +56,7 @@ public class BiggerObj : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            StartCoroutine(Bigger());
+          ObjEffect.Effect_Bigger();
         }
 
         if (other.CompareTag("Heal"))
@@ -75,38 +65,7 @@ public class BiggerObj : MonoBehaviour
         }
     }
 
-    IEnumerator Bigger()
-    {
-        while (player.localScale.x < biggersize)
-        {
-            player.localScale = originalscale * (1f + time * speed);
-            Debug.Log("bigger11");
-            if (player.localScale.x>=biggersize)
-            {
-                time = 0;
-                break;
-            }
-            yield return null;
-        }
-        yield return new WaitForSeconds(5f);
-        Debug.Log("bigger22");
-        StartCoroutine(smaller());
-    }
 
-    private IEnumerator smaller()
-    {
-        while (player.localScale.x > smallersize)
-        {
-            Debug.Log("bigger33");
-            player.localScale = originalscale * (0.1f + time * speed);
-            if (player.localScale.x <= smallersize)
-            {
-                time = 0;
-                break;
-            }
-            yield return null;
-        }
-    }
 
 
 }
