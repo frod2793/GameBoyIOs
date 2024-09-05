@@ -27,7 +27,9 @@ public class MobBase : MonoBehaviour
         transform.position = vector;
 
     }
-
+    
+   
+    
 
     // Update is called once per frame
     void Update()
@@ -36,7 +38,7 @@ public class MobBase : MonoBehaviour
         {
             transform.Translate(Vector2.left * Time.deltaTime * mobSpeed);
 
-            if (transform.position.x < -6)
+            if (transform.position.x < -1080)
             {
                 gameObject.SetActive(false);
             }
