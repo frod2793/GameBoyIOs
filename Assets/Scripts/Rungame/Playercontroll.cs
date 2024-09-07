@@ -121,13 +121,13 @@ public class Playercontroll : MonoBehaviour
         {
             hit = collision.GetComponent<MobBase>().mobDamage;
 
-            rungameUimanager.currenthp = rungameUimanager.currenthp - hit ;
-
+            rungameUimanager.currenthp -= hit ;
+            Debug.Log("hit: " + hit);
             if (rungameUimanager.currenthp < 0)
             {
                 animator.SetBool("isDead", true);
             
-            rungameUimanager.Gameover();
+                rungameUimanager.Gameover();
             }
             else
             {
@@ -139,7 +139,7 @@ public class Playercontroll : MonoBehaviour
 
         if (collision.CompareTag("Heal"))
         {
-            rungameUimanager.currenthp = rungameUimanager.currenthp + 50f;
+            rungameUimanager.currenthp += 50f;
         }
 
     }

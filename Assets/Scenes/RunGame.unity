@@ -174,11 +174,11 @@ MonoBehaviour:
     Damage: 10
   mobList:
   - {fileID: 4426176091652609517, guid: 99fd0d9426a018f49babe57c429e4c02, type: 3}
+  - {fileID: 6566306734797275757, guid: 59ffb32dc963347b7b1a9732d05fa738, type: 3}
   - {fileID: 3954864450231761443, guid: aa5797dc6e89f794fa45c57b12c36138, type: 3}
   - {fileID: 5512440600961220048, guid: 8fb91ffb6202e4746bcccaf84bf217e4, type: 3}
   - {fileID: 4483261306127445286, guid: 3d8e4a1f7e5bebe499da10ee07399459, type: 3}
   - {fileID: 1693248661684063621, guid: 56ffd58ddbfcde84fa68baf86abc33f5, type: 3}
-  - {fileID: 6566306734797275757, guid: 59ffb32dc963347b7b1a9732d05fa738, type: 3}
   - {fileID: 3585706205484877292, guid: 7bd3eb80921634a0a9e61f752e7a3588, type: 3}
   - {fileID: 2688738510613840263, guid: d44ff0e6e3a367f459824dbf5380c198, type: 3}
   - {fileID: 8623282661846962463, guid: 361a379b1d535aa4fac0cb777ba54ec7, type: 3}
@@ -191,12 +191,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8574209}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.515625, y: 1.0755209, z: 90}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 531940456}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &206704874
 GameObject:
@@ -730,6 +730,7 @@ Transform:
   - {fileID: 1188634629}
   - {fileID: 1644408126}
   - {fileID: 1302966771}
+  - {fileID: 8574211}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &621822117
@@ -3116,7 +3117,6 @@ SceneRoots:
   - {fileID: 2136070934}
   - {fileID: 1553427611}
   - {fileID: 1106258653}
-  - {fileID: 8574211}
   - {fileID: 621822120}
   - {fileID: 372978764}
   - {fileID: 531940456}

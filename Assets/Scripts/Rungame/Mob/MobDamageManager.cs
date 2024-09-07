@@ -11,35 +11,43 @@ public class Mobinfo
 }
 public class MobDamageManager : MonoBehaviour
 {
-
-
-  
     public List<Mobinfo> Mobinfo;
 
     [SerializeField]
     MobBase[] mobList;
   
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        for (int i = 0; i < Mobinfo.Count; i++)
+        // mobList와 Mobinfo 리스트 크기가 다르면 경고 출력
+        if (mobList.Length != Mobinfo.Count)
         {
-            if (mobList[i].mobName == Mobinfo[i].Name)
+            Debug.LogWarning("mobList와 Mobinfo의 크기가 다릅니다. 확인이 필요합니다.");
+        }
+
+        // mobList의 각 mob에 대해 Mobinfo에서 해당 mobName을 찾기
+        for (int i = 0; i < mobList.Length; i++)
+        {
+            bool foundMatch = false;
+
+            // Mobinfo에서 해당하는 mobName을 가진 정보를 찾음
+            for (int j = 0; j < Mobinfo.Count; j++)
             {
-                mobList[i].mobDamage = Mobinfo[i].Damage;
-                Debug.Log("damage setting"+i);
-            }
-            else
-            {
-                Debug.Log("damage setting false " + mobList[i].mobName);
+                if (mobList[i].mobName == Mobinfo[j].Name)
+                {
+                    mobList[i].mobDamage = Mobinfo[j].Damage;
+                    Debug.Log("Damage setting: " + mobList[i].mobName + " = " + mobList[i].mobDamage);
+                    foundMatch = true;
+                    break;
+                }
             }
 
+            if (!foundMatch)
+            {
+                Debug.LogWarning("Damage setting failed: " + mobList[i].mobName + " 에 해당하는 Mobinfo를 찾을 수 없습니다.");
+            }
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+ 
 }
