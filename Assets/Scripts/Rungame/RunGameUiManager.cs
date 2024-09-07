@@ -10,6 +10,8 @@ public class RunGameUiManager : MonoBehaviour
     public Slider Hpbar;
     public float JumpHight;
     public float JumpSpeed;
+    
+    
     [Header("초당 깎이는 Hp")]
     public float discountHp;
 

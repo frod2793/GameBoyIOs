@@ -12,10 +12,8 @@ public class Playercontroll : MonoBehaviour
     [SerializeField]
     private float jumpSpeed;
  
-
-    
     float hit;
-    bool isJump;
+    bool isJumping;
     bool isTop;
 
     Vector2 startPosition;
@@ -38,7 +36,6 @@ public class Playercontroll : MonoBehaviour
         rungameUimanager.currenthp = 100;
         animator.SetBool("isDead", false);
         rungameUimanager.JumpBtn.gameObject.SetActive(true);
-      
     }
 
     void Update()
@@ -55,8 +52,7 @@ public class Playercontroll : MonoBehaviour
             }
         }
 
-        
-          jump();
+        //jump();
 
 
         rungameUimanager.Hpbar.value = rungameUimanager.currenthp / rungameUimanager.maxHp;
@@ -77,63 +73,59 @@ public class Playercontroll : MonoBehaviour
     // Update is called once per frame
     private void Func_jump()
     {
-
-
-        isJump = true;
-
-      
-        Debug.Log("player jump");
-
+        if (!isJumping) // 점프 중이 아닐 때만 점프 실행
+        {
+            StartCoroutine(JumpRoutine()); // 코루틴 실행
+            Debug.Log("player jump");
+        }
     }
 
-    void jump()
+    private IEnumerator JumpRoutine()
     {
-       
-        if (isJump)
-        {
-            animator.SetBool("isJump", true);
-            if (transform.position.y <= jumpHight - 0.1f && !isTop)
-            {
-              
-               transform.position = Vector2.Lerp(transform.position,
-                  new Vector2(transform.position.x, jumpHight), jumpSpeed * Time.deltaTime);
-              
-            }
-            else
-            {
-                isTop = true;
-            }
-            if (transform.position.y > startPosition.y && isTop)
-            {
-                transform.position = Vector2.MoveTowards(transform.position, startPosition, jumpSpeed * Time.deltaTime);
-            }
+        isJumping = true; // 점프 상태 설정
 
-        }
-        
+        // 애니메이터 설정
+        animator.SetBool("isJump", true);
 
-        if (isJump && transform.position.y <= startPosition.y)
+        // 상승 (점프 최고점까지 이동)
+        while (transform.position.y < jumpHight - 0.1f)
         {
-            isJump = false;//jump
-            isTop = false;
-            animator.SetBool("isJump", isTop);
-            transform.position = startPosition;
+            transform.position = Vector2.Lerp(transform.position,
+                new Vector2(transform.position.x, jumpHight), jumpSpeed * Time.deltaTime);
+
+            yield return null; // 한 프레임 대기
         }
 
+        // 최고점 도달 후 하강
+        isTop = true; // 최고점 도달 플래그 설정
 
+        while (transform.position.y > startPosition.y)
+        {
+            transform.position = Vector2.MoveTowards(transform.position, startPosition, jumpSpeed * Time.deltaTime);
+            yield return null; // 한 프레임 대기
+        }
 
+        // 점프 종료 후 초기화
+        transform.position = startPosition; // 정확한 위치로 설정
+        animator.SetBool("isJump", false);  // 애니메이션 해제
+        isTop = false;   // 최고점 상태 해제
+        isJumping = false; // 점프 완료 상태 설정
 
+        Debug.Log("player landing");
     }
+    
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Mob"))
         {
-            hit = collision.GetComponent<MobBase>().Damage;
+            hit = collision.GetComponent<MobBase>().mobDamage;
 
             rungameUimanager.currenthp = rungameUimanager.currenthp - hit ;
 
             if (rungameUimanager.currenthp < 0)
             {
-            animator.SetBool("isDead", true);
+                animator.SetBool("isDead", true);
             
             rungameUimanager.Gameover();
             }

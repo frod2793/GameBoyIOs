@@ -18,21 +18,20 @@ public class MobDamageManager : MonoBehaviour
 
     [SerializeField]
     MobBase[] mobList;
-    [SerializeField]
-
+  
     // Start is called before the first frame update
     void Start()
     {
         for (int i = 0; i < Mobinfo.Count; i++)
         {
-            if (mobList[i].name == Mobinfo[i].Name)
+            if (mobList[i].mobName == Mobinfo[i].Name)
             {
-                mobList[i].Damage = Mobinfo[i].Damage;
+                mobList[i].mobDamage = Mobinfo[i].Damage;
                 Debug.Log("damage setting"+i);
             }
             else
             {
-                Debug.Log("damage setting false " + mobList[i].name);
+                Debug.Log("damage setting false " + mobList[i].mobName);
             }
 
         }

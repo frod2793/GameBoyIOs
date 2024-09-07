@@ -2,30 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MobBase : MonoBehaviour
 {
     private float mobSpeed;
     [SerializeField]
-    RunGameUiManager UImanager;
+    RunGameUiManager uImanager;
    
-    public float Damage;
-    public string name;
+     public float mobDamage;
+     public string mobName;
 
     // Start is called before the first frame update
     void Awake()
     {
-      
-        UImanager = GameObject.FindObjectOfType<RunGameUiManager>();
-
-        mobSpeed = UImanager.MobSpeed;
+        uImanager = GameObject.FindObjectOfType<RunGameUiManager>();
+        mobSpeed = uImanager.MobSpeed;
     }
 
     private void OnEnable()
     {
-        Vector2 vector = new Vector2(UImanager.startpoint.x, transform.position.y);
+        Vector2 vector = new Vector2(uImanager.startpoint.x, transform.position.y);
         transform.position = vector;
-
     }
     
    
@@ -34,11 +32,11 @@ public class MobBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (UImanager.isPlay)
+        if (uImanager.isPlay)
         {
             transform.Translate(Vector2.left * Time.deltaTime * mobSpeed);
 
-            if (transform.position.x < -1080)
+            if (transform.localPosition.x < -10)
             {
                 gameObject.SetActive(false);
             }

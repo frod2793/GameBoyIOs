@@ -1,22 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class BiggerObj : MonoBehaviour
+public class BiggerObj : Obect_base
 {
-    private float movespeed;
-    private Rigidbody2D rigidbody;
-    [SerializeField]
-    RunGameUiManager Uimanager;
 
-    ObjEffectManager ObjEffect;
+    ObjEffectManager objEffect;
     // Update is called once per frame
-    private void Awake()
+    protected override void BaseInit()
     {
-        ObjEffect = GameObject.FindObjectOfType<ObjEffectManager>();
-        Uimanager = GameObject.FindObjectOfType<RunGameUiManager>();
-        rigidbody = GetComponent<Rigidbody2D>();
-        movespeed = Uimanager.CoinSpeed;
+        base.BaseInit();
+        objEffect = GameObject.FindObjectOfType<ObjEffectManager>();
     }
 
     private void Update()
@@ -24,16 +19,16 @@ public class BiggerObj : MonoBehaviour
 #if UNITY_EDITOR
         if (Input.GetKey(KeyCode.Q))
         {
-            //ObjEffect.Effect_Bigger();
+            //objEffect.Effect_Bigger();
             Debug.Log("bigger");
         }
 #endif
-        if (Uimanager.isPlay)
+        if (uimanager.isPlay)
         {
 
-            transform.Translate(Vector2.left * Time.deltaTime * movespeed);
+            transform.Translate(Vector2.left * Time.deltaTime * speed);
             Vector2 vector = new Vector2(transform.position.x, transform.position.y);
-            rigidbody.MovePosition(vector);
+            objRigidbody.MovePosition(vector);
 
             if (transform.position.x < -6)
             {
@@ -51,12 +46,12 @@ public class BiggerObj : MonoBehaviour
     {
         if (other.CompareTag("Mob") || other.CompareTag("Ground"))
         {
-            rigidbody.constraints = RigidbodyConstraints2D.FreezePositionY;
+            objRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY;
         }
 
         if (other.CompareTag("Player"))
         {
-          ObjEffect.Effect_Bigger();
+          objEffect.Effect_Bigger();
         }
 
         if (other.CompareTag("Heal"))

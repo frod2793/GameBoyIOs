@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class ReSpawnManager : MonoBehaviour
 {
+   
     [SerializeField]   
    private RunGameUiManager gameUiManager;
-
     bool isHeal;
-
     private void Start()
     {
         for (int i = 0; i < gameUiManager.Mobs.Length; i++)
@@ -28,19 +27,17 @@ public class ReSpawnManager : MonoBehaviour
                 gameUiManager.CoinPool.Add(Createobj(gameUiManager.Coins[i], transform));
             }
         }
-
         gameUiManager.onPlay += playgame;
-
     }
-
     private void FixedUpdate()
     {
         if (gameUiManager.Hpbar.value < gameUiManager.PointHp)
         {
             StartCoroutine(CreateHealObj());
         }
+        
+     
     }
-
     private void playgame(bool isPlay)
     {
         if (isPlay)
@@ -49,15 +46,14 @@ public class ReSpawnManager : MonoBehaviour
             {
                 if (gameUiManager.MobPool[i].activeSelf)
                 {
-                    gameUiManager.MobPool[i].SetActive(false);
                
                 }
                
             }
-        StartCoroutine(createMob());
-        StartCoroutine(createCoin());
-        StartCoroutine(CreateHealObj());
-        StartCoroutine(CreateBiggerObj());
+            StartCoroutine(createMob());
+            StartCoroutine(createCoin());
+            StartCoroutine(CreateHealObj());
+            StartCoroutine(CreateBiggerObj());
 
         }
         else
@@ -65,7 +61,6 @@ public class ReSpawnManager : MonoBehaviour
             StopAllCoroutines();
         }
     }
-
 
     IEnumerator createMob()
     {
@@ -96,7 +91,7 @@ public class ReSpawnManager : MonoBehaviour
 
     }
 
-
+  
 
     IEnumerator createCoin()
     {
@@ -126,8 +121,7 @@ public class ReSpawnManager : MonoBehaviour
        
     }
 
-
-
+   
     IEnumerator CreateHealObj()
     {
         while (gameUiManager.currenthp < gameUiManager.PointHp && !isHeal && gameUiManager.score > gameUiManager.NextHealScore)
