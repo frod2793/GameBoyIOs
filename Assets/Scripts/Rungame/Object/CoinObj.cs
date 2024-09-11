@@ -50,9 +50,6 @@ public class CoinObj : Obect_base
                 gameObject.SetActive(false);
             }
         }
-        else
-        {
-            gameObject.SetActive(false);
-        }
+        
     }
 }

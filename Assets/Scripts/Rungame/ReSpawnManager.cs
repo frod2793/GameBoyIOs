@@ -31,12 +31,14 @@ public class ReSpawnManager : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (gameUiManager.Hpbar.value < gameUiManager.PointHp)
+        if (gameUiManager.isPlay)
         {
-            StartCoroutine(CreateHealObj());
+            if (gameUiManager.Hpbar.value < gameUiManager.PointHp)
+            {
+                StartCoroutine(CreateHealObj());
+            }
+
         }
-        
-     
     }
     private void playgame(bool isPlay)
     {
@@ -65,10 +67,17 @@ public class ReSpawnManager : MonoBehaviour
     IEnumerator createMob()
     {
         yield return new WaitForSeconds(0.5f);
-        while (gameUiManager.isPlay)
+        while (true)
         {
-            gameUiManager.MobPool[Deactivemob()].SetActive(true);
-            yield return new WaitForSeconds(Random.Range(1f, 3f));
+            if (!gameUiManager.isPlay)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+            else
+            {
+                gameUiManager.MobPool[Deactivemob()].SetActive(true);
+                yield return new WaitForSeconds(Random.Range(1f, 3f));
+            }
         }
     }
 
@@ -106,9 +115,14 @@ public class ReSpawnManager : MonoBehaviour
                 num.Add(i);
             }
         }
-        while (gameUiManager.isPlay)
+        while (true)
         {
-            if (gameUiManager.isPlay)
+           
+            if (!gameUiManager.isPlay)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+            else
             {
                 for (int i = 0; i < num.Count - 1; i++)
                 {
@@ -124,33 +138,53 @@ public class ReSpawnManager : MonoBehaviour
    
     IEnumerator CreateHealObj()
     {
-        while (gameUiManager.currenthp < gameUiManager.PointHp && !isHeal && gameUiManager.score > gameUiManager.NextHealScore)
-        {
-            gameUiManager.Healpool[0].SetActive(true);
-            gameUiManager.NextHealScore = gameUiManager.score;
-            gameUiManager.NextHealScore += gameUiManager.HealScore;
-            isHeal = true;
-            yield return new WaitForSeconds(0.1f);
-        }
+       
+            while (gameUiManager.currenthp < gameUiManager.PointHp && !isHeal &&
+                   gameUiManager.score > gameUiManager.NextHealScore)
+            {
 
+                if (!gameUiManager.isPlay)
+                {
+                    yield return new WaitForSeconds(0.1f);
+                }
+                else
+                {
+                    gameUiManager.Healpool[0].SetActive(true);
+                    gameUiManager.NextHealScore = gameUiManager.score;
+                    gameUiManager.NextHealScore += gameUiManager.HealScore;
+                    isHeal = true;
+                    yield return new WaitForSeconds(0.1f);
+                    
+                }
+                
+               
+            }
 
-        if (gameUiManager.currenthp > gameUiManager.PointHp)
-        {
-            isHeal = false;
-        }
+            if (gameUiManager.currenthp > gameUiManager.PointHp)
+            {
+                isHeal = false;
+            }
+        
     }
 
 
     IEnumerator CreateBiggerObj()
     {
-
        while (true)
        {
-           gameUiManager.Biggerpool[0].SetActive(true);
-           gameUiManager.NextHealScore = gameUiManager.score;
-           gameUiManager.NextHealScore += gameUiManager.HealScore;
-         
-         yield return new WaitForSeconds(0.1f);
+           
+           if (!gameUiManager.isPlay)
+           {
+               yield return new WaitForSeconds(0.1f);
+           }
+           else
+           {
+               gameUiManager.Biggerpool[0].SetActive(true);
+               gameUiManager.NextHealScore = gameUiManager.score;
+               gameUiManager.NextHealScore += gameUiManager.HealScore;
+
+               yield return new WaitForSeconds(0.1f);
+           }
        }
 
 

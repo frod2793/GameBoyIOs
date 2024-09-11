@@ -26,13 +26,15 @@ public class IntroUiManger : MonoBehaviour
     }
 
     private void func_startBtn()
-    {//시작 버튼 을 눌렀을떄 실행되야하는 함수
+    {
+        //시작 버튼 을 눌렀을떄 실행되야하는 함수
         //임시 기능
       //  SceneLoader.Instace.LoadScene("SampleScene");
         Debug.Log("게임 선택 팝업");
 
         CgamePopUp.SetActive(true);
     }
+    
 
     private void func_tutorialBtn()
     {

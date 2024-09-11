@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RunGameUiManager : MonoBehaviour
 {
+    public SettingsData_oBJ settingsData; // ScriptableObject 참조
+    
     [Header("플레이어")]
     public Button JumpBtn;
     public Slider Hpbar;
@@ -54,9 +57,15 @@ public class RunGameUiManager : MonoBehaviour
     public Button PlayBtn;
     public Text Scoretext;
     public bool isPlay = false;
+    
+    [Header("Puse 팝업")]
     public Image PusePopup;
     public Button PopUp_playBtn;
     public Button PopUp_ResetBtn;
+    public Button PopUp_OPtionBtn;
+    [Header("옵션 팝업")]
+    public OptionPopupManager OptionPopUP;
+    
    // public bool isPuse = false;
 
     public delegate void Onplay(bool isPlay);
@@ -69,6 +78,7 @@ public class RunGameUiManager : MonoBehaviour
     public bool IsDead;
     private void Func_playBtn()
     {
+       
         JumpBtn.gameObject.SetActive(true);
         PlayBtn.gameObject.SetActive(false);
         isPlay = true;
@@ -87,13 +97,21 @@ public class RunGameUiManager : MonoBehaviour
         PusePopup.gameObject.SetActive(true);
     }
 
+    private void Option()
+    {
+        Instantiate(OptionPopUP);
+        OptionPopUP.gameObject.SetActive(true);
+    }
+    
     private void PopUp_Reset()
     {
+        LoadSetting();
         Gameover();
         PusePopup.gameObject.SetActive(false);
     }
     private void Popup_Play()
     {
+        LoadSetting();
         isPlay = true;
         PusePopup.gameObject.SetActive(false);
         //추후 카운트다운 기능 넣을것
@@ -106,10 +124,27 @@ public class RunGameUiManager : MonoBehaviour
         PuseBtn.onClick.AddListener(Puse);
         PopUp_playBtn.onClick.AddListener(Popup_Play);
         PopUp_ResetBtn.onClick.AddListener(PopUp_Reset);
+        PopUp_OPtionBtn.onClick.AddListener(Option);
         PusePopup.gameObject.SetActive(false);
-
+        LoadSetting();
     }
 
+    private void LoadSetting()
+    {
+        if (settingsData.ConSmall_toggle)
+        {
+            JumpBtn.gameObject.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+        }
+        else if (settingsData.ConNormal_Toggle)
+        {
+            JumpBtn.gameObject.transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (settingsData.ConBigBtn_Toggle)
+        {
+            JumpBtn.gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1);
+        }
+
+    }
 
     IEnumerator addScore()
     {
