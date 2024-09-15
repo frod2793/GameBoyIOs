@@ -52,6 +52,7 @@ public class BiggerObj : Obect_base
         if (other.CompareTag("Player"))
         {
           objEffect.Effect_Bigger();
+          gameObject.SetActive(false);
         }
 
         if (other.CompareTag("Heal"))

@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class ReSpawnManager : MonoBehaviour
 {
-   
-    [SerializeField]   
-   private RunGameUiManager gameUiManager;
+    [SerializeField] private RunGameUiManager gameUiManager;
     bool isHeal;
+
     private void Start()
     {
         for (int i = 0; i < gameUiManager.Mobs.Length; i++)
@@ -15,11 +14,11 @@ public class ReSpawnManager : MonoBehaviour
             for (int j = 0; j < gameUiManager.Objcount; j++)
             {
                 gameUiManager.MobPool.Add(Createobj(gameUiManager.Mobs[i], transform));
-              
             }
         }
-        gameUiManager.Healpool.Add(Createobj(gameUiManager.HealObj,transform));
-        gameUiManager.Biggerpool.Add(Createobj(gameUiManager.Biggerobj,transform));
+
+        gameUiManager.Healpool.Add(Createobj(gameUiManager.HealObj, transform));
+        gameUiManager.Biggerpool.Add(Createobj(gameUiManager.Biggerobj, transform));
         for (int i = 0; i < gameUiManager.Coins.Length; i++)
         {
             for (int j = 0; j < gameUiManager.Coin_Objcount; j++)
@@ -27,8 +26,10 @@ public class ReSpawnManager : MonoBehaviour
                 gameUiManager.CoinPool.Add(Createobj(gameUiManager.Coins[i], transform));
             }
         }
+
         gameUiManager.onPlay += playgame;
     }
+
     private void FixedUpdate()
     {
         if (gameUiManager.isPlay)
@@ -37,26 +38,19 @@ public class ReSpawnManager : MonoBehaviour
             {
                 StartCoroutine(CreateHealObj());
             }
-
         }
     }
+
     private void playgame(bool isPlay)
     {
         if (isPlay)
         {
-            for (int i = 0; i < gameUiManager.MobPool.Count; i++)
-            {
-                if (gameUiManager.MobPool[i].activeSelf)
-                {
-               
-                }
-               
-            }
+            
+            gameUiManager.Healpool[0].SetActive(true);
             StartCoroutine(createMob());
             StartCoroutine(createCoin());
             StartCoroutine(CreateHealObj());
             StartCoroutine(CreateBiggerObj());
-
         }
         else
         {
@@ -76,7 +70,7 @@ public class ReSpawnManager : MonoBehaviour
             else
             {
                 gameUiManager.MobPool[Deactivemob()].SetActive(true);
-                yield return new WaitForSeconds(Random.Range(1f, 3f));
+                yield return new WaitForSeconds(Random.Range(2f, 4f));
             }
         }
     }
@@ -91,23 +85,23 @@ public class ReSpawnManager : MonoBehaviour
                 num.Add(i);
             }
         }
+
         int x = 0;
         if (num.Count > 0)
         {
             x = num[Random.Range(0, num.Count)];
         }
-        return x;
 
+        return x;
     }
 
-  
 
     IEnumerator createCoin()
     {
         yield return new WaitForSeconds(0.1f);
 
         List<int> num = new List<int>();
-     //   int x = 0;
+        //   int x = 0;
         for (int i = 0; i < gameUiManager.CoinPool.Count; i++)
         {
             if (!gameUiManager.CoinPool[i].activeSelf)
@@ -115,9 +109,9 @@ public class ReSpawnManager : MonoBehaviour
                 num.Add(i);
             }
         }
+
         while (true)
         {
-           
             if (!gameUiManager.isPlay)
             {
                 yield return new WaitForSeconds(0.1f);
@@ -131,70 +125,59 @@ public class ReSpawnManager : MonoBehaviour
                 }
             }
         }
-
-       
     }
 
-   
+
     IEnumerator CreateHealObj()
     {
-       
-            while (gameUiManager.currenthp < gameUiManager.PointHp && !isHeal &&
-                   gameUiManager.score > gameUiManager.NextHealScore)
+        while (gameUiManager.currenthp < gameUiManager.PointHp && !isHeal &&
+               gameUiManager.score > gameUiManager.NextHealScore)
+        {
+            if (!gameUiManager.isPlay)
             {
-
-                if (!gameUiManager.isPlay)
-                {
-                    yield return new WaitForSeconds(0.1f);
-                }
-                else
-                {
-                    gameUiManager.Healpool[0].SetActive(true);
-                    gameUiManager.NextHealScore = gameUiManager.score;
-                    gameUiManager.NextHealScore += gameUiManager.HealScore;
-                    isHeal = true;
-                    yield return new WaitForSeconds(0.1f);
-                    
-                }
-                
-               
+                yield return new WaitForSeconds(0.1f);
             }
-
-            if (gameUiManager.currenthp > gameUiManager.PointHp)
+            else
             {
-                isHeal = false;
+                gameUiManager.Healpool[0].SetActive(true);
+                gameUiManager.NextHealScore = gameUiManager.score;
+                gameUiManager.NextHealScore += gameUiManager.HealScore;
+                isHeal = true;
+                yield return new WaitForSeconds(0.1f);
             }
-        
+        }
+
+        if (gameUiManager.currenthp > gameUiManager.PointHp)
+        {
+            isHeal = false;
+        }
     }
 
 
     IEnumerator CreateBiggerObj()
     {
-       while (true)
-       {
-           
-           if (!gameUiManager.isPlay)
-           {
-               yield return new WaitForSeconds(0.1f);
-           }
-           else
-           {
-               gameUiManager.Biggerpool[0].SetActive(true);
-               gameUiManager.NextHealScore = gameUiManager.score;
-               gameUiManager.NextHealScore += gameUiManager.HealScore;
+        while (gameUiManager.score > gameUiManager.NextHealScore)
+        {
+            if (!gameUiManager.isPlay)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+            else
+            {
+                gameUiManager.Biggerpool[0].SetActive(true);
+                gameUiManager.NextBiggerScore = gameUiManager.score;
+                gameUiManager.NextBiggerScore += gameUiManager.BiggerScore;
 
-               yield return new WaitForSeconds(0.1f);
-           }
-       }
-
-
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
     }
-    GameObject Createobj(GameObject obj,Transform parent)
+
+    GameObject Createobj(GameObject obj, Transform parent)
     {
         GameObject copy = Instantiate(obj);
         copy.transform.SetParent(parent);
         copy.SetActive(false);
         return copy;
     }
-
 }

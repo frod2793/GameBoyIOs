@@ -70,7 +70,7 @@ public class Playercontroll : MonoBehaviour
         }
 
     }
-    // Update is called once per frame
+    
     private void Func_jump()
     {
         if (!isJumping) // 점프 중이 아닐 때만 점프 실행
@@ -141,7 +141,7 @@ public class Playercontroll : MonoBehaviour
         {
             rungameUimanager.currenthp += 50f;
         }
-
+        
     }
 
 }

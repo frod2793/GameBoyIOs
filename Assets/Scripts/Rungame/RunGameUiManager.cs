@@ -75,6 +75,11 @@ public class RunGameUiManager : MonoBehaviour
     public int NextHealScore;//목표점수 
     public int HealScore;//더할점수
 
+    [Header("거대화 아이템 목표 점수")]
+    public int NextBiggerScore;
+    public int BiggerScore;
+    
+    
     public bool IsDead;
     private void Func_playBtn()
     {

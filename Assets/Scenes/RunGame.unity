@@ -2215,6 +2215,8 @@ MonoBehaviour:
   score: 0
   NextHealScore: 0
   HealScore: 100
+  NextBiggerScore: 0
+  BiggerScore: 150
   IsDead: 0
 --- !u!1 &1385345752
 GameObject:
