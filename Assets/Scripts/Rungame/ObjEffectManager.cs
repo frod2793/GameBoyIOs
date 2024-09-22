@@ -7,7 +7,7 @@ public class ObjEffectManager : MonoBehaviour
     [SerializeField]
     Transform player;
     private Vector2 originalscale;
-    private float biggersize = 0.71f;
+    private float biggersize = 0.55f;
     private float smallersize = 0.24f;
     public float speed = 0.01f;
 
@@ -46,7 +46,7 @@ public class ObjEffectManager : MonoBehaviour
         }
     
   
-       // StartCoroutine(smaller());
+        // StartCoroutine(smaller());
     }
 
 

@@ -46,7 +46,7 @@ public class ReSpawnManager : MonoBehaviour
         if (isPlay)
         {
             
-            gameUiManager.Healpool[0].SetActive(true);
+          //  gameUiManager.Healpool[0].SetActive(true);
             StartCoroutine(createMob());
             StartCoroutine(createCoin());
             StartCoroutine(CreateHealObj());
@@ -101,7 +101,7 @@ public class ReSpawnManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         List<int> num = new List<int>();
-        //   int x = 0;
+        
         for (int i = 0; i < gameUiManager.CoinPool.Count; i++)
         {
             if (!gameUiManager.CoinPool[i].activeSelf)
@@ -130,19 +130,20 @@ public class ReSpawnManager : MonoBehaviour
 
     IEnumerator CreateHealObj()
     {
-        while (gameUiManager.currenthp < gameUiManager.PointHp && !isHeal &&
-               gameUiManager.score > gameUiManager.NextHealScore)
+        while (gameUiManager.isPlay)
         {
-            if (!gameUiManager.isPlay)
-            {
-                yield return new WaitForSeconds(0.1f);
-            }
-            else
+            if (gameUiManager.currenthp < gameUiManager.PointHp && !isHeal &&
+                gameUiManager.score > gameUiManager.NextHealScore)
             {
                 gameUiManager.Healpool[0].SetActive(true);
                 gameUiManager.NextHealScore = gameUiManager.score;
                 gameUiManager.NextHealScore += gameUiManager.HealScore;
                 isHeal = true;
+                yield return new WaitForSeconds(0.1f);
+            }
+            else
+            {
+                
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -156,15 +157,16 @@ public class ReSpawnManager : MonoBehaviour
 
     IEnumerator CreateBiggerObj()
     {
-        while (gameUiManager.score > gameUiManager.NextHealScore)
+        while (gameUiManager.isPlay)
         {
-            if (!gameUiManager.isPlay)
+            if (gameUiManager.score < gameUiManager.NextBiggerScore)
             {
                 yield return new WaitForSeconds(0.1f);
             }
             else
             {
                 gameUiManager.Biggerpool[0].SetActive(true);
+                print("Bigger");
                 gameUiManager.NextBiggerScore = gameUiManager.score;
                 gameUiManager.NextBiggerScore += gameUiManager.BiggerScore;
 

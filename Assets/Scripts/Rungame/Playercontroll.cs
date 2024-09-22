@@ -7,9 +7,9 @@ public class Playercontroll : MonoBehaviour
     [SerializeField]
     private RunGameUiManager rungameUimanager;
 
-    [SerializeField]
     private float jumpHight;
-    [SerializeField]
+    private float fallMultiplier = 2.5f; // 하강 속도 조절 변수 (기본값 2.5)
+
     private float jumpSpeed;
  
     float hit;
@@ -19,6 +19,7 @@ public class Playercontroll : MonoBehaviour
     Vector2 startPosition;
     Animator animator;
 
+    private Rigidbody2D rb;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +29,7 @@ public class Playercontroll : MonoBehaviour
         jumpHight = rungameUimanager.JumpHight;
         jumpSpeed = rungameUimanager.JumpSpeed;
 
+        rb = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
     }
 
@@ -52,8 +54,6 @@ public class Playercontroll : MonoBehaviour
             }
         }
 
-        //jump();
-
 
         rungameUimanager.Hpbar.value = rungameUimanager.currenthp / rungameUimanager.maxHp;
 
@@ -67,13 +67,21 @@ public class Playercontroll : MonoBehaviour
                 rungameUimanager.JumpBtn.gameObject.SetActive(false);
                 rungameUimanager.Gameover();
             }
+            
+            if (rb.velocity.y < 0)
+            {
+                // 하강 속도 조절 (fallMultiplier 사용)
+                float gravityAdjustment = (fallMultiplier - 1) * Physics2D.gravity.y * Time.deltaTime;
+                rb.velocity += Vector2.up * gravityAdjustment;
+            }
+            
         }
 
     }
     
     private void Func_jump()
     {
-        if (!isJumping) // 점프 중이 아닐 때만 점프 실행
+        if (!isJumping && Mathf.Abs(rb.velocity.y) < 0.01f) // 점프 중이 아니고, 바닥에 있을 때만 점프
         {
             StartCoroutine(JumpRoutine()); // 코루틴 실행
             Debug.Log("player jump");
@@ -83,37 +91,41 @@ public class Playercontroll : MonoBehaviour
     private IEnumerator JumpRoutine()
     {
         isJumping = true; // 점프 상태 설정
+        isTop = false;
 
         // 애니메이터 설정
         animator.SetBool("isJump", true);
 
-        // 상승 (점프 최고점까지 이동)
-        while (transform.position.y < jumpHight - 0.1f)
-        {
-            transform.position = Vector2.Lerp(transform.position,
-                new Vector2(transform.position.x, jumpHight), jumpSpeed * Time.deltaTime);
+        // 점프 시작 - Rigidbody2D의 velocity를 설정하여 위로 점프
+        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
 
+        // 최고점에 도달할 때까지 대기
+        while (rb.velocity.y > 0)
+        {
             yield return null; // 한 프레임 대기
         }
 
-        // 최고점 도달 후 하강
-        isTop = true; // 최고점 도달 플래그 설정
+        isTop = true; // 최고점 도달
 
-        while (transform.position.y > startPosition.y)
+        // 하강 및 착지 대기
+        while (!isGrounded())
         {
-            transform.position = Vector2.MoveTowards(transform.position, startPosition, jumpSpeed * Time.deltaTime);
             yield return null; // 한 프레임 대기
         }
 
-        // 점프 종료 후 초기화
-        transform.position = startPosition; // 정확한 위치로 설정
-        animator.SetBool("isJump", false);  // 애니메이션 해제
-        isTop = false;   // 최고점 상태 해제
-        isJumping = false; // 점프 완료 상태 설정
+        // 착지 후 상태 초기화
+        animator.SetBool("isJump", false); // 점프 애니메이션 해제
+        isTop = false;                     // 최고점 상태 해제
+        isJumping = false;                 // 점프 완료 상태 설정
 
         Debug.Log("player landing");
     }
-    
+
+    private bool isGrounded()
+    {
+        // 바닥에 닿았는지 체크 (충돌 감지)
+        return Mathf.Abs(rb.velocity.y) < 0.01f;
+    }
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
