@@ -19,7 +19,7 @@ public class GroundScroll : MonoBehaviour
     float leftPosX = 0f;
     float rightPosX = 0f;
     float xScreenHalfSize;
-    float yScreenHalfSize;
+  //  float yScreenHalfSize;
 
 
     // Start is called before the first frame update
@@ -36,7 +36,7 @@ public class GroundScroll : MonoBehaviour
         temp =tiles[0];
      
         // yScreenHalfSize = Camera.main.orthographicSize;
-        yScreenHalfSize = 12.64f;
+        // yScreenHalfSize = 12.64f;
         xScreenHalfSize = -12.64f;
 
         leftPosX = (xScreenHalfSize * 1f);

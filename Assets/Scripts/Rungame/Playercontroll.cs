@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Playercontroll : MonoBehaviour
 {
@@ -10,12 +12,16 @@ public class Playercontroll : MonoBehaviour
     private float jumpHight;
     private float fallMultiplier = 2.5f; // 하강 속도 조절 변수 (기본값 2.5)
 
+    private DOTweenAnimation doTweenAnimation;
+    
     private float jumpSpeed;
  
+    private SpriteRenderer playerSprite;
+    
     float hit;
     bool isJumping;
     bool isTop;
-
+    private bool ishit;
     Vector2 startPosition;
     Animator animator;
 
@@ -28,7 +34,7 @@ public class Playercontroll : MonoBehaviour
         rungameUimanager.PlayBtn.onClick.AddListener(Init);
         jumpHight = rungameUimanager.JumpHight;
         jumpSpeed = rungameUimanager.JumpSpeed;
-
+        playerSprite = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
     }
@@ -132,18 +138,26 @@ public class Playercontroll : MonoBehaviour
         if (collision.CompareTag("Mob"))
         {
             hit = collision.GetComponent<MobBase>().mobDamage;
-
-            rungameUimanager.currenthp -= hit ;
+            Debug.Log(" ishit: " + ishit);
+            if (!ishit)
+            {
+                rungameUimanager.currenthp -= hit ;
+            }
+          
+            
+          
             Debug.Log("hit: " + hit);
             if (rungameUimanager.currenthp < 0)
             {
                 animator.SetBool("isDead", true);
-            
                 rungameUimanager.Gameover();
             }
             else
-            {
-                animator.SetTrigger("isHit");
+            {  
+                Debug.Log(" doTweenAnimation.DOPlay();: " + hit);
+                //dotween 을 사용하여 0.2속도로 playerSprite가  10번 깜빡이는 효과
+                FlashEffect(5, 0.2f); // 깜빡임 효과 호출
+                ishit = true;
             }
 
             Debug.Log("colider");
@@ -155,5 +169,13 @@ public class Playercontroll : MonoBehaviour
         }
         
     }
-
+    private void FlashEffect(int flashes, float flashSpeed)
+    {
+        // 투명도를 깜빡이기 위해 1(보이기)와 0(투명)을 반복하는 트위닝
+        playerSprite.DOFade(0, flashSpeed).SetLoops(flashes * 2, LoopType.Yoyo)
+            .OnComplete(() => {
+                // 깜빡임이 끝나면 ishit을 false로 초기화
+                ishit = false;
+            });
+    }
 }
