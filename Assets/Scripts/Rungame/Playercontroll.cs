@@ -175,6 +175,7 @@ public class Playercontroll : MonoBehaviour
         playerSprite.DOFade(0, flashSpeed).SetLoops(flashes * 2, LoopType.Yoyo)
             .OnComplete(() => {
                 // 깜빡임이 끝나면 ishit을 false로 초기화
+                playerSprite.color = Color.white;
                 ishit = false;
             });
     }

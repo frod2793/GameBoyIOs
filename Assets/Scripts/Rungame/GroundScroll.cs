@@ -9,7 +9,6 @@ public class GroundScroll : MonoBehaviour
     [SerializeField]
     private Sprite[] groundimag;
     private SpriteRenderer[] tiles;
-    SpriteRenderer temp;
     private float groundSpeed;
 
 
@@ -33,14 +32,14 @@ public class GroundScroll : MonoBehaviour
 
     private void Start()
     {
-        temp =tiles[0];
+     
      
         // yScreenHalfSize = Camera.main.orthographicSize;
         // yScreenHalfSize = 12.64f;
         xScreenHalfSize = -12.64f;
 
         leftPosX = (xScreenHalfSize * 1f);
-        rightPosX = 43.35f;//-xScreenHalfSize * 1f * tiles.Length;
+        rightPosX = 36.36f;//-xScreenHalfSize * 1f * tiles.Length;
     }
     
     void Update()
