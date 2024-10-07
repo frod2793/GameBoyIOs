@@ -11,10 +11,6 @@ public class GroundScroll : MonoBehaviour
     private SpriteRenderer[] tiles;
     private float groundSpeed;
 
-
-
-
-
     float leftPosX = 0f;
     float rightPosX = 0f;
     float xScreenHalfSize;
@@ -32,12 +28,7 @@ public class GroundScroll : MonoBehaviour
 
     private void Start()
     {
-     
-     
-        // yScreenHalfSize = Camera.main.orthographicSize;
-        // yScreenHalfSize = 12.64f;
         xScreenHalfSize = -12.64f;
-
         leftPosX = (xScreenHalfSize * 1f);
         rightPosX = 36.36f;//-xScreenHalfSize * 1f * tiles.Length;
     }
@@ -46,7 +37,6 @@ public class GroundScroll : MonoBehaviour
     {
         if (gameUiManager.isPlay)
         {
-
             for (int i = 0; i < tiles.Length; i++)
             {
                 tiles[i].transform.position += new Vector3(-groundSpeed, 0, 0) * Time.deltaTime;
