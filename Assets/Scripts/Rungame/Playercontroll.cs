@@ -8,7 +8,7 @@ public class Playercontroll : MonoBehaviour
 {
     [SerializeField]
     private RunGameUiManager rungameUimanager;
-
+    private Camera mainCamera; // 카메라 참조
     private float jumpHight;
     private float fallMultiplier = 2.5f; // 하강 속도 조절 변수 (기본값 2.5)
 
@@ -29,6 +29,7 @@ public class Playercontroll : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mainCamera = Camera.main;
         animator = GetComponent<Animator>();
         rungameUimanager.JumpBtn.onClick.AddListener(Func_jump);
         rungameUimanager.PlayBtn.onClick.AddListener(Init);
@@ -143,7 +144,7 @@ public class Playercontroll : MonoBehaviour
             {
                 rungameUimanager.currenthp -= hit ;
             }
-          
+            ShakeCamera();
             
           
             Debug.Log("hit: " + hit);
@@ -179,4 +180,18 @@ public class Playercontroll : MonoBehaviour
                 ishit = false;
             });
     }
+    
+    private void ShakeCamera()
+    {
+        // DOTween을 사용하여 카메라를 흔들림 효과를 줍니다.
+        mainCamera.transform.DOShakePosition(0.5f, strength: new Vector3(0.5f, 0.5f, 0), vibrato: 10, randomness: 90, snapping: false, fadeOut: true);
+
+        // 흔들림 매개변수 설명:
+        // - 지속 시간: 0.5초 동안 흔들림
+        // - 힘 (strength): X, Y축으로 0.5의 강도로 흔들림
+        // - vibrato: 흔들림의 진동 횟수 (10번)
+        // - randomness: 랜덤하게 흔들리는 정도 (90도)
+        // - fadeOut: 흔들림이 점점 감소하며 종료
+    }
+    
 }
