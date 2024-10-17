@@ -47,5 +47,9 @@ public class IntroUiManger : MonoBehaviour
         OptionPopUP.SetActive(true);
     }
 
-
+    private void runGame()
+    {
+        SceneLoader.Instace.LoadScene("RunGame");
+        Debug.Log("런게임");
+    }
 }

@@ -12,7 +12,7 @@ public class BackgroundScrolling : MonoBehaviour
     private float backgroundWidth; // 각 배경의 너비
     private float xScreenHalfSize;
     private float yScreenHalfSize;
-    private float overlapAmount = 0.03f; // 겹칠 양을 설정
+    private float overlapAmount = 0.1f; // 겹칠 양을 설정
 
     void Start()
     {

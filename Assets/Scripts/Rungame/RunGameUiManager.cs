@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -66,7 +68,16 @@ public class RunGameUiManager : MonoBehaviour
     [Header("옵션 팝업")]
     public OptionPopupManager OptionPopUP;
     
-   // public bool isPuse = false;
+    [Header("점수창 팝업")]
+    public GameObject ScorePopUp;
+    public TMP_Text ScorePopUpText;
+    public Button contineBtn;                    
+    public Button ExitBtn;
+    
+    public Image Star1;
+    public Image Star2;
+    public Image Star3;
+    
 
     public delegate void Onplay(bool isPlay);
     public Onplay onPlay;
@@ -83,7 +94,6 @@ public class RunGameUiManager : MonoBehaviour
     public bool IsDead;
     private void Func_playBtn()
     {
-       
         JumpBtn.gameObject.SetActive(true);
         PlayBtn.gameObject.SetActive(false);
         isPlay = true;
@@ -130,7 +140,10 @@ public class RunGameUiManager : MonoBehaviour
         PopUp_playBtn.onClick.AddListener(Popup_Play);
         PopUp_ResetBtn.onClick.AddListener(PopUp_Reset);
         PopUp_OPtionBtn.onClick.AddListener(Option);
+        contineBtn.onClick.AddListener(Continue);
         PusePopup.gameObject.SetActive(false);
+        ScorePopUp.gameObject.SetActive(false);
+        
         LoadSetting();
     }
 
@@ -166,12 +179,41 @@ public class RunGameUiManager : MonoBehaviour
    public void Gameover()
     {
         JumpBtn.gameObject.SetActive(false);
-        PlayBtn.gameObject.SetActive(true);
+        ScorePopUp.gameObject.SetActive(true);
+        GameEnd_Show_Score();
         isPlay = false;
         IsDead = true;
         onPlay.Invoke(isPlay);
         StopCoroutine(addScore());
     }
 
+    public void GameEnd_Show_Score()
+    {
+        // 점수가 0부터 시작해서 'score'까지 올라가는 애니메이션
+        int displayScore = 0;
+        
+        // DOTween을 사용하여 점수 애니메이션
+        DOTween.To(() => displayScore, x => displayScore = x, score, 2f) // 2초 동안 score까지 증가
+            .OnUpdate(() => {
+                // 애니메이션이 업데이트될 때마다 텍스트 갱신
+                ScorePopUpText.text = displayScore.ToString();
+            })
+            .OnComplete(() => {
+                // 애니메이션이 끝난 후 최종 점수 표시
+                ScorePopUpText.text = score.ToString();
+            });
+      
+    }
+   
+   public void Continue()
+   {
+       ScorePopUp.gameObject.SetActive(false);
+       Func_playBtn();
+   }
+
+    public void Exit()
+    {
+        SceneLoader.Instace.LoadScene("LobbyScene");
+    }
    
 }

@@ -56,5 +56,8 @@ public class MessageManager : MonoBehaviour
         message_Text.text = "구상중인 항목입니다.";
         onMessage();
     }
-
+    public void Func_Continue()
+    {
+        SceneLoader.Instace.LoadScene("LobbyScene");
+    }
 }
