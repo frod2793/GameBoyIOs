@@ -15,7 +15,7 @@ public class ObjEffectManager : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.FindObjectOfType<Playercontroll>().GetComponent<Transform>();
+        player = FindAnyObjectByType<Playercontroll>().GetComponent<Transform>();
         originalscale = player.localScale;
 
     }

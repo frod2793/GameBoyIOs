@@ -2,26 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class RunGameUiManager : MonoBehaviour
 {
     public SettingsData_oBJ settingsData; // ScriptableObject 참조
     
-    [Header("플레이어")]
-    public Button JumpBtn;
+    [FormerlySerializedAs("JumpBtn")] [Header("플레이어")]
+    public Button jumpBtn;
     public Slider Hpbar;
     public float JumpHight;
     public float JumpSpeed;
     
-    
     [Header("초당 깎이는 Hp")]
     public float discountHp;
-
     public float maxHp;
- 
     public float currenthp;
 
     [Header("점수 오브젝트 ")]
@@ -38,10 +35,8 @@ public class RunGameUiManager : MonoBehaviour
 
     [Header("거인화 오브젝트 ")]
     public GameObject Biggerobj;
-  
     public List<GameObject> Biggerpool;
-
-
+    
     [Header("장애물")]
     public List<GameObject> MobPool = new List<GameObject>();
     public GameObject[] Mobs;
@@ -78,32 +73,30 @@ public class RunGameUiManager : MonoBehaviour
     public Image Star2;
     public Image Star3;
     
-
     public delegate void Onplay(bool isPlay);
-    public Onplay onPlay;
+    public Onplay OnPlay;
     [Header("힐 아이템 목표 점")]
     public int score = 0;
-    public int NextHealScore;//목표점수 
-    public int HealScore;//더할점수
+    public int nextHealScore;//목표점수 
+    public int healScore;//더할점수
 
     [Header("거대화 아이템 목표 점수")]
-    public int NextBiggerScore;
-    public int BiggerScore;
+    public int nextBiggerScore;
+    public int biggerScore;
     
-    
-    public bool IsDead;
+    public bool isDead;
     private void Func_playBtn()
     {
-        JumpBtn.gameObject.SetActive(true);
+        jumpBtn.gameObject.SetActive(true);
         PlayBtn.gameObject.SetActive(false);
         isPlay = true;
-        IsDead = false;
-        onPlay.Invoke(isPlay);
+        isDead = false;
+        OnPlay.Invoke(isPlay);
         score = 0;
-        NextHealScore = 0;
+        nextHealScore = 0;
         Scoretext.text = score.ToString();
 
-        StartCoroutine(addScore());
+        StartCoroutine(Co_AddScore());
     }
 
     private void Puse()
@@ -135,36 +128,42 @@ public class RunGameUiManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        Event_Setter();
+        PusePopup.gameObject.SetActive(false);
+        ScorePopUp.gameObject.SetActive(false);
+      
+        LoadSetting();
+    }
+
+    private void Event_Setter()
+    {
         PlayBtn.onClick.AddListener(Func_playBtn);
         PuseBtn.onClick.AddListener(Puse);
         PopUp_playBtn.onClick.AddListener(Popup_Play);
         PopUp_ResetBtn.onClick.AddListener(PopUp_Reset);
         PopUp_OPtionBtn.onClick.AddListener(Option);
         contineBtn.onClick.AddListener(Continue);
-        PusePopup.gameObject.SetActive(false);
-        ScorePopUp.gameObject.SetActive(false);
-        
-        LoadSetting();
+        ExitBtn.onClick.AddListener(Exit);
     }
 
     private void LoadSetting()
     {
         if (settingsData.ConSmall_toggle)
         {
-            JumpBtn.gameObject.transform.localScale = new Vector3(0.5f, 0.5f, 1);
+            jumpBtn.gameObject.transform.localScale = new Vector3(0.5f, 0.5f, 1);
         }
         else if (settingsData.ConNormal_Toggle)
         {
-            JumpBtn.gameObject.transform.localScale = new Vector3(1, 1, 1);
+            jumpBtn.gameObject.transform.localScale = new Vector3(1, 1, 1);
         }
         else if (settingsData.ConBigBtn_Toggle)
         {
-            JumpBtn.gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1);
+            jumpBtn.gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1);
         }
 
     }
 
-    IEnumerator addScore()
+    IEnumerator Co_AddScore()
     {
         while (isPlay)
         {
@@ -178,13 +177,13 @@ public class RunGameUiManager : MonoBehaviour
     // Update is called once per frame
    public void Gameover()
     {
-        JumpBtn.gameObject.SetActive(false);
+        jumpBtn.gameObject.SetActive(false);
         ScorePopUp.gameObject.SetActive(true);
         GameEnd_Show_Score();
         isPlay = false;
-        IsDead = true;
-        onPlay.Invoke(isPlay);
-        StopCoroutine(addScore());
+        isDead = true;
+        OnPlay.Invoke(isPlay);
+        StopCoroutine(Co_AddScore());
     }
 
     public void GameEnd_Show_Score()
@@ -205,13 +204,14 @@ public class RunGameUiManager : MonoBehaviour
       
     }
    
-   public void Continue()
+   private void Continue()
    {
        ScorePopUp.gameObject.SetActive(false);
        Func_playBtn();
+       Debug.Log("Continue");
    }
 
-    public void Exit()
+   private void Exit()
     {
         SceneLoader.Instace.LoadScene("LobbyScene");
     }

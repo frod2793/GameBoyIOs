@@ -19,7 +19,7 @@ public class Obect_base : MonoBehaviour
     
     protected virtual void BaseInit()
     {
-        uimanager = GameObject.FindObjectOfType<RunGameUiManager>();
+        uimanager = FindAnyObjectByType<RunGameUiManager>();
         objRigidbody = GetComponent<Rigidbody2D>();
         speed = uimanager.CoinSpeed;
     }

@@ -11,7 +11,7 @@ public class BiggerObj : Obect_base
     protected override void BaseInit()
     {
         base.BaseInit();
-        objEffect = GameObject.FindObjectOfType<ObjEffectManager>();
+        objEffect = FindAnyObjectByType<ObjEffectManager>();
     }
 
     private void Update()

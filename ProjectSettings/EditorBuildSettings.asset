@@ -9,6 +9,10 @@ EditorBuildSettings:
     path: Assets/Scenes/IntroScene.unity
     guid: 7905e388b7f424c71963bef35b91e7d5
   - enabled: 1
+    path: Assets/Scenes/LobbyScene.unity
+    guid: 2917fd536eadc4346ba3a9a1d8058c09
+  - enabled: 1
     path: Assets/Scenes/RunGame.unity
     guid: 45ee4e2d21e66403786be577d941d41d
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

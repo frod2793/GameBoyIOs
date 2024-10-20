@@ -13,7 +13,7 @@ public class SceneLoader : MonoBehaviour
         {
             if (instance == null)
             {
-                var obj = FindObjectOfType<SceneLoader>();
+                var obj = FindAnyObjectByType<SceneLoader>();
                 if (obj != null)
                 {
                     instance = obj;

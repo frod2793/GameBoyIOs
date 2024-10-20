@@ -40,7 +40,7 @@ public class OptionPopupManager : MonoBehaviour
     {
         if (Soundmanager == null)
         {
-            Soundmanager = FindObjectOfType<Soundmanager>();
+            Soundmanager = FindAnyObjectByType<Soundmanager>();
         }
         LoadSettings(); // 활성화 시 설정 불러오기
     }

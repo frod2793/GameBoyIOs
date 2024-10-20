@@ -27,7 +27,7 @@ public class ReSpawnManager : MonoBehaviour
             }
         }
 
-        gameUiManager.onPlay += playgame;
+        gameUiManager.OnPlay += playgame;
     }
 
     private void FixedUpdate()
@@ -133,11 +133,11 @@ public class ReSpawnManager : MonoBehaviour
         while (gameUiManager.isPlay)
         {
             if (gameUiManager.currenthp < gameUiManager.PointHp && !isHeal &&
-                gameUiManager.score > gameUiManager.NextHealScore)
+                gameUiManager.score > gameUiManager.nextHealScore)
             {
                 gameUiManager.Healpool[0].SetActive(true);
-                gameUiManager.NextHealScore = gameUiManager.score;
-                gameUiManager.NextHealScore += gameUiManager.HealScore;
+                gameUiManager.nextHealScore = gameUiManager.score;
+                gameUiManager.nextHealScore += gameUiManager.healScore;
                 isHeal = true;
                 yield return new WaitForSeconds(0.1f);
             }
@@ -159,7 +159,7 @@ public class ReSpawnManager : MonoBehaviour
     {
         while (gameUiManager.isPlay)
         {
-            if (gameUiManager.score < gameUiManager.NextBiggerScore)
+            if (gameUiManager.score < gameUiManager.nextBiggerScore)
             {
                 yield return new WaitForSeconds(0.1f);
             }
@@ -167,8 +167,8 @@ public class ReSpawnManager : MonoBehaviour
             {
                 gameUiManager.Biggerpool[0].SetActive(true);
                 print("Bigger");
-                gameUiManager.NextBiggerScore = gameUiManager.score;
-                gameUiManager.NextBiggerScore += gameUiManager.BiggerScore;
+                gameUiManager.nextBiggerScore = gameUiManager.score;
+                gameUiManager.nextBiggerScore += gameUiManager.biggerScore;
 
                 yield return new WaitForSeconds(0.1f);
             }

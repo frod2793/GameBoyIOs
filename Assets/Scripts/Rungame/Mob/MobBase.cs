@@ -16,7 +16,7 @@ public class MobBase : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        uImanager = GameObject.FindObjectOfType<RunGameUiManager>();
+        uImanager = FindAnyObjectByType<RunGameUiManager>();
         mobSpeed = uImanager.MobSpeed;
     }
 
