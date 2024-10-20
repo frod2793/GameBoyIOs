@@ -75,11 +75,11 @@ public class Playercontroll : MonoBehaviour
                 rungameUimanager.Gameover();
             }
             
-            if (rb.velocity.y < 0)
+            if (rb.linearVelocity.y < 0)
             {
                 // 하강 속도 조절 (fallMultiplier 사용)
                 float gravityAdjustment = (fallMultiplier - 1) * Physics2D.gravity.y * Time.deltaTime;
-                rb.velocity += Vector2.up * gravityAdjustment;
+                rb.linearVelocity += Vector2.up * gravityAdjustment;
             }
             
         }
@@ -88,7 +88,7 @@ public class Playercontroll : MonoBehaviour
     
     private void Func_jump()
     {
-        if (!isJumping && Mathf.Abs(rb.velocity.y) < 0.01f) // 점프 중이 아니고, 바닥에 있을 때만 점프
+        if (!isJumping && Mathf.Abs(rb.linearVelocity.y) < 0.01f) // 점프 중이 아니고, 바닥에 있을 때만 점프
         {
             StartCoroutine(JumpRoutine()); // 코루틴 실행
             Debug.Log("player jump");
@@ -104,10 +104,10 @@ public class Playercontroll : MonoBehaviour
         animator.SetBool("isJump", true);
 
         // 점프 시작 - Rigidbody2D의 velocity를 설정하여 위로 점프
-        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpSpeed);
 
         // 최고점에 도달할 때까지 대기
-        while (rb.velocity.y > 0)
+        while (rb.linearVelocity.y > 0)
         {
             yield return null; // 한 프레임 대기
         }
@@ -131,7 +131,7 @@ public class Playercontroll : MonoBehaviour
     private bool isGrounded()
     {
         // 바닥에 닿았는지 체크 (충돌 감지)
-        return Mathf.Abs(rb.velocity.y) < 0.01f;
+        return Mathf.Abs(rb.linearVelocity.y) < 0.01f;
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
