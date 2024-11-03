@@ -15,6 +15,9 @@ public class PlayerProfil_Manager : MonoBehaviour
     [SerializeField]
     private Button CreateBtn;
     
+    [SerializeField]
+    private Button DeleteProfileBtn;
+    
     
     [SerializeField]
     private Button StartBtn;
@@ -28,6 +31,7 @@ public class PlayerProfil_Manager : MonoBehaviour
         SearchPlayerData();
         StartBtn.onClick.AddListener(Func_StartBtn);
         CreateBtn.onClick.AddListener(Func_CreateBtn);
+        DeleteProfileBtn.onClick.AddListener(DeletePlayerData);
     }
 
     
@@ -66,11 +70,14 @@ public class PlayerProfil_Manager : MonoBehaviour
     public void SavePlayerData()
     {
         // ScriptableObject를 JSON으로 직렬화
-        string jsonData = JsonUtility.ToJson(playerDataDontdesytoy, true);
+        string jsonData = JsonUtility.ToJson(playerDataDontdesytoy.scritpableobj_playerData, true);
         
         // 파일에 저장
         File.WriteAllText(savePath, jsonData);
         Debug.Log("PlayerData saved to: " + savePath);
+        
+        //저장된 파일을 클라우드에 저장
+        Server_Manager.Upload_json(jsonData, "playerData#"+ playerDataDontdesytoy.scritpableobj_playerData.UID+".json");
     }
     
     
@@ -100,6 +107,19 @@ public class PlayerProfil_Manager : MonoBehaviour
     private void Func_StartBtn()
     {
         SceneLoader.Instace.LoadScene("LobbyScene");
+    }
+    
+    private void DeletePlayerData()
+    {
+        if (File.Exists(savePath))
+        {
+            File.Delete(savePath);
+            Debug.Log("PlayerData deleted from: " + savePath);
+        }
+        else
+        {
+            Debug.LogWarning("No PlayerData file found at: " + savePath);
+        }
     }
     
 }
