@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,6 +21,8 @@ public class Login_Manager : MonoBehaviour
     [SerializeField]
     private Button SignUpBtn;
 
+    
+    private PlayerProfil_Manager playerProfilManager;
     public string NickName
     {
         get => SignUp_NickName_InputField.text;
@@ -42,6 +45,7 @@ public class Login_Manager : MonoBehaviour
        void Start()
     {
         serverManager = FindAnyObjectByType<Server_Manager>();
+        playerProfilManager = FindAnyObjectByType<PlayerProfil_Manager>();
     }
 
     private void Awake()
@@ -61,6 +65,8 @@ public class Login_Manager : MonoBehaviour
                 //성공시
                 serverManager.SignUp(SignUp_ID_InputField.text, SignUp_PW_InputField.text, SignUp_NickName_InputField.text);
                 
+                
+                
                 SignUp_PopUp.SetActive(false);
                 Login_PopUp.SetActive(true);
             }
@@ -75,19 +81,27 @@ public class Login_Manager : MonoBehaviour
         }
     }
     
-    private void Func_LoginBtn()
+  IEnumerator CO_Login_Process()
     {
+        
         if (Login_ID_InputField.text != "" && Login_PW_InputField.text != "")
         {
             //로그인
             //서버에 로그인 요청
             //성공시
             serverManager.Login(Login_ID_InputField.text, Login_PW_InputField.text);
+            yield return new WaitForSeconds(1f);
+            playerProfilManager.Func_CreateBtn();
             Login_PopUp.SetActive(false);
         }
         else
         {
             Debug.Log("빈칸을 채워주세요");
         }
+    }
+  
+    private void Func_LoginBtn()
+    {
+       StartCoroutine(CO_Login_Process());
     }
 }

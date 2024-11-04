@@ -3,6 +3,10 @@ using UnityEngine;
 // using UnityGoogleDrive;
 public class Server_Manager : MonoBehaviour
 {
+    
+    public string UUid;
+    public string NickName;
+    
     //파괴되지않는 오브젝트
     private static Server_Manager instance;
     public static Server_Manager Instance
@@ -53,6 +57,7 @@ public class Server_Manager : MonoBehaviour
         if (bro.IsSuccess())
         {
             Debug.Log("회원가입 성공");
+            
         }
         else
         {
@@ -76,6 +81,13 @@ public class Server_Manager : MonoBehaviour
         if (bro.IsSuccess())
         {
             Debug.Log("로그인 성공");
+            Debug.Log(bro);
+
+            UUid = Backend.UID;
+            NickName = Backend.UserNickName;
+            Debug.Log("UUid: "+UUid);
+            Debug.Log("NickName: "+NickName);
+            
         }
         else
         {
@@ -83,5 +95,27 @@ public class Server_Manager : MonoBehaviour
         }
     }
 
+    public void GameDataInsert(PlayerData playerData)
+    {
+        Param param = new Param();
+        param.Add("nickname", playerData.nickname);
+        param.Add("uid", playerData.UID);
+        param.Add("Money1", playerData.currency1);
+        param.Add("Money2", playerData.currency2);
+        param.Add("experience", playerData.experience);
+        param.Add("level", playerData.level);
+        
+        
+        BackendReturnObject bro = Backend.GameData.Insert("User_Data", param);
+        if (bro.IsSuccess())
+        {
+            Debug.Log("게임 데이터 저장 성공");
+        }
+        else
+        {
+            Debug.Log("게임 데이터 저장 실패");
+        }
+    }
+ }
  
-}
+

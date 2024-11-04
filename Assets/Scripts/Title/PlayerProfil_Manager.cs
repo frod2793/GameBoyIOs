@@ -12,13 +12,16 @@ public class PlayerProfil_Manager : MonoBehaviour
     
     [SerializeField]
     private Button StartBtn;
-    [FormerlySerializedAs("playerData")] [SerializeField]
+    [SerializeField]
     private Player_Data_Dontdesytoy playerDataDontdesytoy;
     private string savePath;
+    
+    private Server_Manager serverManager;
     void Start()
     {
         loginManager = FindAnyObjectByType<Login_Manager>();
         // BackEndInIt();
+        serverManager = FindAnyObjectByType<Server_Manager>();
         savePath = Path.Combine(Application.persistentDataPath, "playerData.json");
         playerDataDontdesytoy = FindAnyObjectByType<Player_Data_Dontdesytoy>();
       //  SearchPlayerData();
@@ -39,19 +42,19 @@ public class PlayerProfil_Manager : MonoBehaviour
         }
     }
     
-    private void Func_CreateBtn()
+    public void Func_CreateBtn()
     {
         // if (NickName_InputField.text != "")
         // {
         //     PlayerProfil_Create_PopUp.SetActive(false);
         // }
-        int Uid = Random.Range(100000, 999999);
+       // int Uid = Random.Range(100000, 999999);
         //생성한 닉네임뒤에 #을 붙인후 랜덤6자리 숫자를 붙여준다.
        
-        CreateNewPlayerData(loginManager.NickName, Uid);
+        CreateNewPlayerData(loginManager.NickName, serverManager.UUid);
     }
 
-    private void CreateNewPlayerData(string playerName, int uid)
+    private void CreateNewPlayerData(string playerName, string uid)
     {
        
         playerDataDontdesytoy.scritpableobj_playerData.InitializePlayerData(playerName, uid);
@@ -60,6 +63,8 @@ public class PlayerProfil_Manager : MonoBehaviour
     }
     public void SavePlayerData()
     {
+        
+        
         // ScriptableObject를 JSON으로 직렬화
         string jsonData = JsonUtility.ToJson(playerDataDontdesytoy.scritpableobj_playerData, true);
         
@@ -68,6 +73,9 @@ public class PlayerProfil_Manager : MonoBehaviour
         Debug.Log("PlayerData saved to: " + savePath);
         
         //저장된 파일을 클라우드에 저장
+        Debug.Log(playerDataDontdesytoy.scritpableobj_playerData.nickname);
+        serverManager.GameDataInsert(playerDataDontdesytoy.scritpableobj_playerData);
+        
         // Server_Manager.Upload_json(jsonData, "playerData#"+ playerDataDontdesytoy.scritpableobj_playerData.UID+".json");
     }
     
