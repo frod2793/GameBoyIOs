@@ -735,7 +735,7 @@ MonoBehaviour:
   PlayerProfil_Create_PopUp: {fileID: 1648445266}
   NickName_InputField: {fileID: 1941288112}
   CreateBtn: {fileID: 485887595}
-  DeleteProfileBtn: {fileID: 0}
+  DeleteProfileBtn: {fileID: 334140966}
   StartBtn: {fileID: 1676048293}
   playerDataDontdesytoy: {fileID: 0}
 --- !u!1 &1058213925

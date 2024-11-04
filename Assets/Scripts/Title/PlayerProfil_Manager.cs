@@ -77,7 +77,7 @@ public class PlayerProfil_Manager : MonoBehaviour
         Debug.Log("PlayerData saved to: " + savePath);
         
         //저장된 파일을 클라우드에 저장
-        Server_Manager.Upload_json(jsonData, "playerData#"+ playerDataDontdesytoy.scritpableobj_playerData.UID+".json");
+        // Server_Manager.Upload_json(jsonData, "playerData#"+ playerDataDontdesytoy.scritpableobj_playerData.UID+".json");
     }
     
     
