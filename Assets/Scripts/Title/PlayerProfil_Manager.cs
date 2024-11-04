@@ -1,4 +1,5 @@
 using System.IO;
+// using BackEnd;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -26,6 +27,7 @@ public class PlayerProfil_Manager : MonoBehaviour
     private string savePath;
     void Start()
     {
+        // BackEndInIt();
         savePath = Path.Combine(Application.persistentDataPath, "playerData.json");
         playerDataDontdesytoy = FindAnyObjectByType<Player_Data_Dontdesytoy>();
         SearchPlayerData();
