@@ -35,7 +35,8 @@ public class Server_Manager : MonoBehaviour
     {
         BackEndInIt();
     }
-    void BackEndInIt() {
+    void BackEndInIt() 
+    {
         var bro = Backend.Initialize(); // 뒤끝 초기화
 
         // 뒤끝 초기화에 대한 응답값
@@ -43,6 +44,42 @@ public class Server_Manager : MonoBehaviour
             Debug.Log("초기화 성공 : " + bro); // 성공일 경우 statusCode 204 Success
         } else {
             Debug.LogError("초기화 실패 : " + bro); // 실패일 경우 statusCode 400대 에러 발생
+        }
+    }
+    
+    public void SignUp(string id, string pw, string nickname)
+    {
+        BackendReturnObject bro = Backend.BMember.CustomSignUp(id, pw);
+        if (bro.IsSuccess())
+        {
+            Debug.Log("회원가입 성공");
+        }
+        else
+        {
+            Debug.Log("회원가입 실패");
+        }
+        bro = Backend.BMember.UpdateNickname(nickname);
+        if (bro.IsSuccess())
+        {
+            Debug.Log("닉네임 변경 성공");
+        }
+        else
+        {
+            
+        }
+       
+    }
+    
+    public void Login(string id, string pw)
+    {
+        BackendReturnObject bro = Backend.BMember.CustomLogin(id, pw);
+        if (bro.IsSuccess())
+        {
+            Debug.Log("로그인 성공");
+        }
+        else
+        {
+            Debug.Log("로그인 실패");
         }
     }
 

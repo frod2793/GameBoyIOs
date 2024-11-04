@@ -7,18 +7,8 @@ using UnityEngine.UI;
 
 public class PlayerProfil_Manager : MonoBehaviour
 {
- 
-    [Header("플레이어 프로필 생성 화면")]
-    [SerializeField]
-    private GameObject PlayerProfil_Create_PopUp;
-    [SerializeField]
-    private TMP_InputField NickName_InputField;
-    [SerializeField]
-    private Button CreateBtn;
-    
-    [SerializeField]
-    private Button DeleteProfileBtn;
-    
+
+    Login_Manager loginManager;
     
     [SerializeField]
     private Button StartBtn;
@@ -27,14 +17,13 @@ public class PlayerProfil_Manager : MonoBehaviour
     private string savePath;
     void Start()
     {
+        loginManager = FindAnyObjectByType<Login_Manager>();
         // BackEndInIt();
         savePath = Path.Combine(Application.persistentDataPath, "playerData.json");
         playerDataDontdesytoy = FindAnyObjectByType<Player_Data_Dontdesytoy>();
-        SearchPlayerData();
+      //  SearchPlayerData();
         StartBtn.onClick.AddListener(Func_StartBtn);
-        CreateBtn.onClick.AddListener(Func_CreateBtn);
-        DeleteProfileBtn.onClick.AddListener(DeletePlayerData);
-    }
+         }
 
     
     private void SearchPlayerData()
@@ -45,21 +34,21 @@ public class PlayerProfil_Manager : MonoBehaviour
         }
         else
         {
-            PlayerProfil_Create_PopUp.SetActive(true);
+            // PlayerProfil_Create_PopUp.SetActive(true);
             StartBtn.interactable = false;
         }
     }
     
     private void Func_CreateBtn()
     {
-        if (NickName_InputField.text != "")
-        {
-            PlayerProfil_Create_PopUp.SetActive(false);
-        }
+        // if (NickName_InputField.text != "")
+        // {
+        //     PlayerProfil_Create_PopUp.SetActive(false);
+        // }
         int Uid = Random.Range(100000, 999999);
         //생성한 닉네임뒤에 #을 붙인후 랜덤6자리 숫자를 붙여준다.
        
-        CreateNewPlayerData(NickName_InputField.text, Uid);
+        CreateNewPlayerData(loginManager.NickName, Uid);
     }
 
     private void CreateNewPlayerData(string playerName, int uid)
