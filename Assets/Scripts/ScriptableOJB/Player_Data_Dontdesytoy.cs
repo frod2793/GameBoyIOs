@@ -50,4 +50,10 @@ public class Player_Data_Dontdesytoy : MonoBehaviour
         File.WriteAllText(savePath, jsonData);
     }
     
+    public void InsertPlayerData(PlayerData playerData)
+    {
+        scritpableobj_playerData = playerData;
+    }
+   
+    
 }
