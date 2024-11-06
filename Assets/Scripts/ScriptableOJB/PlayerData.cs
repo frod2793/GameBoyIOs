@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 
@@ -22,4 +23,6 @@ public class PlayerData : ScriptableObject
         experience = 0f; // 초기 경험치
         level = 1;       // 초기 레벨
     }
+    
+  
 }

@@ -1,3 +1,5 @@
+using System;
+using System.Text;
 using BackEnd;
 using UnityEngine;
 // using UnityGoogleDrive;
@@ -52,31 +54,35 @@ public class Server_Manager : MonoBehaviour
         }
     }
     
-    public void SignUp(string id, string pw, string nickname)
+    public void SignUp(string id, string pw, string nickname,Action ac)
     {
         BackendReturnObject bro = Backend.BMember.CustomSignUp(id, pw);
         if (bro.IsSuccess())
         {
-            Debug.Log("회원가입 성공");
-            
+            Debug.Log("회원가입 성공: "+bro);
+            bro = Backend.BMember.UpdateNickname(nickname);
+            if (bro.IsSuccess())
+            {
+                Debug.Log("닉네임 변경 성공: "+bro);
+                ac.Invoke();
+                
+            }
+            else
+            {
+                Debug.Log("닉네임 변경 실패: "+bro);
+                ErroDebug(bro);
+            }
         }
         else
         {
-            Debug.Log("회원가입 실패");
+            Debug.Log("회원가입 실패: "+bro);
+            ErroDebug(bro);
         }
-        bro = Backend.BMember.UpdateNickname(nickname);
-        if (bro.IsSuccess())
-        {
-            Debug.Log("닉네임 변경 성공");
-        }
-        else
-        {
-            
-        }
+     
        
     }
     
-    public void Login(string id, string pw)
+    public void Login(string id, string pw,Action ac)
     {
         BackendReturnObject bro = Backend.BMember.CustomLogin(id, pw);
         if (bro.IsSuccess())
@@ -88,14 +94,46 @@ public class Server_Manager : MonoBehaviour
             NickName = Backend.UserNickName;
             Debug.Log("UUid: "+UUid);
             Debug.Log("NickName: "+NickName);
+       
+            
+            ac.Invoke();
             
         }
         else
         {
-            Debug.Log("로그인 실패");
+            Debug.Log("로그인 실패: "+bro);
+            ErroDebug(bro);
         }
     }
 
+    public void GuestLogin(Action action)
+    {
+        BackendReturnObject bro = Backend.BMember.GuestLogin("게스트 로그인으로 로그인함");
+        if(bro.IsSuccess())
+        {
+            Debug.Log("게스트 로그인에 성공했습니다: "+bro);
+            UUid = Backend.UID;
+            NickName = Backend.UserNickName;
+            Debug.Log("UUid: "+UUid);
+            Debug.Log("NickName: "+NickName);
+            action.Invoke();
+        }
+        else
+        {
+            Debug.Log("게스트 로그인에 실패했습니다: "+bro);
+            ErroDebug(bro);
+        }
+       
+    }
+    
+    private void ErroDebug(BackendReturnObject bro)
+    {
+       // bro = Backend.BMember.CustomLogin;
+        Debug.Log(bro.GetStatusCode());
+        Debug.Log(bro.GetErrorCode());
+        Debug.Log(bro.GetMessage());
+    }
+    
     public void GameDataInsert(PlayerData playerData)
     {
         Param param = new Param();
@@ -119,7 +157,7 @@ public class Server_Manager : MonoBehaviour
         }
     }
     
-    public void GameDataGet()
+    public void GameDataGet(Action action)
     {
         Debug.Log("게임 정보 조회 함수를 호출합니다.");
 
@@ -135,21 +173,28 @@ public class Server_Manager : MonoBehaviour
             // 받아온 데이터의 갯수가 0이라면 데이터가 존재하지 않는 것입니다.  
             if (gameDataJson.Count <= 0)
             {
-                Debug.LogWarning("데이터가 존재하지 않습니다.");
+                Debug.LogWarning("데이터가 존재하지 않습니다.: " + bro);
+                action.Invoke();
             }
             else
             {
                 gameDataRowInDate = gameDataJson[0]["inDate"].ToString(); //불러온 게임 정보의 고유값입니다.  
 
-                playerData = new PlayerData();
+                gameDataRowInDate = gameDataJson[0]["inDate"].ToString(); //불러온 게임 정보의 고유값입니다.
+
+                playerData = ScriptableObject.CreateInstance<PlayerData>();
 
                 playerData.level = int.Parse(gameDataJson[0]["level"].ToString());
                 playerData.currency1 = int.Parse(gameDataJson[0]["Money1"].ToString());
                 playerData.currency2 = int.Parse(gameDataJson[0]["Money2"].ToString());
                 playerData.experience = float.Parse(gameDataJson[0]["experience"].ToString());
-               // playerData.nickname = gameDataJson[0]["nickname"].ToString();
-               
-               Player_Data_Dontdesytoy.Instance.InsertPlayerData(playerData);
+                playerData.UID = gameDataJson[0]["uid"].ToString();
+                // playerData.nickname = gameDataJson[0]["nickname"].ToString();
+
+                Player_Data_Dontdesytoy.Instance.UpdatePlayerData(playerData);
+
+                Debug.Log(playerData.ToString());
+
 
                 // foreach (string itemKey in gameDataJson[0]["inventory"].Keys)
                 // {
@@ -167,6 +212,12 @@ public class Server_Manager : MonoBehaviour
         else
         {
             Debug.LogError("게임 정보 조회에 실패했습니다. : " + bro);
+            ErroDebug(bro);
+
+            if (bro.GetStatusCode() == "404")
+            {
+                action.Invoke();
+            }
         }
     }
     
