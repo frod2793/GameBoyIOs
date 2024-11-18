@@ -78,8 +78,6 @@ public class Server_Manager : MonoBehaviour
             Debug.Log("회원가입 실패: "+bro);
             ErroDebug(bro);
         }
-     
-       
     }
     
     public void Login(string id, string pw,Action ac)
@@ -93,9 +91,15 @@ public class Server_Manager : MonoBehaviour
             UUid = Backend.UID;
             NickName = Backend.UserNickName;
             Debug.Log("UUid: "+UUid);
-            Debug.Log("NickName: "+NickName);
-       
-            
+            Debug.Log("NickName: "+NickName); 
+            bro = Backend.BMember.IsAccessTokenAlive();
+            if(bro.IsSuccess())
+            {
+                Debug.Log("액세스 토큰이 살아있습니다");
+                Backend.BMember.RefreshTheBackendToken();
+            }
+         
+         
             ac.Invoke();
             
         }
@@ -117,6 +121,12 @@ public class Server_Manager : MonoBehaviour
             Debug.Log("UUid: "+UUid);
             Debug.Log("NickName: "+NickName);
             action.Invoke();
+            bro = Backend.BMember.IsAccessTokenAlive();
+            if(bro.IsSuccess())
+            {
+                Debug.Log("액세스 토큰이 살아있습니다");
+                Backend.BMember.RefreshTheBackendToken();
+            }
         }
         else
         {
@@ -124,6 +134,27 @@ public class Server_Manager : MonoBehaviour
             ErroDebug(bro);
         }
        
+    }
+    
+    public void TokenLogin()
+    {
+        BackendReturnObject bro = Backend.BMember.LoginWithTheBackendToken();
+        if(bro.IsSuccess())
+        {
+            Debug.Log("자동 로그인에 성공했습니다");
+            Debug.Log(bro);
+            bro = Backend.BMember.IsAccessTokenAlive();
+            if(bro.IsSuccess())
+            {
+                Debug.Log("액세스 토큰이 살아있습니다");
+                Backend.BMember.RefreshTheBackendToken();
+            }
+        }
+        else
+        {
+            Debug.Log("자동 로그인에 실패했습니다");
+            ErroDebug(bro);
+        }
     }
     
     private void ErroDebug(BackendReturnObject bro)
