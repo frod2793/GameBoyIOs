@@ -42,6 +42,10 @@ public class Server_Manager : MonoBehaviour
     {
         BackEndInIt();
     }
+    
+    /// <summary>
+    /// 뒤끝 서버 초기화
+    /// </summary>
     void BackEndInIt() 
     {
         var bro = Backend.Initialize(); // 뒤끝 초기화
@@ -54,6 +58,13 @@ public class Server_Manager : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// 회원 가입
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="pw"></param>
+    /// <param name="nickname"></param>
+    /// <param name="ac"></param>
     public void SignUp(string id, string pw, string nickname,Action ac)
     {
         BackendReturnObject bro = Backend.BMember.CustomSignUp(id, pw);
@@ -79,7 +90,12 @@ public class Server_Manager : MonoBehaviour
             ErroDebug(bro);
         }
     }
-    
+    /// <summary>
+    /// 로그인
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="pw"></param>
+    /// <param name="ac">로그인 성공시 실행할액션 </param>
     public void Login(string id, string pw,Action ac)
     {
         BackendReturnObject bro = Backend.BMember.CustomLogin(id, pw);
@@ -109,7 +125,10 @@ public class Server_Manager : MonoBehaviour
             ErroDebug(bro);
         }
     }
-
+/// <summary>
+/// 게스트 로그인
+/// </summary>
+/// <param name="action">게스트 로그인이 성공 할때 실행할 엑션</param>
     public void GuestLogin(Action action)
     {
         BackendReturnObject bro = Backend.BMember.GuestLogin("게스트 로그인으로 로그인함");
@@ -135,28 +154,39 @@ public class Server_Manager : MonoBehaviour
         }
        
     }
-    
-    public void TokenLogin()
+    /// <summary>
+    /// 토큰 로그인
+    /// </summary>
+    /// <param name="action">로그인 성공할때 액션</param>
+    /// <param name="action2">로그인 실패할때 액션</param>
+    public void TokenLogin(Action onSuccess, Action onFailure)
     {
         BackendReturnObject bro = Backend.BMember.LoginWithTheBackendToken();
-        if(bro.IsSuccess())
+        if (bro.IsSuccess())
         {
             Debug.Log("자동 로그인에 성공했습니다");
             Debug.Log(bro);
+
             bro = Backend.BMember.IsAccessTokenAlive();
-            if(bro.IsSuccess())
+            if (bro.IsSuccess())
             {
                 Debug.Log("액세스 토큰이 살아있습니다");
                 Backend.BMember.RefreshTheBackendToken();
+                onSuccess.Invoke();
             }
         }
         else
         {
             Debug.Log("자동 로그인에 실패했습니다");
             ErroDebug(bro);
+            onFailure.Invoke();
         }
     }
     
+    /// <summary>
+    /// 오류 디버그 
+    /// </summary>
+    /// <param name="bro"></param>
     private void ErroDebug(BackendReturnObject bro)
     {
        // bro = Backend.BMember.CustomLogin;
@@ -164,7 +194,10 @@ public class Server_Manager : MonoBehaviour
         Debug.Log(bro.GetErrorCode());
         Debug.Log(bro.GetMessage());
     }
-    
+    /// <summary>
+    /// 플레이어 데이터 세팅
+    /// </summary>
+    /// <param name="playerData"></param>
     public void GameDataInsert(PlayerData playerData)
     {
         Param param = new Param();
@@ -187,7 +220,10 @@ public class Server_Manager : MonoBehaviour
             Debug.Log("게임 데이터 저장 실패");
         }
     }
-    
+    /// <summary>
+    /// 게임 정보 조회
+    /// </summary>
+    /// <param name="action">게임 데이터가 존재하지않을떄 실행할 액션</param>
     public void GameDataGet(Action action)
     {
         Debug.Log("게임 정보 조회 함수를 호출합니다.");

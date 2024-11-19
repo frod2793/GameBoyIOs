@@ -38,12 +38,17 @@ public class Login_Manager : MonoBehaviour
     [Header("일반 로그인")]
     [SerializeField]
     private Button OpenLoginPopUpBtn;
-
     //서버 매니져 
     private Server_Manager serverManager;
     private Player_Data_Dontdesytoy playerDataDontdesytoy;
     private string savePath;
     
+    private void Awake()
+    {
+        SignUpBtn.onClick.AddListener(Func_SignUpBtn);
+        LoginBtn.onClick.AddListener(Func_LoginBtn);
+    }
+
     void Start()
     {
         serverManager = FindAnyObjectByType<Server_Manager>();
@@ -57,8 +62,28 @@ public class Login_Manager : MonoBehaviour
         {
             Func_GuestLoginBtn();
         });
+        
+        LoginButtonGroupACtive(false);
+        
     }
-
+/// <summary>
+///   토큰 로그인
+/// </summary>
+    private void TokenLogin()
+    {
+        serverManager.TokenLogin(
+            onSuccess: () =>
+            {
+                SceneLoader.Instace.LoadScene("LobbyScene");
+            },
+            onFailure: () => LoginButtonGroupACtive(true)
+        );
+    }
+    
+/// <summary>
+/// 로그인 버튼 그룹 활성화, 비활성화
+/// </summary>
+/// <param name="active"></param>
     private void LoginButtonGroupACtive(bool active)
     {
         GuestLoginBtn.gameObject.SetActive(active);
@@ -66,12 +91,9 @@ public class Login_Manager : MonoBehaviour
         OpenLoginPopUpBtn.gameObject.SetActive(active);
     }
     
-    private void Awake()
-    {
-        SignUpBtn.onClick.AddListener(Func_SignUpBtn);
-        LoginBtn.onClick.AddListener(Func_LoginBtn);
-    }
-
+  /// <summary>
+  /// 게스트 로그인 버튼 함수 
+  /// </summary>
     private void Func_GuestLoginBtn()
     {
         serverManager.GuestLogin(() =>
@@ -81,11 +103,15 @@ public class Login_Manager : MonoBehaviour
             FindPlayerdata(() =>
             { 
                 CreateNewPlayerData(serverManager.NickName, serverManager.UUid);
+               
             });
+            SceneLoader.Instace.LoadScene("LobbyScene");
              LoginButtonGroupACtive(false);
         });
     }
-    
+    /// <summary>
+    /// 회원 가입 버튼 함수
+    /// </summary>
     private void Func_SignUpBtn()
     {
         if (SignUp_NickName_InputField.text != "" && SignUp_ID_InputField.text != "" &&
@@ -101,7 +127,7 @@ public class Login_Manager : MonoBehaviour
                         SignUp_PopUp.SetActive(false);
                         Login_PopUp.SetActive(true);
                         CreateNewPlayerData(serverManager.NickName, serverManager.UUid);
-                        
+                        SceneLoader.Instace.LoadScene("LobbyScene");
                     });
               
             }
@@ -115,7 +141,10 @@ public class Login_Manager : MonoBehaviour
             Debug.Log("빈칸을 채워주세요");
         }
     }
-
+/// <summary>
+/// 로그인 프로세스 코루틴
+/// </summary>
+/// <returns></returns>
     IEnumerator CO_Login_Process()
     {
         if (Login_ID_InputField.text != "" && Login_PW_InputField.text != "")
@@ -135,43 +164,42 @@ public class Login_Manager : MonoBehaviour
             yield return new WaitForSeconds(1f);
             StartBtn.interactable = true;
             StartBtn.gameObject.SetActive(true);
+            SceneLoader.Instace.LoadScene("LobbyScene");
         }
         else
         {
             Debug.Log("빈칸을 채워주세요");
         }
     }
-
+/// <summary>
+/// 로그인 버튼 함수
+/// </summary>
     private void Func_LoginBtn()
     {
         StartCoroutine(CO_Login_Process());
     }
-    
+    /// <summary>
+    /// 회원 가입 팝업 열기 함수 
+    /// </summary>
     private void Func_OpenSingUpPopUp_Btn()
     {
         SignUp_PopUp.SetActive(true);
         Login_PopUp.SetActive(false);
     }
-
+/// <summary>
+/// 로그인 팝업 열기 함수 
+/// </summary>
     private void Func_OpenLoginPopUp_Btn()
     {
         Login_PopUp.SetActive(true);
         SignUp_PopUp.SetActive(false);
     }
-    
-    private void SearchPlayerData()
-    {
-        if (File.Exists(savePath))
-        {
-            LoadPlayerData();
-        }
-        else
-        {
-            // PlayerProfil_Create_PopUp.SetActive(true);
-            StartBtn.interactable = false;
-        }
-    }
 
+/// <summary>
+/// 새로운 플레이어 데이터 생성
+/// </summary>
+/// <param name="playerName">  </param>
+/// <param name="uid"></param>
     private void CreateNewPlayerData(string playerName, string uid)
     {
         playerDataDontdesytoy.scritpableobj_playerData.InitializePlayerData(playerName, uid);
@@ -179,6 +207,9 @@ public class Login_Manager : MonoBehaviour
         InsertPlayerData(); // 새로 생성한 데이터를 저장
     }
 
+/// <summary>
+///     플레이어 데이터 저장
+/// </summary>
     public void InsertPlayerData()
     {
         // ScriptableObject를 JSON으로 직렬화
@@ -219,19 +250,26 @@ public class Login_Manager : MonoBehaviour
             Debug.LogWarning("No PlayerData file found at: " + savePath);
         }
     }
-
+/// <summary>
+/// 플레이어 데이터 찾기
+/// </summary>
+/// <param name="action">게임 데이터가 존재하지않을떄 실행할 액션</param>
     private void FindPlayerdata(Action action)
     {
         serverManager.GameDataGet(action);
     }
     
-
+/// <summary>
+/// 시작 버튼 함수
+/// </summary>
     private void Func_StartBtn()
     {
-        SceneLoader.Instace.LoadScene("LobbyScene");
+        TokenLogin();
     }
 
-
+/// <summary>
+///     플레이어 데이터 삭제
+/// </summary>
     private void DeletePlayerData()
     {
         if (File.Exists(savePath))
