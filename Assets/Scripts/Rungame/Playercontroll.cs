@@ -16,7 +16,7 @@ public class Playercontroll : MonoBehaviour
     private SpriteRenderer playerSprite;
     
     float hit;
-    bool isJumping;
+    bool IsJumping;
     bool isTop;
     private bool ishit;
    // Vector2 startPosition;
@@ -41,7 +41,7 @@ public class Playercontroll : MonoBehaviour
     private void Init()//restart init
     {
         rungameUimanager.currenthp = 100;
-        PlayAnimation("isDead", false);
+        PlayAnimation("IsDead", false);
         rungameUimanager.jumpBtn.gameObject.SetActive(true);
     }
 
@@ -51,11 +51,11 @@ public class Playercontroll : MonoBehaviour
         {
             if (rungameUimanager.isPlay)
             { 
-                PlayAnimation("isRun", true);
+                PlayAnimation("IsWalk", true);
             }
             else
             {
-                PlayAnimation("isRun", false);
+                PlayAnimation("IsWalk", false);
             }
         }
 
@@ -68,7 +68,7 @@ public class Playercontroll : MonoBehaviour
 
             if (rungameUimanager.currenthp < 0)
             {
-                PlayAnimation("isDead", true);
+                PlayAnimation("IsDead", true);
                 rungameUimanager.jumpBtn.gameObject.SetActive(false);
                 rungameUimanager.Gameover();
             }
@@ -86,7 +86,7 @@ public class Playercontroll : MonoBehaviour
     
     private void Func_jump()
     {
-        if (!isJumping && Mathf.Abs(rb.linearVelocity.y) < 0.01f) // 점프 중이 아니고, 바닥에 있을 때만 점프
+        if (!IsJumping && Mathf.Abs(rb.linearVelocity.y) < 0.01f) // 점프 중이 아니고, 바닥에 있을 때만 점프
         {
             StartCoroutine(JumpRoutine()); // 코루틴 실행
             Debug.Log("player jump");
@@ -95,11 +95,11 @@ public class Playercontroll : MonoBehaviour
 
     private IEnumerator JumpRoutine()
     {
-        isJumping = true; // 점프 상태 설정
+        IsJumping = true; // 점프 상태 설정
         isTop = false;
 
         // 애니메이터 설정
-        PlayAnimation("isJump",true);
+        PlayAnimation("IsJump",true);
 
         // 점프 시작 - Rigidbody2D의 velocity를 설정하여 위로 점프
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpSpeed);
@@ -119,9 +119,9 @@ public class Playercontroll : MonoBehaviour
         }
 
         // 착지 후 상태 초기화
-        PlayAnimation("isJump",false);
+        PlayAnimation("IsJump",false);
         isTop = false;                     // 최고점 상태 해제
-        isJumping = false;                 // 점프 완료 상태 설정
+        IsJumping = false;                 // 점프 완료 상태 설정
 
         Debug.Log("player landing");
     }
@@ -148,7 +148,7 @@ public class Playercontroll : MonoBehaviour
             Debug.Log("hit: " + hit);
             if (rungameUimanager.currenthp < 0)
             {
-                PlayAnimation("isDead",true);
+                PlayAnimation("IsDead",true);
                 rungameUimanager.Gameover();
             }
             else
