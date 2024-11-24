@@ -47,7 +47,7 @@ public class ReSpawnManager : MonoBehaviour
         {
           //  gameUiManager.Healpool[0].SetActive(true);
             StartCoroutine(createMob());
-            StartCoroutine(createCoin());
+            StartCoroutine(CreateCoin());
             StartCoroutine(CreateHealObj());
             StartCoroutine(CreateBiggerObj());
         }
@@ -95,36 +95,34 @@ public class ReSpawnManager : MonoBehaviour
     }
 
 
-    IEnumerator createCoin()
+    IEnumerator CreateCoin()
     {
         yield return new WaitForSeconds(0.1f);
-
-        List<int> num = new List<int>();
-        
-        for (int i = 0; i < gameUiManager.CoinPool.Count; i++)
-        {
-            if (!gameUiManager.CoinPool[i].activeSelf)
-            {
-                num.Add(i);
-            }
-        }
 
         while (true)
         {
             if (!gameUiManager.isPlay)
             {
+                // 게임이 멈춘 상태라면 0.1초 대기
                 yield return new WaitForSeconds(0.1f);
+                continue;
             }
-            else
+
+            // 게임이 진행 중일 경우
+            for (int i = 0; i < gameUiManager.CoinPool.Count; i++)
             {
-                for (int i = 0; i < num.Count - 1; i++)
+                // 비활성화된 코인만 활성화
+                if (!gameUiManager.CoinPool[i].activeSelf)
                 {
                     gameUiManager.CoinPool[i].SetActive(true);
-                    yield return new WaitForSeconds(0.1f);
+                    yield return new WaitForSeconds(0.1f); // 활성화 후 대기
                 }
             }
+
+            yield return null; // 다음 프레임까지 대기
         }
     }
+
 
 
     IEnumerator CreateHealObj()

@@ -25,11 +25,10 @@ public class BiggerObj : Obect_base
 #endif
         if (uimanager.isPlay)
         {
-
-            transform.Translate(Vector2.left * Time.deltaTime * speed);
+            float movement = speed * Time.deltaTime;
+            transform.Translate(Vector2.left * movement);
             Vector2 vector = new Vector2(transform.position.x, transform.position.y);
             objRigidbody.MovePosition(vector);
-
             if (transform.position.x < -6)
             {
                 gameObject.SetActive(false);

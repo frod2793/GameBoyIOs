@@ -123,7 +123,6 @@ public class RunGameUiManager : MonoBehaviour
         isPlay = true;
         PusePopup.gameObject.SetActive(false);
         //추후 카운트다운 기능 넣을것
-
     }
     // Start is called before the first frame update
     void Awake()
@@ -131,7 +130,6 @@ public class RunGameUiManager : MonoBehaviour
         Event_Setter();
         PusePopup.gameObject.SetActive(false);
         ScorePopUp.gameObject.SetActive(false);
-      
         LoadSetting();
     }
 

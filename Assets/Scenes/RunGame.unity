@@ -3208,8 +3208,7 @@ MonoBehaviour:
   CoinPool: []
   Coins:
   - {fileID: 282501698335660031, guid: ad20ff87d59534bcaad9fa8e939f0bfa, type: 3}
-  - {fileID: 282501698335660031, guid: ad20ff87d59534bcaad9fa8e939f0bfa, type: 3}
-  Coin_Objcount: 15
+  Coin_Objcount: 30
   C_startpoint: {x: 9, y: 0}
   HealObj: {fileID: 3666157395051966247, guid: 7e576d58c6d034857b004aa5d41c9f6c, type: 3}
   PointHp: 20
