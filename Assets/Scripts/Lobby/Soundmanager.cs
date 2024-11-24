@@ -18,13 +18,7 @@ public class Soundmanager : MonoBehaviour
     private float effectsoundVolum;
     private float bgmSoundVolum;
     // Start is called before the first frame update
-
-
-
-    public void Awake()
-    {
-        
-    }
+    
     public void Init()
     {
         GameObject root = new GameObject { name = "Sound" };

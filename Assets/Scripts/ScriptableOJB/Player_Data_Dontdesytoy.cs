@@ -12,10 +12,10 @@ public class Player_Data_Dontdesytoy : MonoBehaviour
     {
         get
         {
-            if (instance == null)
+            if (IsNullOrEmpty(instance) )
             {
                 instance = FindAnyObjectByType<Player_Data_Dontdesytoy>();
-                if (instance == null)
+                if (IsNullOrEmpty(instance))
                 {
                     GameObject container = new GameObject("Player_Data");
                     instance = container.AddComponent<Player_Data_Dontdesytoy>();
@@ -56,4 +56,8 @@ public class Player_Data_Dontdesytoy : MonoBehaviour
         scritpableobj_playerData = playerData;
     }
     
+    private static bool IsNullOrEmpty(Object value)
+    {
+        return ReferenceEquals(value, null);
+    }
 }

@@ -45,7 +45,6 @@ public class ReSpawnManager : MonoBehaviour
     {
         if (isPlay)
         {
-            
           //  gameUiManager.Healpool[0].SetActive(true);
             StartCoroutine(createMob());
             StartCoroutine(createCoin());
@@ -177,8 +176,7 @@ public class ReSpawnManager : MonoBehaviour
 
     GameObject Createobj(GameObject obj, Transform parent)
     {
-        GameObject copy = Instantiate(obj);
-        copy.transform.SetParent(parent);
+        GameObject copy = Instantiate(obj, parent);
         copy.SetActive(false);
         return copy;
     }

@@ -27,8 +27,6 @@ public class ObjEffectManager : MonoBehaviour
 
     IEnumerator Bigger()
     {
-
-
         while (player.localScale.x < biggersize)
         {
             player.localScale = originalscale * (1f + time * speed);
@@ -44,8 +42,6 @@ public class ObjEffectManager : MonoBehaviour
             }
             yield return null;
         }
-    
-  
         // StartCoroutine(smaller());
     }
 
