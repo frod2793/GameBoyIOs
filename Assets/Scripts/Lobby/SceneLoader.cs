@@ -33,8 +33,10 @@ public class SceneLoader : MonoBehaviour
     [SerializeField]
     private CanvasGroup sceneLoadferCanvasGroup;
     [SerializeField]
-    private Image progressbar;
+    private Slider progressbar;
 
+    
+    
     private string loadSceneName;
 
     public static SceneLoader Create()
@@ -60,9 +62,9 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(Load(SceneName));
         Debug.Log("Scene change activie");
     }
-    private IEnumerator Load (string sceneName)
+    private IEnumerator Load(string sceneName)
     {
-        progressbar.fillAmount = 0f;
+        progressbar.value = 0f;
         yield return StartCoroutine(Fade(true));
 
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
@@ -75,22 +77,23 @@ public class SceneLoader : MonoBehaviour
             timer += Time.unscaledDeltaTime;
             if (op.progress < 0.9f)
             {
-                progressbar.fillAmount = Mathf.Lerp(progressbar.fillAmount, op.progress, timer);
-                if (progressbar.fillAmount>=op.progress)
+                float targetProgress = Mathf.Lerp(progressbar.value, op.progress, timer);
+                progressbar.value = targetProgress;
+                if (progressbar.value >= op.progress)
                 {
                     timer = 0f;
                 }
             }
             else
             {
-                progressbar.fillAmount = Mathf.Lerp(progressbar.fillAmount, 1f, timer);
-                if (progressbar.fillAmount == 1.0f)
+                float targetProgress = Mathf.Lerp(progressbar.value, 1f, timer);
+                progressbar.value = targetProgress;
+                if (progressbar.value >= 0.9999f) 
                 {
                     op.allowSceneActivation = true;
                     yield break;
                 }
             }
-           
         }
     }
 
