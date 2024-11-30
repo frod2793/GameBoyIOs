@@ -57,7 +57,9 @@ public class Server_Manager : MonoBehaviour
             Debug.LogError("초기화 실패 : " + bro); // 실패일 경우 statusCode 400대 에러 발생
         }
     }
-    
+
+    #region 로그인 및 회원 가입
+
     /// <summary>
     /// 회원 가입
     /// </summary>
@@ -183,17 +185,10 @@ public class Server_Manager : MonoBehaviour
         }
     }
     
-    /// <summary>
-    /// 오류 디버그 
-    /// </summary>
-    /// <param name="bro"></param>
-    private void ErroDebug(BackendReturnObject bro)
-    {
-       // bro = Backend.BMember.CustomLogin;
-        Debug.Log(bro.GetStatusCode());
-        Debug.Log(bro.GetErrorCode());
-        Debug.Log(bro.GetMessage());
-    }
+    #endregion
+    
+    #region 게임 데이터 저장 및 불러오기
+
     /// <summary>
     /// 플레이어 데이터 세팅
     /// </summary>
@@ -324,6 +319,48 @@ public class Server_Manager : MonoBehaviour
             Debug.LogError("게임 정보 데이터 수정에 실패했습니다. : " + bro);
         }
     }
+    #endregion
+    
+    /// <summary>
+    /// 오류 디버그 
+    /// </summary>
+    /// <param name="bro"></param>
+    private void ErroDebug(BackendReturnObject bro)
+    {
+        // bro = Backend.BMember.CustomLogin;
+        Debug.Log(bro.GetStatusCode());
+        Debug.Log(bro.GetErrorCode());
+        Debug.Log(bro.GetMessage());
+    }
+
+    /// <summary>
+    /// 우편함 불러오기 (동기)
+    /// </summary>
+    public void LoadMessage()
+    {
+        BackendReturnObject bro = Backend.UPost.GetPostList(PostType.Coupon, 10);
+        LitJson.JsonData json = bro.GetReturnValuetoJSON()["postList"];
+
+        for(int i = 0; i < json.Count; i++)  {
+            Debug.Log("제목 : " +  json[i]["title"].ToString());
+            Debug.Log("inDate : " +  json[i]["inDate"].ToString());
+        }
+    }
+    /// <summary>
+    /// 우편함 불러오기 (비동기)
+    /// </summary>
+    public async void LoadMessage2()
+    {
+        Backend.UPost.GetPostList(PostType.Coupon, 10, callback => {
+            LitJson.JsonData json = callback.GetReturnValuetoJSON()["postList"];
+
+            for(int i = 0; i < json.Count; i++)  {
+                Debug.Log("제목 : " +  json[i]["title"].ToString());
+                Debug.Log("inDate : " +  json[i]["inDate"].ToString());
+            }
+        });
+    }
+    
     
  }
  
