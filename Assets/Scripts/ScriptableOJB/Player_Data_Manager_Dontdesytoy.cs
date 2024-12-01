@@ -2,23 +2,23 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Player_Data_Dontdesytoy : MonoBehaviour
+public class Player_Data_Manager_Dontdesytoy : MonoBehaviour
 {
-    [FormerlySerializedAs("playerData")] public PlayerData scritpableobj_playerData;
+    public PlayerData scritpableobj_playerData;
     
     //파괴되지않는 오브젝트
-    private static Player_Data_Dontdesytoy instance;
-    public static Player_Data_Dontdesytoy Instance
+    private static Player_Data_Manager_Dontdesytoy instance;
+    public static Player_Data_Manager_Dontdesytoy Instance
     {
         get
         {
             if (IsNullOrEmpty(instance) )
             {
-                instance = FindAnyObjectByType<Player_Data_Dontdesytoy>();
+                instance = FindAnyObjectByType<Player_Data_Manager_Dontdesytoy>();
                 if (IsNullOrEmpty(instance))
                 {
                     GameObject container = new GameObject("Player_Data");
-                    instance = container.AddComponent<Player_Data_Dontdesytoy>();
+                    instance = container.AddComponent<Player_Data_Manager_Dontdesytoy>();
                 }
             }
             return instance;

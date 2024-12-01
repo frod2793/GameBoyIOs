@@ -40,7 +40,7 @@ public class Login_Manager : MonoBehaviour
     private Button OpenLoginPopUpBtn;
     //서버 매니져 
     private Server_Manager serverManager;
-    private Player_Data_Dontdesytoy playerDataDontdesytoy;
+    private Player_Data_Manager_Dontdesytoy _playerDataManagerDontdesytoy;
     private string savePath;
     
     private void Awake()
@@ -53,7 +53,7 @@ public class Login_Manager : MonoBehaviour
     {
         serverManager = FindAnyObjectByType<Server_Manager>();
         savePath = Path.Combine(Application.persistentDataPath, "playerData.json");
-        playerDataDontdesytoy = FindAnyObjectByType<Player_Data_Dontdesytoy>();
+        _playerDataManagerDontdesytoy = FindAnyObjectByType<Player_Data_Manager_Dontdesytoy>();
 
         StartBtn.onClick.AddListener(Func_StartBtn);
         OpenSingUpPopUp_Btn.onClick.AddListener(Func_OpenSingUpPopUp_Btn);
@@ -202,7 +202,7 @@ public class Login_Manager : MonoBehaviour
 /// <param name="uid"></param>
     private void CreateNewPlayerData(string playerName, string uid)
     {
-        playerDataDontdesytoy.scritpableobj_playerData.InitializePlayerData(playerName, uid);
+        _playerDataManagerDontdesytoy.scritpableobj_playerData.InitializePlayerData(playerName, uid);
         StartBtn.interactable = true;
         InsertPlayerData(); // 새로 생성한 데이터를 저장
     }
@@ -213,15 +213,15 @@ public class Login_Manager : MonoBehaviour
     public void InsertPlayerData()
     {
         // ScriptableObject를 JSON으로 직렬화
-        string jsonData = JsonUtility.ToJson(playerDataDontdesytoy.scritpableobj_playerData, true);
+        string jsonData = JsonUtility.ToJson(_playerDataManagerDontdesytoy.scritpableobj_playerData, true);
 
         // 파일에 저장
         File.WriteAllText(savePath, jsonData);
         Debug.Log("PlayerData saved to: " + savePath);
 
         //저장된 파일을 클라우드에 저장
-        Debug.Log(playerDataDontdesytoy.scritpableobj_playerData.nickname);
-        serverManager.GameDataInsert(playerDataDontdesytoy.scritpableobj_playerData);
+        Debug.Log(_playerDataManagerDontdesytoy.scritpableobj_playerData.nickname);
+        serverManager.GameDataInsert(_playerDataManagerDontdesytoy.scritpableobj_playerData);
 
     }
 
@@ -232,17 +232,17 @@ public class Login_Manager : MonoBehaviour
         {
             // JSON 파일을 읽어와 ScriptableObject에 덮어씌움
             string jsonData = File.ReadAllText(savePath);
-            if (playerDataDontdesytoy == null)
+            if (_playerDataManagerDontdesytoy == null)
             {
-                playerDataDontdesytoy = FindFirstObjectByType<Player_Data_Dontdesytoy>();
+                _playerDataManagerDontdesytoy = FindFirstObjectByType<Player_Data_Manager_Dontdesytoy>();
             }
 
-            if (playerDataDontdesytoy.scritpableobj_playerData == null)
+            if (_playerDataManagerDontdesytoy.scritpableobj_playerData == null)
             {
-                playerDataDontdesytoy.scritpableobj_playerData = ScriptableObject.CreateInstance<PlayerData>();
+                _playerDataManagerDontdesytoy.scritpableobj_playerData = ScriptableObject.CreateInstance<PlayerData>();
             }
 
-            JsonUtility.FromJsonOverwrite(jsonData, playerDataDontdesytoy.scritpableobj_playerData);
+            JsonUtility.FromJsonOverwrite(jsonData, _playerDataManagerDontdesytoy.scritpableobj_playerData);
             Debug.Log("PlayerData loaded from: " + savePath);
         }
         else

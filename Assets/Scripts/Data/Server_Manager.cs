@@ -1,17 +1,27 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using BackEnd;
+using LitJson;
 using UnityEngine;
+
 // using UnityGoogleDrive;
 public class Server_Manager : MonoBehaviour
 {
-    
     public string UUid;
     public string NickName;
     private string gameDataRowInDate = string.Empty;
+
     PlayerData playerData;
+    Item_Data itemData;
+    Inventory_Data inventoryData;
+
+    public Dictionary<string, int> inventory = new Dictionary<string, int>();
+
     //파괴되지않는 오브젝트
     private static Server_Manager instance;
+
     public static Server_Manager Instance
     {
         get
@@ -25,9 +35,11 @@ public class Server_Manager : MonoBehaviour
                     instance = container.AddComponent<Server_Manager>();
                 }
             }
+
             return instance;
         }
     }
+
     private void Awake()
     {
         if (Instance != this)
@@ -35,25 +47,29 @@ public class Server_Manager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         DontDestroyOnLoad(gameObject);
     }
-    
+
     private void Start()
     {
         BackEndInIt();
     }
-    
+
     /// <summary>
     /// 뒤끝 서버 초기화
     /// </summary>
-    void BackEndInIt() 
+    void BackEndInIt()
     {
         var bro = Backend.Initialize(); // 뒤끝 초기화
 
         // 뒤끝 초기화에 대한 응답값
-        if(bro.IsSuccess()) {
+        if (bro.IsSuccess())
+        {
             Debug.Log("초기화 성공 : " + bro); // 성공일 경우 statusCode 204 Success
-        } else {
+        }
+        else
+        {
             Debug.LogError("초기화 실패 : " + bro); // 실패일 경우 statusCode 400대 에러 발생
         }
     }
@@ -67,38 +83,38 @@ public class Server_Manager : MonoBehaviour
     /// <param name="pw"></param>
     /// <param name="nickname"></param>
     /// <param name="ac"></param>
-    public void SignUp(string id, string pw, string nickname,Action ac)
+    public void SignUp(string id, string pw, string nickname, Action ac)
     {
         BackendReturnObject bro = Backend.BMember.CustomSignUp(id, pw);
         if (bro.IsSuccess())
         {
-            Debug.Log("회원가입 성공: "+bro);
+            Debug.Log("회원가입 성공: " + bro);
             bro = Backend.BMember.UpdateNickname(nickname);
             if (bro.IsSuccess())
             {
-                Debug.Log("닉네임 변경 성공: "+bro);
+                Debug.Log("닉네임 변경 성공: " + bro);
                 ac.Invoke();
-                
             }
             else
             {
-                Debug.Log("닉네임 변경 실패: "+bro);
+                Debug.Log("닉네임 변경 실패: " + bro);
                 ErroDebug(bro);
             }
         }
         else
         {
-            Debug.Log("회원가입 실패: "+bro);
+            Debug.Log("회원가입 실패: " + bro);
             ErroDebug(bro);
         }
     }
+
     /// <summary>
     /// 로그인
     /// </summary>
     /// <param name="id"></param>
     /// <param name="pw"></param>
     /// <param name="ac">로그인 성공시 실행할액션 </param>
-    public void Login(string id, string pw,Action ac)
+    public void Login(string id, string pw, Action ac)
     {
         BackendReturnObject bro = Backend.BMember.CustomLogin(id, pw);
         if (bro.IsSuccess())
@@ -108,42 +124,42 @@ public class Server_Manager : MonoBehaviour
 
             UUid = Backend.UID;
             NickName = Backend.UserNickName;
-            Debug.Log("UUid: "+UUid);
-            Debug.Log("NickName: "+NickName); 
+            Debug.Log("UUid: " + UUid);
+            Debug.Log("NickName: " + NickName);
             bro = Backend.BMember.IsAccessTokenAlive();
-            if(bro.IsSuccess())
+            if (bro.IsSuccess())
             {
                 Debug.Log("액세스 토큰이 살아있습니다");
                 Backend.BMember.RefreshTheBackendToken();
             }
-         
-         
+
+
             ac.Invoke();
-            
         }
         else
         {
-            Debug.Log("로그인 실패: "+bro);
+            Debug.Log("로그인 실패: " + bro);
             ErroDebug(bro);
         }
     }
-/// <summary>
-/// 게스트 로그인
-/// </summary>
-/// <param name="action">게스트 로그인이 성공 할때 실행할 엑션</param>
+
+    /// <summary>
+    /// 게스트 로그인
+    /// </summary>
+    /// <param name="action">게스트 로그인이 성공 할때 실행할 엑션</param>
     public void GuestLogin(Action action)
     {
         BackendReturnObject bro = Backend.BMember.GuestLogin("게스트 로그인으로 로그인함");
-        if(bro.IsSuccess())
+        if (bro.IsSuccess())
         {
-            Debug.Log("게스트 로그인에 성공했습니다: "+bro);
+            Debug.Log("게스트 로그인에 성공했습니다: " + bro);
             UUid = Backend.UID;
             NickName = Backend.UserNickName;
-            Debug.Log("UUid: "+UUid);
-            Debug.Log("NickName: "+NickName);
+            Debug.Log("UUid: " + UUid);
+            Debug.Log("NickName: " + NickName);
             action.Invoke();
             bro = Backend.BMember.IsAccessTokenAlive();
-            if(bro.IsSuccess())
+            if (bro.IsSuccess())
             {
                 Debug.Log("액세스 토큰이 살아있습니다");
                 Backend.BMember.RefreshTheBackendToken();
@@ -151,11 +167,11 @@ public class Server_Manager : MonoBehaviour
         }
         else
         {
-            Debug.Log("게스트 로그인에 실패했습니다: "+bro);
+            Debug.Log("게스트 로그인에 실패했습니다: " + bro);
             ErroDebug(bro);
         }
-       
     }
+
     /// <summary>
     /// 토큰 로그인
     /// </summary>
@@ -184,9 +200,9 @@ public class Server_Manager : MonoBehaviour
             onFailure.Invoke();
         }
     }
-    
+
     #endregion
-    
+
     #region 게임 데이터 저장 및 불러오기
 
     /// <summary>
@@ -202,8 +218,8 @@ public class Server_Manager : MonoBehaviour
         param.Add("Money2", playerData.currency2);
         param.Add("experience", playerData.experience);
         param.Add("level", playerData.level);
-        
-        
+
+
         BackendReturnObject bro = Backend.GameData.Insert("User_Data", param);
         if (bro.IsSuccess())
         {
@@ -215,6 +231,7 @@ public class Server_Manager : MonoBehaviour
             Debug.Log("게임 데이터 저장 실패");
         }
     }
+
     /// <summary>
     /// 게임 정보 조회
     /// </summary>
@@ -242,8 +259,6 @@ public class Server_Manager : MonoBehaviour
             {
                 gameDataRowInDate = gameDataJson[0]["inDate"].ToString(); //불러온 게임 정보의 고유값입니다.  
 
-                gameDataRowInDate = gameDataJson[0]["inDate"].ToString(); //불러온 게임 정보의 고유값입니다.
-
                 playerData = ScriptableObject.CreateInstance<PlayerData>();
 
                 playerData.level = int.Parse(gameDataJson[0]["level"].ToString());
@@ -253,20 +268,10 @@ public class Server_Manager : MonoBehaviour
                 playerData.UID = gameDataJson[0]["uid"].ToString();
                 // playerData.nickname = gameDataJson[0]["nickname"].ToString();
 
-                Player_Data_Dontdesytoy.Instance.UpdatePlayerData(playerData);
+
+                Player_Data_Manager_Dontdesytoy.Instance.UpdatePlayerData(playerData);
 
                 Debug.Log(playerData.ToString());
-
-
-                // foreach (string itemKey in gameDataJson[0]["inventory"].Keys)
-                // {
-                //     userData.inventory.Add(itemKey, int.Parse(gameDataJson[0]["inventory"][itemKey].ToString()));
-                // }
-                //
-                // foreach (LitJson.JsonData equip in gameDataJson[0]["equipment"])
-                // {
-                //     userData.equipment.Add(equip.ToString());
-                // }
 
                 Debug.Log(playerData.ToString());
             }
@@ -282,8 +287,8 @@ public class Server_Manager : MonoBehaviour
             }
         }
     }
-    
-    
+
+
     public void GameDataUpdate(PlayerData playerData)
     {
         Param param = new Param();
@@ -293,10 +298,10 @@ public class Server_Manager : MonoBehaviour
         param.Add("Money2", playerData.currency2);
         param.Add("experience", playerData.experience);
         param.Add("level", playerData.level);
-        
+
         BackendReturnObject bro = null;
-        
-        
+
+
         if (string.IsNullOrEmpty(gameDataRowInDate))
         {
             Debug.Log("내 제일 최신 게임 정보 데이터 수정을 요청합니다.");
@@ -319,19 +324,127 @@ public class Server_Manager : MonoBehaviour
             Debug.LogError("게임 정보 데이터 수정에 실패했습니다. : " + bro);
         }
     }
+
     #endregion
-    
-    /// <summary>
-    /// 오류 디버그 
-    /// </summary>
-    /// <param name="bro"></param>
-    private void ErroDebug(BackendReturnObject bro)
+
+    #region 인벤토리 데이터 저장 및 불러오기
+
+    public void InventoryDataInsert()
     {
-        // bro = Backend.BMember.CustomLogin;
-        Debug.Log(bro.GetStatusCode());
-        Debug.Log(bro.GetErrorCode());
-        Debug.Log(bro.GetMessage());
+        Param param = new Param();
+        param.Add("inventory", Inventory_Data_Manager_Dontdestory.Instance.inventorydata_string);
+        //  param.Add("equipment", inventoryData.equipment);
+
+        BackendReturnObject bro = Backend.GameData.Insert("Inventory_Data", param);
+        if (bro.IsSuccess())
+        {
+            Debug.Log("인벤토리 데이터 삽입 성공: " + Inventory_Data_Manager_Dontdestory.Instance.inventorydata_string);
+        }
+        else
+        {
+            Debug.Log("인벤토리 데이터 저장 실패");
+        }
     }
+public void Get_Inventory_Data(Action Fail)
+{
+    // Backend 호출
+    var bro = Backend.GameData.Get("Inventory_Data", new Where());
+    if (bro.IsSuccess())
+    {
+        // JSON 데이터 로드
+        LitJson.JsonData gameDataJson = bro.FlattenRows();
+
+        // 데이터가 없는 경우
+        if (gameDataJson.Count <= 0)
+        {
+            Debug.LogWarning("데이터가 존재하지 않습니다.: " + bro);
+            Fail.Invoke();
+            return;
+        }
+
+        // 최상위 JSON 확인
+        LitJson.JsonData inventoryContainerJson = gameDataJson[0];
+
+        // inventory 키 확인
+        if (!inventoryContainerJson.Keys.Contains("inventory"))
+        {
+            Debug.LogError($"inventory 키가 없습니다: {inventoryContainerJson.ToJson()}");
+            Fail.Invoke();
+            return;
+        }
+
+        // inventory 문자열 디코딩
+        string inventoryJsonString = inventoryContainerJson["inventory"].ToString();
+        LitJson.JsonData inventoryDecodedJson = JsonMapper.ToObject(inventoryJsonString);
+
+        // inventoryDecodedJson에서 "inventory" 배열 가져오기
+        if (!inventoryDecodedJson.Keys.Contains("inventory") || !inventoryDecodedJson["inventory"].IsArray)
+        {
+            Debug.LogError($"inventoryDecodedJson에 inventory 배열이 없습니다: {inventoryDecodedJson.ToJson()}");
+            Fail.Invoke();
+            return;
+        }
+
+        LitJson.JsonData inventoryArray = inventoryDecodedJson["inventory"];
+
+        // Inventory_Data 생성 및 초기화
+        inventoryData = ScriptableObject.CreateInstance<Inventory_Data>();
+
+        foreach (LitJson.JsonData entry in inventoryArray)
+        {
+            try
+            {
+                // item과 count 확인
+                if (entry.Keys.Contains("item") && entry.Keys.Contains("count"))
+                {
+                    LitJson.JsonData itemDataJson = entry["item"];
+                    int count = int.Parse(entry["count"].ToString());
+
+                    // Item_Data 생성
+                    Item_Data item = ScriptableObject.CreateInstance<Item_Data>();
+                    item.itemName = itemDataJson["itemName"].ToString();
+                    item.itemCode = int.Parse(itemDataJson["itemCode"].ToString());
+                    item.itemtype = itemDataJson["itemtype"].ToString();
+                    item.itemCount = int.Parse(itemDataJson["itemCount"].ToString());
+
+                    // 인벤토리에 아이템 추가
+                    for (int i = 0; i < count; i++)
+                    {
+                        inventoryData.AddItem(item);
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("item 또는 count 키가 없는 항목이 발견되었습니다: " + entry.ToJson());
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"아이템 데이터 처리 중 오류 발생: {ex.Message}\n{entry}");
+            }
+        }
+
+        // 로드 완료 로그
+        Debug.Log($"<color=green>{inventoryData.inventory.Count}개의 아이템이 인벤토리에 로드되었습니다.</color>");
+     
+        // Inventory_Data_Manager에 데이터 업데이트
+        Inventory_Data_Manager_Dontdestory.Instance.UpdateInventoryData(inventoryData);
+        
+        
+    }
+    else
+    {
+        // 실패 처리
+        Debug.LogError("인벤토리 데이터 조회 실패: " + bro.GetErrorCode());
+        Fail.Invoke();
+    }
+}
+
+
+    
+    #endregion
+
+    #region 메시지 관련
 
     /// <summary>
     /// 우편함 불러오기 (동기)
@@ -341,27 +454,107 @@ public class Server_Manager : MonoBehaviour
         BackendReturnObject bro = Backend.UPost.GetPostList(PostType.Coupon, 10);
         LitJson.JsonData json = bro.GetReturnValuetoJSON()["postList"];
 
-        for(int i = 0; i < json.Count; i++)  {
-            Debug.Log("제목 : " +  json[i]["title"].ToString());
-            Debug.Log("inDate : " +  json[i]["inDate"].ToString());
+        for (int i = 0; i < json.Count; i++)
+        {
+            Debug.Log("제목 : " + json[i]["title"].ToString());
+            Debug.Log("inDate : " + json[i]["inDate"].ToString());
         }
     }
+
     /// <summary>
     /// 우편함 불러오기 (비동기)
     /// </summary>
     public async void LoadMessage2()
     {
-        Backend.UPost.GetPostList(PostType.Coupon, 10, callback => {
-            LitJson.JsonData json = callback.GetReturnValuetoJSON()["postList"];
+        await Task.Run(() =>
+        {
+            Backend.UPost.GetPostList(PostType.Coupon, 10, callback =>
+            {
+                LitJson.JsonData json = callback.GetReturnValuetoJSON()["postList"];
 
-            for(int i = 0; i < json.Count; i++)  {
-                Debug.Log("제목 : " +  json[i]["title"].ToString());
-                Debug.Log("inDate : " +  json[i]["inDate"].ToString());
-            }
+                for (int i = 0; i < json.Count; i++)
+                {
+                    Debug.Log("제목 : " + json[i]["title"].ToString());
+                    Debug.Log("inDate : " + json[i]["inDate"].ToString());
+                }
+            });
         });
     }
-    
-    
- }
- 
 
+    /// <summary>
+    /// 우편 하나 수령하기
+    /// </summary>
+    public void GetReward()
+    {
+        PostType type = PostType.Admin;
+
+        //우편 리스트 불러오기
+        BackendReturnObject bro = Backend.UPost.GetPostList(type, 100);
+        LitJson.JsonData json = bro.GetReturnValuetoJSON()["postItems"];
+
+        //우편 리스트중 0번째 우편의 inDate 가져오기
+        string recentPostIndate = json[0]["inDate"].ToString();
+
+        // 동일한 PostType의 우편 수령하기
+        Backend.UPost.ReceivePostItem(type, recentPostIndate);
+    }
+
+    public void GetRewardAll()
+    {
+        var receiveBro = Backend.UPost.ReceivePostItemAll(PostType.Admin);
+        if (receiveBro.IsSuccess() == false)
+        {
+            Debug.LogError("우편 모두 수령하기 중 에러가 발생하였습니다. : " + receiveBro);
+            return;
+        }
+
+        foreach (LitJson.JsonData postItemJson in receiveBro.GetReturnValuetoJSON()["postItems"])
+        {
+            for (int j = 0; j < postItemJson.Count; j++)
+            {
+                if (!postItemJson[j].ContainsKey("item"))
+                {
+                    continue;
+                }
+
+                // ReceiveItem item = new ReceiveItem();
+                // if(postItemJson[j]["item"].ContainsKey("itemName")) {
+                //     item.itemName = postItemJson[j]["item"]["itemName"].ToString();
+                // }
+                //
+                // // 랭킹 보상의 경우 chartFileName이 존재하지 않습니다.  
+                // if(postItemJson[j]["item"].ContainsKey("chartFileName")) {
+                //     item.chartFileName = postItemJson[j]["item"]["chartFileName"].ToString();
+                // }
+                //
+                // if(postItemJson[j]["item"].ContainsKey("itemID")) {
+                //     item.itemID = postItemJson[j]["item"]["itemID"].ToString();
+                // }
+                //
+                // if(postItemJson[j]["item"].ContainsKey("hpPower")) {
+                //     item.hpPower = int.Parse(postItemJson[j]["item"]["hpPower"].ToString());
+                // }
+                //
+                // if(postItemJson[j].ContainsKey("itemCount")) {
+                //     item.itemCount = int.Parse(postItemJson[j]["itemCount"].ToString());
+                // }
+
+                //  Debug.Log(item.ToString());
+            }
+        }
+    }
+
+    #endregion
+
+    /// <summary>
+    /// 오류 디버그 
+    /// </summary>
+    /// <param name="bro"></param>
+    private void ErroDebug(BackendReturnObject bro)
+    {
+        // bro = Backend.BMember.CustomLogin;
+        print(bro.GetStatusCode());
+        print(bro.GetErrorCode());
+        print(bro.GetMessage());
+    }
+}
