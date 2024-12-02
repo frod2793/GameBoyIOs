@@ -13,6 +13,10 @@ public class Inventory_Data : ScriptableObject
         public int count; // 아이템 개수
     }
 
+    /// <summary>
+    /// 인벤토리에 아이템 추가
+    /// </summary>
+    /// <param name="item"></param>
     public void AddItem(Item_Data item)
     {
         InventoryEntry existingEntry = inventory.Find(entry => entry.item.itemCode == item.itemCode);
@@ -26,6 +30,9 @@ public class Inventory_Data : ScriptableObject
         }
     }
 
+    /// <summary>
+    /// 인벤토리 초기화 
+    /// </summary>
     public void initInventory()
     {
         inventory.Clear();

@@ -329,6 +329,9 @@ public class Server_Manager : MonoBehaviour
 
     #region 인벤토리 데이터 저장 및 불러오기
 
+    /// <summary>
+    /// 인벤토리 데이터 삽입
+    /// </summary>
     public void InventoryDataInsert()
     {
         Param param = new Param();
@@ -345,103 +348,104 @@ public class Server_Manager : MonoBehaviour
             Debug.Log("인벤토리 데이터 저장 실패");
         }
     }
-public void Get_Inventory_Data(Action Fail)
-{
-    // Backend 호출
-    var bro = Backend.GameData.Get("Inventory_Data", new Where());
-    if (bro.IsSuccess())
+
+    /// <summary>
+    /// 인벤토리 데이터 불러오기
+    /// </summary>
+    /// <param name="Fail"></param>
+    public void Get_Inventory_Data(Action Fail)
     {
-        // JSON 데이터 로드
-        LitJson.JsonData gameDataJson = bro.FlattenRows();
-
-        // 데이터가 없는 경우
-        if (gameDataJson.Count <= 0)
+        // Backend 호출
+        var bro = Backend.GameData.Get("Inventory_Data", new Where());
+        if (bro.IsSuccess())
         {
-            Debug.LogWarning("데이터가 존재하지 않습니다.: " + bro);
-            Fail.Invoke();
-            return;
-        }
+            // JSON 데이터 로드
+            LitJson.JsonData gameDataJson = bro.FlattenRows();
 
-        // 최상위 JSON 확인
-        LitJson.JsonData inventoryContainerJson = gameDataJson[0];
-
-        // inventory 키 확인
-        if (!inventoryContainerJson.Keys.Contains("inventory"))
-        {
-            Debug.LogError($"inventory 키가 없습니다: {inventoryContainerJson.ToJson()}");
-            Fail.Invoke();
-            return;
-        }
-
-        // inventory 문자열 디코딩
-        string inventoryJsonString = inventoryContainerJson["inventory"].ToString();
-        LitJson.JsonData inventoryDecodedJson = JsonMapper.ToObject(inventoryJsonString);
-
-        // inventoryDecodedJson에서 "inventory" 배열 가져오기
-        if (!inventoryDecodedJson.Keys.Contains("inventory") || !inventoryDecodedJson["inventory"].IsArray)
-        {
-            Debug.LogError($"inventoryDecodedJson에 inventory 배열이 없습니다: {inventoryDecodedJson.ToJson()}");
-            Fail.Invoke();
-            return;
-        }
-
-        LitJson.JsonData inventoryArray = inventoryDecodedJson["inventory"];
-
-        // Inventory_Data 생성 및 초기화
-        inventoryData = ScriptableObject.CreateInstance<Inventory_Data>();
-
-        foreach (LitJson.JsonData entry in inventoryArray)
-        {
-            try
+            // 데이터가 없는 경우
+            if (gameDataJson.Count <= 0)
             {
-                // item과 count 확인
-                if (entry.Keys.Contains("item") && entry.Keys.Contains("count"))
+                Debug.LogWarning("데이터가 존재하지 않습니다.: " + bro);
+                Fail.Invoke();
+                return;
+            }
+
+            // 최상위 JSON 확인
+            LitJson.JsonData inventoryContainerJson = gameDataJson[0];
+
+            // inventory 키 확인
+            if (!inventoryContainerJson.Keys.Contains("inventory"))
+            {
+                Debug.LogError($"inventory 키가 없습니다: {inventoryContainerJson.ToJson()}");
+                Fail.Invoke();
+                return;
+            }
+
+            // inventory 문자열 디코딩
+            string inventoryJsonString = inventoryContainerJson["inventory"].ToString();
+            LitJson.JsonData inventoryDecodedJson = JsonMapper.ToObject(inventoryJsonString);
+
+            // inventoryDecodedJson에서 "inventory" 배열 가져오기
+            if (!inventoryDecodedJson.Keys.Contains("inventory") || !inventoryDecodedJson["inventory"].IsArray)
+            {
+                Debug.LogError($"inventoryDecodedJson에 inventory 배열이 없습니다: {inventoryDecodedJson.ToJson()}");
+                Fail.Invoke();
+                return;
+            }
+
+            LitJson.JsonData inventoryArray = inventoryDecodedJson["inventory"];
+
+            // Inventory_Data 생성 및 초기화
+            inventoryData = ScriptableObject.CreateInstance<Inventory_Data>();
+
+            foreach (LitJson.JsonData entry in inventoryArray)
+            {
+                try
                 {
-                    LitJson.JsonData itemDataJson = entry["item"];
-                    int count = int.Parse(entry["count"].ToString());
-
-                    // Item_Data 생성
-                    Item_Data item = ScriptableObject.CreateInstance<Item_Data>();
-                    item.itemName = itemDataJson["itemName"].ToString();
-                    item.itemCode = int.Parse(itemDataJson["itemCode"].ToString());
-                    item.itemtype = itemDataJson["itemtype"].ToString();
-                    item.itemCount = int.Parse(itemDataJson["itemCount"].ToString());
-
-                    // 인벤토리에 아이템 추가
-                    for (int i = 0; i < count; i++)
+                    // item과 count 확인
+                    if (entry.Keys.Contains("item") && entry.Keys.Contains("count"))
                     {
-                        inventoryData.AddItem(item);
+                        LitJson.JsonData itemDataJson = entry["item"];
+                        int count = int.Parse(entry["count"].ToString());
+
+                        // Item_Data 생성
+                        Item_Data item = ScriptableObject.CreateInstance<Item_Data>();
+                        item.itemName = itemDataJson["itemName"].ToString();
+                        item.itemCode = int.Parse(itemDataJson["itemCode"].ToString());
+                        item.itemtype = itemDataJson["itemtype"].ToString();
+                        item.itemCount = int.Parse(itemDataJson["itemCount"].ToString());
+
+                        // 인벤토리에 아이템 추가
+                        for (int i = 0; i < count; i++)
+                        {
+                            inventoryData.AddItem(item);
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning("item 또는 count 키가 없는 항목이 발견되었습니다: " + entry.ToJson());
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Debug.LogWarning("item 또는 count 키가 없는 항목이 발견되었습니다: " + entry.ToJson());
+                    Debug.LogError($"아이템 데이터 처리 중 오류 발생: {ex.Message}\n{entry}");
                 }
             }
-            catch (Exception ex)
-            {
-                Debug.LogError($"아이템 데이터 처리 중 오류 발생: {ex.Message}\n{entry}");
-            }
+
+            // 로드 완료 로그
+            Debug.Log($"<color=green>{inventoryData.inventory.Count}개의 아이템이 인벤토리에 로드되었습니다.</color>");
+
+            // Inventory_Data_Manager에 데이터 업데이트
+            Inventory_Data_Manager_Dontdestory.Instance.UpdateInventoryData(inventoryData);
         }
-
-        // 로드 완료 로그
-        Debug.Log($"<color=green>{inventoryData.inventory.Count}개의 아이템이 인벤토리에 로드되었습니다.</color>");
-     
-        // Inventory_Data_Manager에 데이터 업데이트
-        Inventory_Data_Manager_Dontdestory.Instance.UpdateInventoryData(inventoryData);
-        
-        
+        else
+        {
+            // 실패 처리
+            Debug.LogError("인벤토리 데이터 조회 실패: " + bro.GetErrorCode());
+            Fail.Invoke();
+        }
     }
-    else
-    {
-        // 실패 처리
-        Debug.LogError("인벤토리 데이터 조회 실패: " + bro.GetErrorCode());
-        Fail.Invoke();
-    }
-}
 
-
-    
     #endregion
 
     #region 메시지 관련
