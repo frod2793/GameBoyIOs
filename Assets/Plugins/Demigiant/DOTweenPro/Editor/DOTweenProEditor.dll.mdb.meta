@@ -2,3 +2,10 @@ fileFormatVersion: 2
 guid: ee3a420017f129443896310d9fab256b
 DefaultImporter:
   userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 32416
+  packageName: DOTween Pro
+  packageVersion: 1.0.380
+  assetPath: Assets/Plugins/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll.mdb
+  uploadId: 642067

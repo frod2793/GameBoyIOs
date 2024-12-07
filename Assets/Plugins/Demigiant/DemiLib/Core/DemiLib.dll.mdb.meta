@@ -2,3 +2,10 @@ fileFormatVersion: 2
 guid: 995cf2d9b4a41f840b3a41712e9b3bc0
 DefaultImporter:
   userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 32416
+  packageName: DOTween Pro
+  packageVersion: 1.0.380
+  assetPath: Assets/Plugins/Demigiant/DemiLib/Core/DemiLib.dll.mdb
+  uploadId: 642067

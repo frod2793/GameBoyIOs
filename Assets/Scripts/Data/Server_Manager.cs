@@ -19,6 +19,8 @@ public class Server_Manager : MonoBehaviour
 
     public Dictionary<string, int> inventory = new Dictionary<string, int>();
 
+
+    #region DontDestroyOnLoad
     //파괴되지않는 오브젝트
     private static Server_Manager instance;
 
@@ -40,6 +42,8 @@ public class Server_Manager : MonoBehaviour
         }
     }
 
+    #endregion
+    
     private void Awake()
     {
         if (Instance != this)
@@ -436,7 +440,7 @@ public class Server_Manager : MonoBehaviour
             Debug.Log($"<color=green>{inventoryData.inventory.Count}개의 아이템이 인벤토리에 로드되었습니다.</color>");
 
             // Inventory_Data_Manager에 데이터 업데이트
-            Inventory_Data_Manager_Dontdestory.Instance.UpdateInventoryData(inventoryData);
+            Inventory_Data_Manager_Dontdestory.Instance.Update_Inventory_Data(inventoryData);
         }
         else
         {
@@ -445,6 +449,41 @@ public class Server_Manager : MonoBehaviour
             Fail.Invoke();
         }
     }
+    
+    /// <summary>
+    /// 인벤토리 정보 업데이트
+    /// </summary>
+    /// <param name="inventoryData"></param>
+    public void Inventory_Data_Update()
+    {
+        Param param = new Param();
+        param.Add("inventory", Inventory_Data_Manager_Dontdestory.Instance.inventorydata_string);
+
+        BackendReturnObject bro = null;
+
+        if(string.IsNullOrEmpty(gameDataRowInDate))
+        {
+            Debug.Log("내 제일 최신 인벤토리 정보 데이터 수정을 요청합니다.");
+
+            bro = Backend.GameData.Update("Inventory_Data", new Where(), param);
+        }
+        else
+        {
+            Debug.Log($"{gameDataRowInDate}의 인벤토리 정보 데이터 수정을 요청합니다.");
+
+            bro = Backend.GameData.UpdateV2("Inventory_Data", gameDataRowInDate, Backend.UserInDate, param);
+        }
+
+        if (bro.IsSuccess())
+        {
+            Debug.Log("인벤토리 정보 데이터 수정에 성공했습니다. : " + bro);
+        }
+        else
+        {
+            Debug.LogError("인벤토리 정보 데이터 수정에 실패했습니다. : " + bro);
+        }
+    }
+    
 
     #endregion
 

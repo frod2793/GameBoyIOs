@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_GUID: c0218446462d6b744bc070f0277a6ea3
+  m_SerializeEntries:
+  - m_GUID: 0fb3ab37b22f5d046b0ae9aa41dc7e90
+    m_Address: Assets/Game_Resource/rungame/Store_Items/Item 1.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Store_Item
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 13fcdc3dde31c064b9b8aa730517b39f
+    m_Address: Assets/Game_Resource/rungame/Store_Items/Item.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Store_Item
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7d8bbe329dcef174d808ac5c9ec55f80
+    m_Address: Assets/Game_Resource/rungame/Store_Items
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Store_Item
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b195c56687d988a41aec6c14b5fee10a
+    m_Address: Assets/Game_Resource/rungame/Store_Items/Item 3.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Store_Item
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6648bec230a92c4fb9793b480b85197
+    m_Address: Assets/Game_Resource/rungame/Store_Items/Item 2.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Store_Item
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: f81b927aabe27c140b936a55fa05287c, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 4b5140061786f82499e9a31f3eca7317, type: 2}
+    - {fileID: 11400000, guid: f144c8c2ae0fe3848828ee9f2eff5576, type: 2}

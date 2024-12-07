@@ -56,13 +56,13 @@ public class Inventory_Data_Manager_Dontdestory : MonoBehaviour
         }
 
         Server_Manager.Instance.Get_Inventory_Data(Server_Manager.Instance.InventoryDataInsert);
-
     }
-/// <summary>
-///  인벤토리 데이터 업데이트
-/// </summary>
-/// <param name="inventoryData"></param>
-    public void UpdateInventoryData(Inventory_Data inventoryData)
+
+    /// <summary>
+    ///  인벤토리 데이터 업데이트
+    /// </summary>
+    /// <param name="inventoryData"></param>
+    public void Update_Inventory_Data(Inventory_Data inventoryData)
     {
         _scritpableobjInventoryData = inventoryData;
         // List를 JSON으로 변환
@@ -102,7 +102,7 @@ public class Inventory_Data_Manager_Dontdestory : MonoBehaviour
     {
         return ReferenceEquals(value, null);
     }
-    
+
     /// <summary>
     /// 테스트 함수
     /// </summary>
