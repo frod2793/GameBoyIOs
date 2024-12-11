@@ -1193,11 +1193,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8293859b667e9a74c9b848c58f34a723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerSprite: {fileID: 1668074515}
+  player: {fileID: 0}
   variableJoystick: {fileID: 1852878176}
   cameraTransform: {fileID: 2040098699}
-  moveSpeed: 20
-  rotateSpeed: 200
   moveDuration: 0.25
 --- !u!1 &656450243
 GameObject:
@@ -2765,6 +2763,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1668074516}
   - component: {fileID: 1668074515}
+  - component: {fileID: 1668074517}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -2842,6 +2841,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 55434327}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1668074517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1668074514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e8002305a577734b9aabec3b7e18685, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPower: 10
+  coolTime: 1
+  attackSpeed: 1
+  weaponSize: 1
+  projectileCount: 1
+  criticalChance: 0
+  criticalDamage: 1
+  health: 100
+  healthRegen: 1
+  defense: 0
+  moveSpeed: 5
+  expGain: 1
+  goldGain: 1
+  itemGainRange: 1
+  reroll: 1
 --- !u!1 &1730057773
 GameObject:
   m_ObjectHideFlags: 0
