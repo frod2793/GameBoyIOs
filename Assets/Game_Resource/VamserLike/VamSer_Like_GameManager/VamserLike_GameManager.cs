@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DogGuns_Games.vamsir
 {
-    public class BamserLike_GameManager : MonoBehaviour
+    public class VamserLike_GameManager : MonoBehaviour
     {
         private Player_Base[] player;
         [SerializeField] private GameObject inGameObject_parent;

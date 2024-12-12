@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 namespace DogGuns_Games.vamsir
 {
-    public class BAM_PlayerControll : MonoBehaviour
+    public class VAM_PlayerControll : MonoBehaviour
     {
         [Header("<color=green>Player Object")] [SerializeField]
         private Player_Base player;
