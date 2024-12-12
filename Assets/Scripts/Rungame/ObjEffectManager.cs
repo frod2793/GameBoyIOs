@@ -1,64 +1,67 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjEffectManager : MonoBehaviour
+namespace DogGuns_Games.Run
 {
-    [SerializeField]
-    Transform player;
-    private Vector2 originalscale;
-    private float biggersize = 0.55f;
-    private float smallersize = 0.24f;
-    public float speed = 0.01f;
-
-    private float time = 1f;
-
-    private void Awake()
+    public class ObjEffectManager : MonoBehaviour
     {
-        player = FindAnyObjectByType<Playercontroll>().GetComponent<Transform>();
-        originalscale = player.localScale;
+        [SerializeField] Transform player;
+        private Vector2 originalscale;
+        private float biggersize = 0.55f;
+        private float smallersize = 0.24f;
+        public float speed = 0.01f;
 
-    }
+        private float time = 1f;
 
-    public void Effect_Bigger()
-    {
-       StartCoroutine(Bigger());
-    }
-
-    IEnumerator Bigger()
-    {
-        while (player.localScale.x < biggersize)
+        private void Awake()
         {
-            player.localScale = originalscale * (1f + time * speed);
-            Debug.Log("bigger11");
-            time += Time.deltaTime;
-            if (player.localScale.x >= biggersize)
-            {
-                time = 0;
-                yield return new WaitForSeconds(5f);
+            player = FindAnyObjectByType<Playercontroll>().GetComponent<Transform>();
+            originalscale = player.localScale;
 
-               yield return StartCoroutine(smaller());
-                break;
-            }
-            yield return null;
         }
-        // StartCoroutine(smaller());
-    }
 
-
-    private IEnumerator smaller()
-    {
-        while (player.localScale.x > smallersize)
+        public void Effect_Bigger()
         {
-            Debug.Log("bigger33");
-            player.localScale = originalscale * (1f - time * speed);
-            time += Time.deltaTime;
-            if (player.localScale.x <= smallersize)
+            StartCoroutine(Bigger());
+        }
+
+        IEnumerator Bigger()
+        {
+            while (player.localScale.x < biggersize)
             {
-                time = 0;
-                break;
+                player.localScale = originalscale * (1f + time * speed);
+                Debug.Log("bigger11");
+                time += Time.deltaTime;
+                if (player.localScale.x >= biggersize)
+                {
+                    time = 0;
+                    yield return new WaitForSeconds(5f);
+
+                    yield return StartCoroutine(smaller());
+                    break;
+                }
+
+                yield return null;
             }
-            yield return null;
+            // StartCoroutine(smaller());
+        }
+
+
+        private IEnumerator smaller()
+        {
+            while (player.localScale.x > smallersize)
+            {
+                Debug.Log("bigger33");
+                player.localScale = originalscale * (1f - time * speed);
+                time += Time.deltaTime;
+                if (player.localScale.x <= smallersize)
+                {
+                    time = 0;
+                    break;
+                }
+
+                yield return null;
+            }
         }
     }
 }

@@ -1,55 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class CoinObj : Obect_base
+namespace DogGuns_Games.Run
 {
-
-
-    private void OnEnable()
+    public class CoinObj : Obect_base
     {
-        Vector2 vector2 = new Vector2(uimanager.C_startpoint.x, 1);
-        transform.position = vector2;
-        objRigidbody.constraints = RigidbodyConstraints2D.None;
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Mob")|| other.CompareTag("Ground"))
+        private void OnEnable()
         {
-            objRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY;
+            Vector2 vector2 = new Vector2(uimanager.C_startpoint.x, 1);
+            transform.position = vector2;
+            objRigidbody.constraints = RigidbodyConstraints2D.None;
         }
 
-
-
-        if (other.CompareTag("Player"))
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            uimanager.score++;
-            gameObject.SetActive(false);
-        }
+            if (other.CompareTag("Mob") || other.CompareTag("Ground"))
+            {
+                objRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY;
+            }
 
 
-        if (other.CompareTag("Heal"))
-        {
-            gameObject.SetActive(false);
-        }
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        if (uimanager.isPlay)
-        { 
+            if (other.CompareTag("Player"))
+            {
+                uimanager.score++;
+                gameObject.SetActive(false);
+            }
 
-            transform.Translate(Vector2.left * Time.deltaTime * speed);
-            Vector2 vector = new Vector2(transform.position.x,transform.position.y);
-            objRigidbody.MovePosition(vector);
 
-            if (transform.position.x < -6)
+            if (other.CompareTag("Heal"))
             {
                 gameObject.SetActive(false);
             }
         }
-        
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (uimanager.isPlay)
+            {
+                transform.Translate(Vector2.left * Time.deltaTime * speed);
+                Vector2 vector = new Vector2(transform.position.x, transform.position.y);
+                objRigidbody.MovePosition(vector);
+
+                if (transform.position.x < -6)
+                {
+                    gameObject.SetActive(false);
+                }
+            }
+        }
     }
 }

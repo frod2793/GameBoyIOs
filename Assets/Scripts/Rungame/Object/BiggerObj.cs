@@ -1,66 +1,62 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class BiggerObj : Obect_base
+namespace DogGuns_Games.Run
 {
-
-    ObjEffectManager objEffect;
-    // Update is called once per frame
-    protected override void BaseInit()
+    public class BiggerObj : Obect_base
     {
-        base.BaseInit();
-        objEffect = FindAnyObjectByType<ObjEffectManager>();
-    }
+        ObjEffectManager objEffect;
 
-    private void Update()
-    {
-#if UNITY_EDITOR
-        if (Input.GetKey(KeyCode.Q))
+        // Update is called once per frame
+        protected override void BaseInit()
         {
-            //objEffect.Effect_Bigger();
-            Debug.Log("bigger");
+            base.BaseInit();
+            objEffect = FindAnyObjectByType<ObjEffectManager>();
         }
-#endif
-        if (uimanager.isPlay)
+
+        private void Update()
         {
-            float movement = speed * Time.deltaTime;
-            transform.Translate(Vector2.left * movement);
-            Vector2 vector = new Vector2(transform.position.x, transform.position.y);
-            objRigidbody.MovePosition(vector);
-            if (transform.position.x < -6)
+#if UNITY_EDITOR
+            if (Input.GetKey(KeyCode.Q))
+            {
+                //objEffect.Effect_Bigger();
+                Debug.Log("bigger");
+            }
+#endif
+            if (uimanager.isPlay)
+            {
+                float movement = speed * Time.deltaTime;
+                transform.Translate(Vector2.left * movement);
+                Vector2 vector = new Vector2(transform.position.x, transform.position.y);
+                objRigidbody.MovePosition(vector);
+                if (transform.position.x < -6)
+                {
+                    gameObject.SetActive(false);
+                }
+            }
+            else
             {
                 gameObject.SetActive(false);
             }
         }
-        else
+
+
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            gameObject.SetActive(false);
+            if (other.CompareTag("Mob") || other.CompareTag("Ground"))
+            {
+                objRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY;
+            }
+
+            if (other.CompareTag("Player"))
+            {
+                objEffect.Effect_Bigger();
+                gameObject.SetActive(false);
+            }
+
+            if (other.CompareTag("Heal"))
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
-
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Mob") || other.CompareTag("Ground"))
-        {
-            objRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY;
-        }
-
-        if (other.CompareTag("Player"))
-        {
-          objEffect.Effect_Bigger();
-          gameObject.SetActive(false);
-        }
-
-        if (other.CompareTag("Heal"))
-        {
-            gameObject.SetActive(false);
-        }
-    }
-
-
-
-
 }

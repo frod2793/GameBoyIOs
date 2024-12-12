@@ -1,44 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-public class MobBase : MonoBehaviour
+namespace DogGuns_Games.Run
 {
-    private float mobSpeed;
-    [SerializeField]
-    RunGameUiManager uImanager;
-   
-     public float mobDamage;
-     public string mobName;
-
-    // Start is called before the first frame update
-    void Awake()
+    public class MobBase : MonoBehaviour
     {
-        uImanager = FindAnyObjectByType<RunGameUiManager>();
-        mobSpeed = uImanager.MobSpeed;
-    }
+        private float mobSpeed;
+        [SerializeField] RunGameUiManager uImanager;
 
-    private void OnEnable()
-    {
-        Vector2 vector = new Vector2(uImanager.startpoint.x, transform.position.y);
-        transform.position = vector;
-    }
-    
-   
-    
+        public float mobDamage;
+        public string mobName;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (uImanager.isPlay)
+        // Start is called before the first frame update
+        void Awake()
         {
-            transform.Translate(Vector2.left * Time.deltaTime * mobSpeed);
+            uImanager = FindAnyObjectByType<RunGameUiManager>();
+            mobSpeed = uImanager.MobSpeed;
+        }
 
-            if (transform.localPosition.x < -10)
+        private void OnEnable()
+        {
+            Vector2 vector = new Vector2(uImanager.startpoint.x, transform.position.y);
+            transform.position = vector;
+        }
+
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (uImanager.isPlay)
             {
-                gameObject.SetActive(false);
+                transform.Translate(Vector2.left * Time.deltaTime * mobSpeed);
+
+                if (transform.localPosition.x < -10)
+                {
+                    gameObject.SetActive(false);
+                }
             }
         }
     }

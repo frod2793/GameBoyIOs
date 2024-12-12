@@ -3,76 +3,75 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChoosegamePopup : MonoBehaviour
+namespace DogGuns_Games
 {
-    //private Button CgameBtn;
-    [SerializeField]
-    private List<Button> CgameBtn = new List<Button>();
-    [SerializeField]
-    private Button exitBtn;
-    [SerializeField]
-    private MessageManager messageManager;
-
-
-    private void Start()
+    public class ChoosegamePopup : MonoBehaviour
     {
-     
-        for (int i = 0; i < CgameBtn.Count; i++)
+        //private Button CgameBtn;
+        [SerializeField] private List<Button> CgameBtn = new List<Button>();
+        [SerializeField] private Button exitBtn;
+        [SerializeField] private MessageManager messageManager;
+
+
+        private void Start()
         {
-            int index = i;
-          
-            //모두마지막 값으로 초기화 되는 현상 방지 를 위해 따로 변수 할당
+            for (int i = 0; i < CgameBtn.Count; i++)
+            {
+                int index = i;
+
+                //모두마지막 값으로 초기화 되는 현상 방지 를 위해 따로 변수 할당
 
                 CgameBtn[i].onClick.AddListener(delegate
                 {
                     cGameBtnSetting(index);
                     Debug.Log("가능 삽입" + i);
                 });
-        
+            }
+
+            exitBtn.onClick.AddListener(exitBtn_Func);
         }
 
-        exitBtn.onClick.AddListener(exitBtn_Func);
-    }
-
-    private void cGameBtnSetting(int FuncNum)
-    {
-        Debug.Log("가능 활성화"+ FuncNum);
-        switch (FuncNum)
+        private void cGameBtnSetting(int FuncNum)
         {
-            case 0:
-                runGame();
-                break;
-            case 1:
-                groundGame();
-                break;
-            case 2:
-                shootingGame();
-                break;
-            default:
-               messageManager.OnEmptyGameMessage();
-                break;
+            Debug.Log("가능 활성화" + FuncNum);
+            switch (FuncNum)
+            {
+                case 0:
+                    runGame();
+                    break;
+                case 1:
+                    groundGame();
+                    break;
+                case 2:
+                    shootingGame();
+                    break;
+                default:
+                    messageManager.OnEmptyGameMessage();
+                    break;
+            }
+        }
+
+        private void exitBtn_Func()
+        {
+            gameObject.SetActive(false);
+        }
+
+        private void runGame()
+        {
+            SceneLoader.Instace.LoadScene("RunGame");
+            Debug.Log("런게임");
+        }
+
+        private void groundGame()
+        {
+            messageManager.OnEmptyGameMessage();
+            Debug.Log("땅따먹기");
+        }
+
+        private void shootingGame()
+        {
+            messageManager.OnEmptyGameMessage();
+            Debug.Log("슈팅게임");
         }
     }
-
-    private void exitBtn_Func()
-    {
-        gameObject.SetActive(false);
-    }
-
-    private void runGame()
-    {
-        SceneLoader.Instace.LoadScene("RunGame");
-        Debug.Log("런게임");
-    }
-    private void groundGame()
-    {
-        messageManager.OnEmptyGameMessage();
-        Debug.Log("땅따먹기");
-    }
-    private void shootingGame()
-    {
-        messageManager.OnEmptyGameMessage();
-        Debug.Log("슈팅게임");
-    }
-
 }

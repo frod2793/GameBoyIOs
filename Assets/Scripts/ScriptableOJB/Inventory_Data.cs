@@ -1,40 +1,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Inventory_Data", menuName = "GameData/Inventory_Data")]
-public class Inventory_Data : ScriptableObject
+namespace DogGuns_Games
 {
-    public List<InventoryEntry> inventory = new List<InventoryEntry>(); // 인벤토리
 
-    [System.Serializable]
-    public class InventoryEntry
-    {
-        public Item_Data item; // 아이템 데이터
-        public int count; // 아이템 개수
-    }
 
-    /// <summary>
-    /// 인벤토리에 아이템 추가
-    /// </summary>
-    /// <param name="item"></param>
-    public void AddItem(Item_Data item)
+    [CreateAssetMenu(fileName = "Inventory_Data", menuName = "GameData/Inventory_Data")]
+    public class Inventory_Data : ScriptableObject
     {
-        InventoryEntry existingEntry = inventory.Find(entry => entry.item.itemCode == item.itemCode);
-        if (existingEntry != null)
+        public List<InventoryEntry> inventory = new List<InventoryEntry>(); // 인벤토리
+
+        [System.Serializable]
+        public class InventoryEntry
         {
-            existingEntry.count++;
+            public Item_Data item; // 아이템 데이터
+            public int count; // 아이템 개수
         }
-        else
-        {
-            inventory.Add(new InventoryEntry { item = item, count = 1 });
-        }
-    }
 
-    /// <summary>
-    /// 인벤토리 초기화 
-    /// </summary>
-    public void initInventory()
-    {
-        inventory.Clear();
+        /// <summary>
+        /// 인벤토리에 아이템 추가
+        /// </summary>
+        /// <param name="item"></param>
+        public void AddItem(Item_Data item)
+        {
+            InventoryEntry existingEntry = inventory.Find(entry => entry.item.itemCode == item.itemCode);
+            if (existingEntry != null)
+            {
+                existingEntry.count++;
+            }
+            else
+            {
+                inventory.Add(new InventoryEntry { item = item, count = 1 });
+            }
+        }
+
+        /// <summary>
+        /// 인벤토리 초기화 
+        /// </summary>
+        public void initInventory()
+        {
+            inventory.Clear();
+        }
     }
 }

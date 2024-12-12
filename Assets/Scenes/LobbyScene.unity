@@ -661,7 +661,7 @@ GameObject:
   - component: {fileID: 78527161}
   - component: {fileID: 78527162}
   m_Layer: 0
-  m_Name: Lobby_UI_Manager
+  m_Name: '[ - Lobby_UI_Manager - ]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1853,7 +1853,7 @@ GameObject:
   - component: {fileID: 378748808}
   - component: {fileID: 378748809}
   m_Layer: 0
-  m_Name: Post_Manager
+  m_Name: '[ - Post_Manager - ]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2265,7 +2265,7 @@ GameObject:
   - component: {fileID: 617242524}
   - component: {fileID: 617242525}
   m_Layer: 0
-  m_Name: Select_Character_UI_Manager
+  m_Name: '[ - Select_Character_UI_Manager - ] '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2628,7 +2628,7 @@ GameObject:
   - component: {fileID: 642763487}
   - component: {fileID: 642763488}
   m_Layer: 0
-  m_Name: Messagemanager
+  m_Name: '[ - Messagemanager - ]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5618,7 +5618,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1323311151}
   m_Layer: 0
-  m_Name: managers
+  m_Name: '[ - managers - ]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5924,7 +5924,7 @@ GameObject:
   - component: {fileID: 1359785978}
   - component: {fileID: 1359785979}
   m_Layer: 0
-  m_Name: Store_Manager
+  m_Name: '[ - Store_Manager - ]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7242,7 +7242,7 @@ GameObject:
   - component: {fileID: 1559167682}
   - component: {fileID: 1559167683}
   m_Layer: 0
-  m_Name: Soundmanager
+  m_Name: '[ - Soundmanager - ]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

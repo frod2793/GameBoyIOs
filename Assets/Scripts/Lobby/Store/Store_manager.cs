@@ -1,60 +1,58 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class Store_manager : MonoBehaviour
+namespace DogGuns_Games.Lobby
 {
-  
-     [SerializeField] private RectTransform storeItemList; // 상점 아이템 리스트
-    [SerializeField] private List<Store_Item> storeItems = new List<Store_Item>(); // 상점 아이템 리스트
-
-    private void Start()
+    public class Store_manager : MonoBehaviour
     {
-        LoadAddressableStoreItems();
-    }
+        [SerializeField] private RectTransform storeItemList; // 상점 아이템 리스트
+        [SerializeField] private List<Store_Item> storeItems = new List<Store_Item>(); // 상점 아이템 리스트
 
-    private void LoadAddressableStoreItems()
-    {
-        storeItems.Clear();
-
-        // Addressable 로드를 통해 GameObject 타입으로 상점 아이템 프리팹들을 로드하여 상점 리스트에 추가
-        Addressables.LoadAssetsAsync<GameObject>("Store_Item", null).Completed += OnStoreItemsLoaded;
-    }
-
-    private void OnStoreItemsLoaded(AsyncOperationHandle<IList<GameObject>> op)
-    {
-        if (op.Status == AsyncOperationStatus.Succeeded)
+        private void Start()
         {
-            foreach (var item in op.Result)
+            LoadAddressableStoreItems();
+        }
+
+        private void LoadAddressableStoreItems()
+        {
+            storeItems.Clear();
+
+            // Addressable 로드를 통해 GameObject 타입으로 상점 아이템 프리팹들을 로드하여 상점 리스트에 추가
+            Addressables.LoadAssetsAsync<GameObject>("Store_Item", null).Completed += OnStoreItemsLoaded;
+        }
+
+        private void OnStoreItemsLoaded(AsyncOperationHandle<IList<GameObject>> op)
+        {
+            if (op.Status == AsyncOperationStatus.Succeeded)
             {
-                Store_Item storeItem = item.GetComponent<Store_Item>();
-                if (storeItem != null)
+                foreach (var item in op.Result)
                 {
-                    storeItems.Add(storeItem);
+                    Store_Item storeItem = item.GetComponent<Store_Item>();
+                    if (storeItem != null)
+                    {
+                        storeItems.Add(storeItem);
+                    }
                 }
+
+                LoadStoreItems();
             }
-            LoadStoreItems();
+            else
+            {
+                Debug.LogError("상점 아이템 로드에 실패했습니다. 'Store_Item' 레이블이 올바른지 및 자산이 제대로 설정되었는지 확인하세요.");
+            }
         }
-        else
+
+        private void LoadStoreItems()
         {
-            Debug.LogError("상점 아이템 로드에 실패했습니다. 'Store_Item' 레이블이 올바른지 및 자산이 제대로 설정되었는지 확인하세요.");
+            foreach (var item in storeItems)
+            {
+                Store_Item newItem = Instantiate(item, storeItemList);
+                //오브젝트 이름을 상점 아이템 이름 + item으로 변경
+                newItem.name = item.name + " item";
+                newItem.transform.localScale = Vector3.one;
+            }
         }
     }
-
-    private void LoadStoreItems()
-    {
-        foreach (var item in storeItems)
-        {
-            Store_Item newItem = Instantiate(item, storeItemList);
-            //오브젝트 이름을 상점 아이템 이름 + item으로 변경
-            newItem.name = item.name + " item";
-            newItem.transform.localScale = Vector3.one;
-        }
-    }
-
-   
- 
 }
