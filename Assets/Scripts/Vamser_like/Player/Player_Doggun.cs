@@ -25,6 +25,27 @@ namespace DogGuns_Games.vamsir
             itemGainRange = 1.5f;
             reroll = 2f;
         }
-        
+
+        public override void Player_attack(Vector3 attackAngle)
+        {
+            base.Player_attack( attackAngle);
+            
+            Debug.Log("Player_attack : " + attackAngle);
+        }
+
+        public override void Player_Die()
+        {
+            base.Player_Die();
+        }
+
+        public override void Player_Hit()
+        {
+            base.Player_Hit();
+        }
+
+        public override void Player_Idle()
+        {
+            base.Player_Idle();
+        }
     }
 }

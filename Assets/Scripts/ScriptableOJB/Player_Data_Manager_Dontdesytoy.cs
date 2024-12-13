@@ -50,15 +50,13 @@ namespace DogGuns_Games
 
             DontDestroyOnLoad(gameObject);
             
-            
             if (scritpableobj_playerData == null)
             {
                 scritpableobj_playerData = ScriptableObject.CreateInstance<PlayerData>();
             }
             
         }
-
-
+        
         /// <summary>
         ///  플레이어 데이터 로컬 저장
         /// </summary>

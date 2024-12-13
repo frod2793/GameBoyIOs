@@ -1,3 +1,4 @@
+using System;
 using DogGuns_Games.Run;
 using UnityEngine;
 
@@ -5,6 +6,11 @@ namespace DogGuns_Games.vamsir
 { 
     public class Normal_Mob : Vamser_Mob_Base
     {
+        private void Start()
+        {
+            
+        }
+
         protected override void Mob_Idle()
         {
             Debug.Log("Idle");

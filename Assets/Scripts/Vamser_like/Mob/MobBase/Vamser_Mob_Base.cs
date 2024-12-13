@@ -7,6 +7,16 @@ namespace DogGuns_Games.vamsir
     {
         public ObjectPool_Spawner objectPool_Spawner;
 
+        
+        public float Mob_Speed { get; set; }
+        public float Mob_Hp { get; set; }
+        public float Mob_AttackDamage { get; set; }
+        public float Mob_AttackSpeed { get; set; }
+        public float Mob_AttackRange { get; set; }
+        public float Mob_StunTime { get; set; }
+        public bool  Mob_IsDie { get; set; }
+        
+        
         public enum MobState
         {
             Idle,
@@ -25,6 +35,7 @@ namespace DogGuns_Games.vamsir
             SetMobState(MobState.Idle);
         }
 
+        
         private void OnValidate()
         {
             if (Application.isPlaying)
@@ -56,10 +67,12 @@ namespace DogGuns_Games.vamsir
 
         protected virtual void Mob_Move()
         {
+            
         }
 
         protected virtual void Mob_Stun()
         {
+            
         }
 
         protected virtual void Mob_Attack()

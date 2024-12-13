@@ -1,6 +1,8 @@
+using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.Serialization; 
+using UnityEngine.Serialization;
 
 namespace DogGuns_Games.vamsir
 {
@@ -22,6 +24,8 @@ namespace DogGuns_Games.vamsir
 
 
         bool isGameStart = false;
+
+        bool isAttack = false;
 
         private void Start()
         {
@@ -55,6 +59,13 @@ namespace DogGuns_Games.vamsir
             player.transform.DOMove(player.transform.position + moveVector * deltaSpeed, moveDuration);
             playerAnimator.SetFloat("Walk", moveVector.magnitude);
 
+            // 조이스틱 조작 시 공격 
+            if (moveVector.magnitude > 0 && isAttack == false)
+            {
+                PlayerAttack(moveVector).Forget();
+            }
+
+
             if (moveVector != Vector3.zero)
             {
                 float angle = Mathf.Atan2(moveVector.y, moveVector.x) * Mathf.Rad2Deg;
@@ -63,7 +74,23 @@ namespace DogGuns_Games.vamsir
             }
         }
 
+        /// <summary>
+        /// 플레이어 공격 호출 
+        /// </summary>
+        /// <param name="attackAngle">공격 방향</param>
+        private async UniTask PlayerAttack(Vector3 attackAngle)
+        {
+            isAttack = true;
+            // playerAnimator.SetTrigger("Attack");
+            player.Player_attack(attackAngle);
+            
+            await UniTask.Delay(100);
+            isAttack = false;
+        }
 
+        /// <summary>
+        /// 카메라 추적 
+        /// </summary>
         private void FallowCamera()
         {
             Vector3 cameraPosition = new Vector3(player.transform.position.x, player.transform.position.y,

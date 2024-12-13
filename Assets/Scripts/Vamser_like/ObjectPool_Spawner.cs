@@ -55,11 +55,24 @@ namespace DogGuns_Games.vamsir
         {
             if (mainCamera != null)
             {
-                // 화면 밖 위치 계산
+                // // 뷰포트 크기 가져오기
+                // float viewportWidth = mainCamera.pixelWidth;
+                // float viewportHeight = mainCamera.pixelHeight;
+
+                // 뷰포트 밖의 랜덤 위치 생성
+                float x = Random.Range(-1.0f, 2.0f);
+                float y = Random.Range(-1.0f, 2.0f);
+
+                // 위치가 뷰포트 밖에 있는지 확인
+                if (x > 0 && x < 1) x = x < 0.5f ? -0.1f : 1.1f;
+                if (y > 0 && y < 1) y = y < 0.5f ? -0.1f : 1.1f;
+
+                // 뷰포트 위치를 월드 위치로 변환
                 Vector3 offScreenPosition =
-                    mainCamera.ViewportToWorldPoint(new Vector3(1.2f, 1.2f, mainCamera.nearClipPlane));
-                obj.transform.position =
-                    new Vector3(offScreenPosition.x, offScreenPosition.y, obj.transform.position.z);
+                    mainCamera.ViewportToWorldPoint(new Vector3(x, y, mainCamera.nearClipPlane));
+
+                // 객체의 위치 설정
+                obj.transform.position = offScreenPosition;
             }
         }
     }
