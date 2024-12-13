@@ -30,7 +30,7 @@ namespace DogGuns_Games.vamsir
         {
             base.Player_attack( attackAngle);
             
-            Debug.Log("Player_attack : " + attackAngle);
+         //   Debug.Log("Player_attack : " + attackAngle);
         }
 
         public override void Player_Die()

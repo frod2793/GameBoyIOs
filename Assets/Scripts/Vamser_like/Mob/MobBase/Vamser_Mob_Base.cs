@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-
 namespace DogGuns_Games.vamsir
 {
     public class Vamser_Mob_Base : MonoBehaviour
@@ -28,11 +27,11 @@ namespace DogGuns_Games.vamsir
 
         [SerializeField] private MobState mobState;
 
-        private void OnEnable()
+        public virtual void OnEnable()
         {
             objectPool_Spawner = FindFirstObjectByType<ObjectPool_Spawner>();
 
-            SetMobState(MobState.Idle);
+            
         }
 
         

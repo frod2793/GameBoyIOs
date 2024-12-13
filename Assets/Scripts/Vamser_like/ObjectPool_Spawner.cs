@@ -9,6 +9,10 @@ namespace DogGuns_Games.vamsir
         [SerializeField] private int poolSize_MobCount = 10;
         [SerializeField] private Vamser_Mob_Base Mob_prefab;
         [SerializeField] private Transform Mob_Parent;
+        
+        //todo: 경험치 클래스 작업 필요
+        [SerializeField] private GameObject Exp_Prefab;
+        
         Camera mainCamera;
 
         private void Awake()

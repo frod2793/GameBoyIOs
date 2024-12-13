@@ -69,7 +69,7 @@ namespace DogGuns_Games.vamsir
             if (moveVector != Vector3.zero)
             {
                 float angle = Mathf.Atan2(moveVector.y, moveVector.x) * Mathf.Rad2Deg;
-                float yRotation = (angle > 90 || angle < -90) ? 180f : 0f;
+                float yRotation = (angle > 90 || angle < -90) ? 0f : 180f;
                 player.transform.rotation = Quaternion.Euler(0, yRotation, 0);
             }
         }
