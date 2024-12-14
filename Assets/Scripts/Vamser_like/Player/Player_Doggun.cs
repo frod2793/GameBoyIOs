@@ -6,7 +6,7 @@ namespace DogGuns_Games.vamsir
 
     public class Player_Doggun : Player_Base
     {
-        void Start()
+        void Init()
         {
             // 부모 클래스의 변수를 오버라이드하여 초기화
             attackPower = 15f;
@@ -26,10 +26,22 @@ namespace DogGuns_Games.vamsir
             reroll = 2f;
         }
 
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            Init();
+        }
+
+        public override void OnCollisionEnter2D(Collision2D other)
+        {
+            base.OnCollisionEnter2D(other);
+        }
+
         public override void Player_attack(Vector3 attackAngle)
         {
             base.Player_attack( attackAngle);
             
+            weaphonBase.Weaphon_Attack(attackAngle);
          //   Debug.Log("Player_attack : " + attackAngle);
         }
 

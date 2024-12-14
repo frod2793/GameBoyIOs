@@ -31,7 +31,7 @@ namespace DogGuns_Games.vamsir
         {
             objectPool_Spawner = FindFirstObjectByType<ObjectPool_Spawner>();
 
-            
+            Mob_IsDie = false;
         }
 
         
@@ -74,14 +74,23 @@ namespace DogGuns_Games.vamsir
             
         }
 
+        protected virtual void Mob_hit()
+        {
+            
+        }
+        
         protected virtual void Mob_Attack()
         {
         }
 
         protected virtual void Mob_Die()
         {
-            objectPool_Spawner.objectPool.Release(this);
-            Debug.Log("Die : " + name);
+            if (!Mob_IsDie)
+            {
+                Mob_IsDie = true;
+                objectPool_Spawner.MOB_objectPool.Release(this);
+                Debug.Log("Die : " + name);
+            }
         }
     }
 }

@@ -1,15 +1,22 @@
 using System;
 using DG.Tweening;
 using DogGuns_Games.Run;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace DogGuns_Games.vamsir
 { 
     public class Normal_Mob : Vamser_Mob_Base
     {
      
+        
+        
+        
         [SerializeField]
         private Player_Base player;
+        [SerializeField]
+        private Weaphon_base player_Weaphon;
 
         private bool ismove;
 
@@ -31,6 +38,8 @@ namespace DogGuns_Games.vamsir
         {
             base.OnEnable();
             player = FindFirstObjectByType<Player_Base>();
+            player_Weaphon = FindFirstObjectByType<Weaphon_base>();
+            
             SetMobState(MobState.Move);
             
         }
@@ -49,7 +58,31 @@ namespace DogGuns_Games.vamsir
                     transform.DOMove(transform.position + direction * distance, distance / Mob_Speed);
                 }
             }
+            else
+            {
+                transform.DOKill();
+            }
          
+        }
+
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+                if (other.gameObject.CompareTag("Player_Attack"))
+                {
+                    Debug.Log("Hit");
+                    //  SetMobState(MobState.Stun);
+                    Mob_Hp -= player_Weaphon.attackPower;
+                    if (Mob_Hp <= 0)
+                    {
+                        SetMobState(MobState.Die);
+                    }
+                    else
+                    {
+                        SetMobState(MobState.Stun);
+                    }
+                }
+            
         }
 
 
@@ -66,6 +99,21 @@ namespace DogGuns_Games.vamsir
         protected override void Mob_Stun()
         {
             Debug.Log("Stun");
+            //3초간 스턴
+            
+            ismove = false;
+            
+            DOVirtual.DelayedCall(Mob_StunTime, () =>
+            {
+                SetMobState(MobState.Move);
+            });
+            
+            
+        }
+
+        protected override void Mob_hit()
+        {
+            base.Mob_hit();
         }
 
         protected override void Mob_Attack()
@@ -76,6 +124,7 @@ namespace DogGuns_Games.vamsir
         protected override void Mob_Die()
         {
             base.Mob_Die();
+            
             Debug.Log("Die");
         }
         
