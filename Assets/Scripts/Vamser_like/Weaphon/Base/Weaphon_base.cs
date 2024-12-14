@@ -18,7 +18,7 @@ namespace DogGuns_Games.vamsir
         
         [SerializeField] private WeaphonState weaphonState;
         
-        private void OnEnable()
+        public virtual void OnEnable()
         {
             SetWeaphonState(WeaphonState.Idle);
         }
@@ -38,7 +38,7 @@ namespace DogGuns_Games.vamsir
             {
                 case WeaphonState.Idle: Weaphon_Idle(); 
                     break;
-                case WeaphonState.Attack: Weaphon_Attack(); 
+                case WeaphonState.Attack: Weaphon_Attack( Vector3.zero); 
                     break;
                 case WeaphonState.Reload: Weaphon_Reload(); 
                     break;
@@ -50,7 +50,7 @@ namespace DogGuns_Games.vamsir
             // 무기가 대기 상태일 때 처리
         }
         
-        public virtual void Weaphon_Attack()
+        public virtual void Weaphon_Attack( Vector3 attackAngle)
         {
             // 무기가 공격 상태일 때 처리
         }

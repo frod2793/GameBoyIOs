@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 
 namespace DogGuns_Games.vamsir
@@ -25,8 +26,35 @@ namespace DogGuns_Games.vamsir
         
         public int CharacterIndex { get; set; } //현재 캐릭터 인덱스
         
-        
-        
+        public Weaphon_base weaphonBase { get; set; }
+
+
+        public virtual void OnEnable()
+        {
+            weaphonBase = FindFirstObjectByType<Weaphon_base>();
+            weaphonBase.transform.SetParent(transform);
+            weaphonBase.transform.localPosition = Vector3.zero;
+        }
+
+        public virtual void OnCollisionEnter2D(Collision2D other)
+        {
+            if (other.gameObject.CompareTag("Mob"))
+            {
+                Player_Hit();
+            }
+            
+            if (other.gameObject.CompareTag("Exp"))
+            {
+               Debug.Log("Exp");
+               
+               EXP_Obj expObj = other.gameObject.GetComponent<EXP_Obj>();
+               
+               expObj.objectPool_Spawner.EXP_objectPool.Release(expObj);
+            }
+            
+        }
+
+
         public virtual void Player_attack( Vector3 attackAngle)
         {
             attackAngle = this.attackAngle;

@@ -1,21 +1,23 @@
 using System;
 using DG.Tweening;
 using DogGuns_Games.Run;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace DogGuns_Games.vamsir
-{ 
+{
     public class Normal_Mob : Vamser_Mob_Base
     {
-     
-        [SerializeField]
-        private Player_Base player;
+        [Header("<color=green>플레이여")]
+        [SerializeField] private Player_Base player;
+        [Header("<color=green>플레이어 무기")]
+        [SerializeField] private Weaphon_base player_Weaphon;
 
         private bool ismove;
 
         private void Start()
         {
-            
             Mob_Speed = 0.5f;
             Mob_Hp = 100f;
             Mob_AttackDamage = 10f;
@@ -23,16 +25,16 @@ namespace DogGuns_Games.vamsir
             Mob_AttackRange = 1f;
             Mob_StunTime = 1f;
             Mob_IsDie = false;
-            
         }
-        
-        
+
+
         public override void OnEnable()
         {
             base.OnEnable();
             player = FindFirstObjectByType<Player_Base>();
+            player_Weaphon = FindFirstObjectByType<Weaphon_base>();
+
             SetMobState(MobState.Move);
-            
         }
 
 
@@ -41,15 +43,37 @@ namespace DogGuns_Games.vamsir
             if (ismove)
             {
                 // 플레이어 방향으로 이동 dotween
-                if (!Equals(player,null))
-                { 
-                   // Debug.Log("Move");
+                if (!Equals(player, null))
+                {
+                    // Debug.Log("Move");
                     Vector3 direction = (player.transform.position - transform.position).normalized;
                     float distance = Vector3.Distance(player.transform.position, transform.position);
                     transform.DOMove(transform.position + direction * distance, distance / Mob_Speed);
                 }
             }
-         
+            else
+            {
+                transform.DOKill();
+            }
+        }
+
+
+        private void OnCollisionEnter2D(Collision2D other)
+        {
+            if (other.gameObject.CompareTag("Player_Attack"))
+            {
+                Debug.Log("Hit");
+                //  SetMobState(MobState.Stun);
+                Mob_Hp -= player_Weaphon.attackPower;
+                if (Mob_Hp <= 0)
+                {
+                    SetMobState(MobState.Die);
+                }
+                else
+                {
+                    SetMobState(MobState.Stun);
+                }
+            }
         }
 
 
@@ -66,6 +90,16 @@ namespace DogGuns_Games.vamsir
         protected override void Mob_Stun()
         {
             Debug.Log("Stun");
+            //3초간 스턴
+
+            ismove = false;
+
+            DOVirtual.DelayedCall(Mob_StunTime, () => { SetMobState(MobState.Move); });
+        }
+
+        protected override void Mob_hit()
+        {
+            base.Mob_hit();
         }
 
         protected override void Mob_Attack()
@@ -76,8 +110,8 @@ namespace DogGuns_Games.vamsir
         protected override void Mob_Die()
         {
             base.Mob_Die();
+            transform.DOKill();
             Debug.Log("Die");
         }
-        
     }
 }
