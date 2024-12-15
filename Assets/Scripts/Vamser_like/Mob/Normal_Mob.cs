@@ -110,7 +110,7 @@ namespace DogGuns_Games.vamsir
         protected override void Mob_Die()
         {
             base.Mob_Die();
-
+            transform.DOKill();
             Debug.Log("Die");
         }
     }

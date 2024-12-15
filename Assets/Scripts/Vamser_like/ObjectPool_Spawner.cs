@@ -8,19 +8,26 @@ namespace DogGuns_Games.vamsir
     public class ObjectPool_Spawner : MonoBehaviour
     {
         [SerializeField] public IObjectPool<Vamser_Mob_Base> MOB_objectPool;
-        [Header("<color=green>몹 오브젝트")] 
-        [SerializeField] private int poolSize_MobCount = 20;
-        [Header("<color=green>몹 프리팹")]
-        [SerializeField] private Vamser_Mob_Base Mob_prefab;
-        [Header("<color=green>몹 오브젝트 스폰 위치")]
-        [SerializeField] private Transform Mob_Parent;
+
+        [Header("<color=green>몹 오브젝트")] [SerializeField]
+        private int poolSize_MobCount = 20;
+
+        [Header("<color=green>몹 프리팹")] [SerializeField]
+        private Vamser_Mob_Base Mob_prefab;
+
+        [Header("<color=green>몹 오브젝트 스폰 위치")] [SerializeField]
+        private Transform Mob_Parent;
+
         private int MobCount = 0;
 
+        private int MobSpawnWave = 0;
 
-       
+
         [SerializeField] public IObjectPool<EXP_Obj> EXP_objectPool;
-        [Header("<color=green>경험치 오브젝트")]
-        [SerializeField] private EXP_Obj Exp_Prefab;
+
+        [Header("<color=green>경험치 오브젝트")] [SerializeField]
+        private EXP_Obj Exp_Prefab;
+
         [SerializeField] private EXP_Obj BigExp_Prefab;
 
         Camera mainCamera;
@@ -39,29 +46,38 @@ namespace DogGuns_Games.vamsir
 
         private void Start()
         {
+            GameStart();
+        }
+
+        private void GameStart()
+        {
             for (int i = 0; i < poolSize_MobCount; i++)
             {
                 MOB_objectPool.Get();
                 MobCount++;
             }
+
+            MobSpawnWave = 1;
         }
 
 
         private void CheckMob()
         {
-            Invoke(nameof(ReSpawn), 3);
+            if (MobCount <= 0)
+            {
+                Invoke(nameof(ReSpawn), 3);
+            }
         }
 
         private void ReSpawn()
         {
-            // 몹이 모두 죽었을때 다시 생성
-            if (MobCount == 0)
+            MobSpawnWave++;
+            poolSize_MobCount += 5;
+            Debug.Log("Wave : " + MobSpawnWave);
+            for (int i = 0; i < poolSize_MobCount; i++)
             {
-                for (int i = 0; i < poolSize_MobCount; i++)
-                {
-                    MOB_objectPool.Get();
-                    MobCount++;
-                }
+                MOB_objectPool.Get();
+                MobCount++;
             }
         }
 
