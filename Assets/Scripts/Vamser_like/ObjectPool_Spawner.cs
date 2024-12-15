@@ -8,14 +8,18 @@ namespace DogGuns_Games.vamsir
     public class ObjectPool_Spawner : MonoBehaviour
     {
         [SerializeField] public IObjectPool<Vamser_Mob_Base> MOB_objectPool;
+        [Header("<color=green>몹 오브젝트")] 
         [SerializeField] private int poolSize_MobCount = 20;
+        [Header("<color=green>몹 프리팹")]
         [SerializeField] private Vamser_Mob_Base Mob_prefab;
+        [Header("<color=green>몹 오브젝트 스폰 위치")]
         [SerializeField] private Transform Mob_Parent;
         private int MobCount = 0;
 
 
-        //todo: 경험치 클래스 작업 필요
+       
         [SerializeField] public IObjectPool<EXP_Obj> EXP_objectPool;
+        [Header("<color=green>경험치 오브젝트")]
         [SerializeField] private EXP_Obj Exp_Prefab;
         [SerializeField] private EXP_Obj BigExp_Prefab;
 
