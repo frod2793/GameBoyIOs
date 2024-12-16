@@ -11,7 +11,11 @@ public class SettingsData_oBJ : ScriptableObject
     public bool ConSmall_toggle = true;         // 작은 버튼 기본값
     public bool ConNormal_Toggle = false;       // 중간 버튼 기본값
     public bool ConBigBtn_Toggle = false;       // 큰 버튼 기본값
-
+    public int JoystickType = 0;       // 조이스틱 타입 기본값
+    public float JoystickSize = 1;       // 조이스틱 크기 기본값
+    public Vector2 JoystickPos = new Vector2(0.5f, 0.5f);       // 조이스틱 위치 기본값
+  
+    
     private static string filePath => Path.Combine(Application.persistentDataPath, "settingsData.json");
 
     // JSON으로 데이터 저장

@@ -8,7 +8,9 @@ namespace DogGuns_Games.vamsir
         [SerializeField] private GameObject inGameObject_parent;
         
         private Vector3 SpawnPosition = new Vector3(0, 0, 0);
-        
+        [SerializeField] 
+        private OptionPopupManager OptionPopUP;
+        public SettingsData_oBJ settingsData;
         private void Awake()
         {
             Player_Data_Manager_Dontdesytoy.Instance.SelectCharacterIndex = 0; //임시 
@@ -30,5 +32,13 @@ namespace DogGuns_Games.vamsir
                 }
             }
         }
+        
+        
+        public void Open_OptionPopUp()
+        {
+            Instantiate(OptionPopUP);
+            OptionPopUP.gameObject.SetActive(true);
+        }
+        
     }
 }

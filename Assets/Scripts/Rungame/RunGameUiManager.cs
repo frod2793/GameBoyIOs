@@ -12,7 +12,7 @@ namespace DogGuns_Games.Run
     {
         public SettingsData_oBJ settingsData; // ScriptableObject 참조
 
-        [FormerlySerializedAs("JumpBtn")] [Header("플레이어")]
+        [Header("플레이어")]
         public Button jumpBtn;
 
         public Slider Hpbar;
