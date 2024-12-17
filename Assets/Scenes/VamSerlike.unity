@@ -1142,11 +1142,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04a5c7db7f299b242b18e2c886886ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolSize_MobCount: 10
-  Mob_prefab: {fileID: 2752415986043711644, guid: eadd366eb479eb346b949d1b6f3169f6, type: 3}
-  Mob_Parent: {fileID: 825623793}
-  Exp_Prefab: {fileID: 4566103890259729249, guid: 4c8425f62f705cc4a99f433172396afc, type: 3}
-  BigExp_Prefab: {fileID: 7148867924126193655, guid: 4938e6d7b52b8a54eb1d81472b4f565c, type: 3}
+  poolSizeMobCount: 10
+  mobPrefab: {fileID: 0}
+  mobParent: {fileID: 825623793}
+  expPrefab: {fileID: 0}
+  bigExpPrefab: {fileID: 0}
 --- !u!1 &524570544
 GameObject:
   m_ObjectHideFlags: 0
@@ -4206,8 +4206,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2e1479d42afc645ab7173157cf7f64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inGameObject_parent: {fileID: 55434326}
-  OptionPopUP: {fileID: 4094199759714701803, guid: 5a7f1c748981f41a9a1663df2eed2eab, type: 3}
+  inGameObjectParent: {fileID: 0}
+  optionPopupManager: {fileID: 0}
   settingsData: {fileID: 11400000, guid: 4c02e581b0798d8469464ed35d84d0f8, type: 2}
 --- !u!114 &1744711242
 MonoBehaviour:
@@ -4221,15 +4221,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a947f548df8967459641a63baf7aaa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MobWaveText: {fileID: 0}
+  mobWaveText: {fileID: 0}
   coinText: {fileID: 868339475}
-  MobCountText: {fileID: 1556697593}
+  mobCountText: {fileID: 0}
   playerLevelText: {fileID: 1089778738}
-  SettingBtn: {fileID: 1242505182}
-  PusePopup: {fileID: 0}
-  PopUp_playBtn: {fileID: 0}
-  PopUp_ResetBtn: {fileID: 0}
-  PopUp_OPtionBtn: {fileID: 0}
+  settingBtn: {fileID: 1242505182}
+  variableJoystick: {fileID: 1852878176}
 --- !u!1 &1764308907
 GameObject:
   m_ObjectHideFlags: 0

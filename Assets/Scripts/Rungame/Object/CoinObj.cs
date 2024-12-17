@@ -37,7 +37,7 @@ namespace DogGuns_Games.Run
         {
             if (uimanager.isPlay)
             {
-                transform.Translate(Vector2.left * Time.deltaTime * speed);
+                transform.Translate(Vector2.left * Time.deltaTime * Speed);
                 Vector2 vector = new Vector2(transform.position.x, transform.position.y);
                 objRigidbody.MovePosition(vector);
 

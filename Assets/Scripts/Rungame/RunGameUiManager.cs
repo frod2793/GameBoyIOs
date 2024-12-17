@@ -141,15 +141,15 @@ namespace DogGuns_Games.Run
 
         private void LoadSetting()
         {
-            if (settingsData.ConSmall_toggle)
+            if (settingsData.conSmallToggle)
             {
                 jumpBtn.gameObject.transform.localScale = new Vector3(0.5f, 0.5f, 1);
             }
-            else if (settingsData.ConNormal_Toggle)
+            else if (settingsData.conNormalToggle)
             {
                 jumpBtn.gameObject.transform.localScale = new Vector3(1, 1, 1);
             }
-            else if (settingsData.ConBigBtn_Toggle)
+            else if (settingsData.conBigBtnToggle)
             {
                 jumpBtn.gameObject.transform.localScale = new Vector3(1.5f, 1.5f, 1);
             }

@@ -9,21 +9,21 @@ namespace DogGuns_Games.vamsir
         void Init()
         {
             // 부모 클래스의 변수를 오버라이드하여 초기화
-            attackPower = 15f;
-            coolTime = 0.5f;
-            attackSpeed = 1.5f;
-            weaponSize = 1.2f;
-            projectileCount = 3f;
-            criticalChance = 0.2f;
-            criticalDamage = 2f;
-            health = 150f;
-            healthRegen = 1.5f;
-            defense = 5f;
-            moveSpeed = 7f;
-            expGain = 1.2f;
-            goldGain = 1.3f;
-            itemGainRange = 1.5f;
-            reroll = 2f;
+            AttackPower = 15f;
+            CoolTime = 0.5f;
+            AttackSpeed = 1.5f;
+            WeaponSize = 1.2f;
+            ProjectileCount = 3f;
+            CriticalChance = 0.2f;
+            CriticalDamage = 2f;
+            Health = 150f;
+            HealthRegen = 1.5f;
+            Defense = 5f;
+            MoveSpeed = 7f;
+            ExpGain = 1.2f;
+            GoldGain = 1.3f;
+            ItemGainRange = 1.5f;
+            Reroll = 2f;
         }
 
         public override void OnEnable()
@@ -41,8 +41,8 @@ namespace DogGuns_Games.vamsir
         {
             base.Player_attack( attackAngle);
             
-            weaphonBase.Weaphon_Attack(attackAngle);
-         //   Debug.Log("Player_attack : " + attackAngle);
+            WeaphonBase.Weaphon_Attack(attackAngle);
+         //   Debug.Log("Player_attack : " + AttackAngle);
         }
 
         public override void Player_Die()

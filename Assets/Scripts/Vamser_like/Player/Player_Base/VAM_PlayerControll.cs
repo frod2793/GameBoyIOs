@@ -11,7 +11,7 @@ namespace DogGuns_Games.vamsir
         [Header("<color=green>Player Object")] [SerializeField]
         private Player_Base player;
 
-        private Animator playerAnimator;
+        private Animator _playerAnimator;
 
         [Header("<color=green>Joystick")] [SerializeField]
         private VariableJoystick variableJoystick;
@@ -23,29 +23,29 @@ namespace DogGuns_Games.vamsir
         private float moveDuration = 0.1f;
 
 
-        bool isGameStart = false;
+        bool _isGameStart = false;
 
-        bool isAttack = false;
+        bool _isAttack = false;
 
         private void Start()
         {
-            playStart();
+            PlayStart();
         }
 
 
-        private void playStart()
+        private void PlayStart()
         {
             player = FindFirstObjectByType<Player_Base>();
-            playerAnimator = player.GetComponent<Animator>();
+            _playerAnimator = player.GetComponent<Animator>();
             if (player != null)
             {
-                isGameStart = true;
+                _isGameStart = true;
             }
         }
 
         private void FixedUpdate()
         {
-            if (isGameStart)
+            if (_isGameStart)
             {
                 PlayerMovement();
                 FallowCamera();
@@ -55,12 +55,12 @@ namespace DogGuns_Games.vamsir
         private void PlayerMovement()
         {
             Vector3 moveVector = (Vector3.right * variableJoystick.Horizontal + Vector3.up * variableJoystick.Vertical);
-            float deltaSpeed = player.moveSpeed * Time.deltaTime;
+            float deltaSpeed = player.MoveSpeed * Time.deltaTime;
             player.transform.DOMove(player.transform.position + moveVector * deltaSpeed, moveDuration);
-            playerAnimator.SetFloat("Walk", moveVector.magnitude);
+            _playerAnimator.SetFloat("Walk", moveVector.magnitude);
 
             // 조이스틱 조작 시 공격 
-            if (moveVector.magnitude > 0 && isAttack == false)
+            if (moveVector.magnitude > 0 && _isAttack == false)
             {
                 PlayerAttack(moveVector).Forget();
             }
@@ -80,12 +80,12 @@ namespace DogGuns_Games.vamsir
         /// <param name="attackAngle">공격 방향</param>
         private async UniTask PlayerAttack(Vector3 attackAngle)
         {
-            isAttack = true;
-            // playerAnimator.SetTrigger("Attack");
+            _isAttack = true;
+            // _playerAnimator.SetTrigger("Attack");
             player.Player_attack(attackAngle);
             
             await UniTask.Delay(100);
-            isAttack = false;
+            _isAttack = false;
         }
 
         /// <summary>
