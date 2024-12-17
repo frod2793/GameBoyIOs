@@ -6,7 +6,7 @@ namespace DogGuns_Games.Run
 {
     public class Obect_base : MonoBehaviour
     {
-        protected float speed;
+        protected float Speed;
         protected Rigidbody2D objRigidbody;
         [SerializeField] protected RunGameUiManager uimanager;
 
@@ -21,7 +21,7 @@ namespace DogGuns_Games.Run
         {
             uimanager = FindAnyObjectByType<RunGameUiManager>();
             objRigidbody = GetComponent<Rigidbody2D>();
-            speed = uimanager.CoinSpeed;
+            Speed = uimanager.CoinSpeed;
         }
     }
 }

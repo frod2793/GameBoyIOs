@@ -4,10 +4,10 @@ namespace DogGuns_Games.vamsir
 {
     public class Weaphon_base : MonoBehaviour
     {
-        public float attackPower { get; set; }
-        public float coolTime{ get; set; }
-        public float attackSpeed{ get; set; }
-        public float attackRange{ get; set; }
+        public float AttackPower { get; set; }
+        public float CoolTime{ get; set; }
+        public float AttackSpeed{ get; set; }
+        public float AttackRange{ get; set; }
         
         public enum WeaphonState
         {

@@ -37,7 +37,7 @@ namespace DogGuns_Games
         /// <summary>
         /// 인벤토리 초기화 
         /// </summary>
-        public void initInventory()
+        public void InitInventory()
         {
             inventory.Clear();
         }

@@ -88,7 +88,7 @@ namespace DogGuns_Games.vamsir
             if (!Mob_IsDie)
             {
                 Mob_IsDie = true;
-                objectPool_Spawner.MOB_objectPool.Release(this);
+                objectPool_Spawner.MobObjectPool.Release(this);
                 Debug.Log("Die : " + name);
             }
         }

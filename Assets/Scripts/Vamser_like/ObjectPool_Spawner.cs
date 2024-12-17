@@ -1,44 +1,45 @@
 using System;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace DogGuns_Games.vamsir
 {
     public class ObjectPool_Spawner : MonoBehaviour
     {
-        [SerializeField] public IObjectPool<Vamser_Mob_Base> MOB_objectPool;
+        [SerializeField] public IObjectPool<Vamser_Mob_Base> MobObjectPool;
 
-        [Header("<color=green>몹 오브젝트")] [SerializeField]
-        private int poolSize_MobCount = 20;
+        [FormerlySerializedAs("poolSize_MobCount")] [Header("<color=green>몹 오브젝트")] [SerializeField]
+        private int poolSizeMobCount = 20;
 
         [Header("<color=green>몹 프리팹")] [SerializeField]
-        private Vamser_Mob_Base Mob_prefab;
+        private Vamser_Mob_Base mobPrefab;
 
-        [Header("<color=green>몹 오브젝트 스폰 위치")] [SerializeField]
-        private Transform Mob_Parent;
+        [FormerlySerializedAs("Mob_Parent")] [Header("<color=green>몹 오브젝트 스폰 위치")] [SerializeField]
+        private Transform mobParent;
 
-        private int MobCount = 0;
+        private int _mobCount = 0;
 
-        private int MobSpawnWave = 0;
+        private int _mobSpawnWave = 0;
 
 
-        [SerializeField] public IObjectPool<EXP_Obj> EXP_objectPool;
+        [SerializeField] public IObjectPool<EXP_Obj> ExpObjectPool;
 
         [Header("<color=green>경험치 오브젝트")] [SerializeField]
-        private EXP_Obj Exp_Prefab;
+        private EXP_Obj expPrefab;
 
-        [SerializeField] private EXP_Obj BigExp_Prefab;
+        [SerializeField] private EXP_Obj bigExpPrefab;
 
         Camera mainCamera;
 
         private void Awake()
         {
-            MOB_objectPool = new ObjectPool<Vamser_Mob_Base>(Create_Mob,
-                OnGet, OnRelease, OnDestory, maxSize: poolSize_MobCount);
+            MobObjectPool = new ObjectPool<Vamser_Mob_Base>(Create_Mob,
+                OnGet, OnRelease, OnDestory, maxSize: poolSizeMobCount);
 
-            EXP_objectPool = new ObjectPool<EXP_Obj>(Create_EXP,
-                OnGet_EXP, OnRelease_EXP, OnDestory_EXP, maxSize: poolSize_MobCount);
+            ExpObjectPool = new ObjectPool<EXP_Obj>(Create_EXP,
+                OnGet_EXP, OnRelease_EXP, OnDestory_EXP, maxSize: poolSizeMobCount);
 
 
             mainCamera = Camera.main;
@@ -51,19 +52,19 @@ namespace DogGuns_Games.vamsir
 
         private void GameStart()
         {
-            for (int i = 0; i < poolSize_MobCount; i++)
+            for (int i = 0; i < poolSizeMobCount; i++)
             {
-                MOB_objectPool.Get();
-                MobCount++;
+                MobObjectPool.Get();
+                _mobCount++;
             }
 
-            MobSpawnWave = 1;
+            _mobSpawnWave = 1;
         }
 
 
         private void CheckMob()
         {
-            if (MobCount <= 0)
+            if (_mobCount <= 0)
             {
                 Invoke(nameof(ReSpawn), 3);
             }
@@ -71,13 +72,13 @@ namespace DogGuns_Games.vamsir
 
         private void ReSpawn()
         {
-            MobSpawnWave++;
-            poolSize_MobCount += 5;
-            Debug.Log("Wave : " + MobSpawnWave);
-            for (int i = 0; i < poolSize_MobCount; i++)
+            _mobSpawnWave++;
+            poolSizeMobCount += 5;
+            Debug.Log("Wave : " + _mobSpawnWave);
+            for (int i = 0; i < poolSizeMobCount; i++)
             {
-                MOB_objectPool.Get();
-                MobCount++;
+                MobObjectPool.Get();
+                _mobCount++;
             }
         }
 
@@ -86,7 +87,7 @@ namespace DogGuns_Games.vamsir
 
         private Vamser_Mob_Base Create_Mob()
         {
-            Vamser_Mob_Base mob = Instantiate(Mob_prefab.gameObject, Mob_Parent).GetComponent<Vamser_Mob_Base>();
+            Vamser_Mob_Base mob = Instantiate(mobPrefab.gameObject, mobParent).GetComponent<Vamser_Mob_Base>();
             mob.objectPool_Spawner = this;
             return mob;
         }
@@ -99,10 +100,10 @@ namespace DogGuns_Games.vamsir
         private void OnRelease(Vamser_Mob_Base obj)
         {
             obj.gameObject.SetActive(false);
-            MobCount--;
+            _mobCount--;
             CheckMob();
             // 몹이 죽었을때 경험치 생성
-            EXP_Obj exp = EXP_objectPool.Get();
+            EXP_Obj exp = ExpObjectPool.Get();
             exp.transform.position = obj.transform.position;
             exp.gameObject.SetActive(true);
         }
@@ -118,8 +119,8 @@ namespace DogGuns_Games.vamsir
         {
             // 큰 경험치 작은경험치 를 랜덤으로 생성 하는대 큰 경험치는 30%확률로 생성 
             EXP_Obj exp = Random.Range(0, 100) < 30
-                ? Instantiate(BigExp_Prefab.gameObject, Mob_Parent).GetComponent<EXP_Obj>()
-                : Instantiate(Exp_Prefab.gameObject, Mob_Parent).GetComponent<EXP_Obj>();
+                ? Instantiate(bigExpPrefab.gameObject, mobParent).GetComponent<EXP_Obj>()
+                : Instantiate(expPrefab.gameObject, mobParent).GetComponent<EXP_Obj>();
             exp.objectPool_Spawner = this;
             return exp;
         }

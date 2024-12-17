@@ -1,41 +1,52 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace DogGuns_Games.vamsir
 {
     public class VamserLike_UI : MonoBehaviour
     {
-        [SerializeField] private TMP_Text MobWaveText;
+        
+        [SerializeField] private TMP_Text mobWaveText;
         [SerializeField] private TMP_Text coinText;
-        [SerializeField] private TMP_Text MobCountText;
+        [SerializeField] private TMP_Text mobCountText;
         [SerializeField] private TMP_Text playerLevelText;
 
-        [SerializeField] private Button SettingBtn;
-     
-        VamserLike_GameManager gameManager;
-
-        [Header("Puse 팝업")] public Image PusePopup;
-        public Button PopUp_playBtn;
-        public Button PopUp_ResetBtn;
-        public Button PopUp_OPtionBtn;
-    
-       
-
+        [FormerlySerializedAs("SettingBtn")]
+        [SerializeField] private Button settingBtn;
+        
+        [Header("<color=green>조이스틱</color>")]
+        [SerializeField] private VariableJoystick variableJoystick;
+ 
+        
+        VamserLike_GameManager _gameManager;
+        
         private void Awake()
         {
-            gameManager = FindFirstObjectByType<VamserLike_GameManager>();
+            _gameManager = FindFirstObjectByType<VamserLike_GameManager>();
         }
 
         private void Start()
         {
             BtnSetting();
+            JoystickSetting();
         }
 
+        private void JoystickSetting()
+        {
+            if (variableJoystick == null)
+            {
+                variableJoystick = FindFirstObjectByType<VariableJoystick>();
+            }
+                
+            variableJoystick.gameObject.transform.localScale = new Vector3(_gameManager.settingsData.joystickSize, _gameManager.settingsData.joystickSize, 1);  
+            variableJoystick.SetMode((JoystickType)_gameManager.settingsData.joystickType);
+        }
         private void BtnSetting()
         {
-            SettingBtn.onClick.AddListener(gameManager.Open_OptionPopUp);
+            settingBtn.onClick.AddListener(_gameManager.Open_OptionPopUp);
         }
         
         

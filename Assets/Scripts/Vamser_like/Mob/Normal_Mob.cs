@@ -64,7 +64,7 @@ namespace DogGuns_Games.vamsir
             {
                 Debug.Log("Hit");
                 //  SetMobState(MobState.Stun);
-                Mob_Hp -= player_Weaphon.attackPower;
+                Mob_Hp -= player_Weaphon.AttackPower;
                 if (Mob_Hp <= 0)
                 {
                     SetMobState(MobState.Die);

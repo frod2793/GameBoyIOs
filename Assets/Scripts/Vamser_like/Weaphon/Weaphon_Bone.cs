@@ -23,7 +23,7 @@ private GameObject Bullet_Parent;
             objectPool = new ObjectPool<Bone_Bullet>(Create_Bullet,
                 OnGet, OnRelease, OnDestory, maxSize: poolSize_BulletCount);
             
-            attackPower = 50f;
+            AttackPower = 50f;
             
         }
       
@@ -80,7 +80,7 @@ private GameObject Bullet_Parent;
         private void Thorw_Bone(Vector3 attackAngle)
         {
             Bone_Bullet bullet = objectPool.Get();
-            bullet.bulletDamage = attackPower;
+            bullet.bulletDamage = AttackPower;
             bullet.transform.position = transform.position;
             bullet.transform.rotation = Quaternion.Euler(attackAngle);
             bullet.Thow_Bullet(attackAngle);
