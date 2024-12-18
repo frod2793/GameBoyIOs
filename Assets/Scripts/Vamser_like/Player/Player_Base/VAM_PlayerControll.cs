@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -29,19 +30,38 @@ namespace DogGuns_Games.vamsir
 
         private void Start()
         {
-            PlayStart();
+            Play_State.OnGameStart += PlayerInit;
+            Play_State.OnGamePause += Pause;
+            Play_State.OnGameResume += Resume;
+    
+        }
+
+        private void OnDestroy()
+        {
+            Play_State.OnGameStart -= PlayerInit;
+            Play_State.OnGamePause -= Pause;
+            Play_State.OnGameResume -= Resume;
+            
         }
 
 
-        private void PlayStart()
+        private void PlayerInit()
         {
             player = FindFirstObjectByType<Player_Base>();
             _playerAnimator = player.GetComponent<Animator>();
-            if (player != null)
-            {
-                _isGameStart = true;
-            }
+            _isGameStart = true;
         }
+
+        private void Pause()
+        {
+            _isGameStart = false;
+        }
+        
+        private void Resume()
+        {
+            _isGameStart = true;
+        }
+        
 
         private void FixedUpdate()
         {
@@ -54,6 +74,12 @@ namespace DogGuns_Games.vamsir
 
         private void PlayerMovement()
         {
+            if (Equals(player, null))
+            {
+                PlayerInit();
+            }
+           
+            
             Vector3 moveVector = (Vector3.right * variableJoystick.Horizontal + Vector3.up * variableJoystick.Vertical);
             float deltaSpeed = player.MoveSpeed * Time.deltaTime;
             player.transform.DOMove(player.transform.position + moveVector * deltaSpeed, moveDuration);

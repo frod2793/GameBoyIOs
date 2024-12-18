@@ -8,9 +8,9 @@ namespace DogGuns_Games.vamsir
 {
     public class ObjectPool_Spawner : MonoBehaviour
     {
-        [SerializeField] public IObjectPool<Vamser_Mob_Base> MobObjectPool;
+        public IObjectPool<Vamser_Mob_Base> MobObjectPool;
 
-        [FormerlySerializedAs("poolSize_MobCount")] [Header("<color=green>몹 오브젝트")] [SerializeField]
+        [Header("<color=green>몹 오브젝트")] [SerializeField]
         private int poolSizeMobCount = 20;
 
         [Header("<color=green>몹 프리팹")] [SerializeField]
@@ -47,18 +47,23 @@ namespace DogGuns_Games.vamsir
 
         private void Start()
         {
-            GameStart();
+            Play_State.OnGameStart += GameStart;
+          
         }
 
         private void GameStart()
         {
-            for (int i = 0; i < poolSizeMobCount; i++)
+            if (Play_State.instance.isPlay)
             {
-                MobObjectPool.Get();
-                _mobCount++;
-            }
+                for (int i = 0; i < poolSizeMobCount; i++)
+                {
+                    MobObjectPool.Get();
+                    _mobCount++;
+                }
 
-            _mobSpawnWave = 1;
+                _mobSpawnWave = 1;
+            }
+           
         }
 
 

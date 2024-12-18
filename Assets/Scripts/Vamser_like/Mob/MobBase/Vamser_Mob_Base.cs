@@ -16,6 +16,7 @@ namespace DogGuns_Games.vamsir
         public bool  Mob_IsDie { get; set; }
         
         
+        public bool ismove;
         public enum MobState
         {
             Idle,
@@ -32,6 +33,9 @@ namespace DogGuns_Games.vamsir
             objectPool_Spawner = FindFirstObjectByType<ObjectPool_Spawner>();
 
             Mob_IsDie = false;
+            
+            Play_State.OnGamePause += Pause;
+            Play_State.OnGameResume += Resume;
         }
 
         
@@ -43,6 +47,17 @@ namespace DogGuns_Games.vamsir
                 SetMobState(mobState);
             }
         }
+
+        private void Pause()
+        {
+            ismove = false;
+        }
+        
+        private void Resume()
+        {
+            ismove = true;
+        }
+        
         public void SetMobState(MobState state)
         {
             switch (state)
