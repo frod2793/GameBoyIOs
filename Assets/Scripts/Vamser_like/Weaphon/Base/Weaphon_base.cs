@@ -5,25 +5,25 @@ namespace DogGuns_Games.vamsir
     public class Weaphon_base : MonoBehaviour
     {
         public float AttackPower { get; set; }
-        public float CoolTime{ get; set; }
-        public float AttackSpeed{ get; set; }
-        public float AttackRange{ get; set; }
-        
+        public float CoolTime { get; set; }
+        public float AttackSpeed { get; set; }
+        public float AttackRange { get; set; }
+
         public enum WeaphonState
         {
             Idle,
             Attack,
             Reload
         }
-        
+
         [SerializeField] private WeaphonState weaphonState;
-        
+
         public virtual void OnEnable()
         {
             SetWeaphonState(WeaphonState.Idle);
         }
-        
-        private  void OnValidate()
+
+        private void OnValidate()
         {
             if (Application.isPlaying)
             {
@@ -31,35 +31,36 @@ namespace DogGuns_Games.vamsir
                 SetWeaphonState(weaphonState);
             }
         }
-        
-        public  void SetWeaphonState(WeaphonState state)
+
+        public void SetWeaphonState(WeaphonState state)
         {
             switch (state)
             {
-                case WeaphonState.Idle: Weaphon_Idle(); 
+                case WeaphonState.Idle:
+                    Weaphon_Idle();
                     break;
-                case WeaphonState.Attack: Weaphon_Attack( Vector3.zero); 
+                case WeaphonState.Attack:
+                    Weaphon_Attack(Vector3.zero);
                     break;
-                case WeaphonState.Reload: Weaphon_Reload(); 
+                case WeaphonState.Reload:
+                    Weaphon_Reload();
                     break;
             }
         }
-        
+
         public virtual void Weaphon_Idle()
         {
             // 무기가 대기 상태일 때 처리
         }
-        
-        public virtual void Weaphon_Attack( Vector3 attackAngle)
+
+        public virtual void Weaphon_Attack(Vector3 attackAngle)
         {
             // 무기가 공격 상태일 때 처리
         }
-        
+
         public virtual void Weaphon_Reload()
         {
             // 무기가 재장전 상태일 때 처리
         }
-        
-        
     }
 }
