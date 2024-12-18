@@ -19,7 +19,7 @@ namespace DogGuns_Games.vamsir
         
         [Header("<color=green>조이스틱</color>")]
         [SerializeField] private VariableJoystick variableJoystick;
- 
+        [SerializeField] private Transform joystickTransform;
         
         VamserLike_GameManager _gameManager;
         
@@ -40,13 +40,18 @@ namespace DogGuns_Games.vamsir
             {
                 variableJoystick = FindFirstObjectByType<VariableJoystick>();
             }
-                
-            variableJoystick.gameObject.transform.localScale = new Vector3(_gameManager.settingsData.joystickSize, _gameManager.settingsData.joystickSize, 1);  
+            
+            Vector2 originJoystickPos = joystickTransform.position;
+            joystickTransform.localScale = new Vector3(_gameManager.settingsData.joystickSize, _gameManager.settingsData.joystickSize, 1);  
             variableJoystick.SetMode((JoystickType)_gameManager.settingsData.joystickType);
+            //todo : 조이스틱 위치 조정 필요 
+            joystickTransform.position = originJoystickPos;
+            
         }
         private void BtnSetting()
         {
             settingBtn.onClick.AddListener(_gameManager.Open_OptionPopUp);
+            
         }
         
         
