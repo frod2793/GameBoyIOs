@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class OptionPopupManager : MonoBehaviour
@@ -14,9 +15,10 @@ public class OptionPopupManager : MonoBehaviour
 
 
     [Header("조이스틱 사이즈및 타입 조절 버튼")] [SerializeField]
-    private Button joystickSizeBtn;
-
-
+    private Button joystickSizeBtn; 
+    [SerializeField] private Joystic_setter joysticSetterPopUp_Prefb;
+    
+    
     private void Start()
     {
         settingsData.LoadSettings();
@@ -26,6 +28,7 @@ public class OptionPopupManager : MonoBehaviour
 
         exitBtn.onClick.AddListener(SaveAndExit);
 
+        joystickSizeBtn.onClick.AddListener(EnableJoystickSizeBtn);
 
         DropDown_Init();
 
@@ -85,4 +88,13 @@ public class OptionPopupManager : MonoBehaviour
         options.Add("Floating");
         options.Add("Dynamic");
     }
+    
+    
+    private void EnableJoystickSizeBtn()
+    {
+        GameObject joystickSetterPopUp = Instantiate(joysticSetterPopUp_Prefb.gameObject, transform);
+        
+        joystickSetterPopUp.SetActive(true);
+    }
+    
 }

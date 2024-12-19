@@ -1298,7 +1298,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ReferenceResolution: {x: 2560, y: 1440}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
@@ -1340,6 +1340,7 @@ MonoBehaviour:
   bgMsoundVolum: {fileID: 4094199758598368506}
   exitBtn: {fileID: 1228173860297738752}
   joystickSizeBtn: {fileID: 5429298077428473100}
+  joysticSetterPopUp_Prefb: {fileID: 2074838346871182768, guid: a1ede60227d70fb4793a104174c41039, type: 3}
 --- !u!1 &4094199759737889036
 GameObject:
   m_ObjectHideFlags: 0

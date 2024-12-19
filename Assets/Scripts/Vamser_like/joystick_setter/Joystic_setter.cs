@@ -9,12 +9,16 @@ public class Joystic_setter : MonoBehaviour
     [SerializeField] private TMP_Dropdown JoystickTypeDropdown;
     [SerializeField] private Transform joystickTransform;
     [SerializeField]  JoyStick_Pos_dragandDrop _joyStickPosDragandDrop;
-
-    private void Start()
+[SerializeField] private Button saveandExitBtn;
+    private void OnEnable()
     {
         JoystickSizeSlider.onValueChanged.AddListener(delegate { JoystickSizeSliderChanged(); });
         JoystickTypeDropdown.onValueChanged.AddListener(delegate { JoystickTypeDropdownChanged(); });
+        saveandExitBtn.onClick.AddListener(SaveAndExit);
+        LoadSettings();
     }
+    
+    
     
     private void JoystickSizeSliderChanged()
     {
@@ -33,11 +37,6 @@ public class Joystic_setter : MonoBehaviour
         JoystickTypeDropdown.value = settingsData.joystickType;
     }
     
-    private void OnEnable()
-    {
-    //    LoadSettings();
-    }
-    
     private void OnDisable()
     {
         settingsData.SaveSettings();
@@ -50,6 +49,12 @@ public class Joystic_setter : MonoBehaviour
     }
     
     
+    private void SaveAndExit()
+    {
+        settingsData.SaveSettings();
+        SetJoystickPos();
+         Destroy(gameObject);
+    }
     
     
     
