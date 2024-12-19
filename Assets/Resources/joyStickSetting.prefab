@@ -493,6 +493,7 @@ MonoBehaviour:
   JoystickTypeDropdown: {fileID: 5306108705120598806}
   joystickTransform: {fileID: 4382627069193571671}
   _joyStickPosDragandDrop: {fileID: 8843523867777123148}
+  saveandExitBtn: {fileID: 186668380259253730}
 --- !u!1 &1911968659251762854
 GameObject:
   m_ObjectHideFlags: 0
