@@ -1,5 +1,6 @@
 
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace DogGuns_Games.vamsir
@@ -26,8 +27,27 @@ namespace DogGuns_Games.vamsir
         
         public int CharacterIndex { get; set; } //현재 캐릭터 인덱스
         
+        public bool ishit = false;
         public Weaphon_base WeaphonBase { get; set; }
 
+        public enum playerState
+        {
+            Idle,
+            Move,
+            Hit,
+            Attack
+        }
+        private playerState _playState;
+
+        public playerState PlayState
+        {
+            get => _playState;
+            set
+            {
+                _playState = value;
+                setPlayerState(_playState);
+            }
+        }
 
         public virtual void OnEnable()
         {
@@ -36,11 +56,16 @@ namespace DogGuns_Games.vamsir
             WeaphonBase.transform.localPosition = Vector3.zero;
         }
 
-        public virtual void OnCollisionEnter2D(Collision2D other)
+        public virtual void OnCollisionStay2D(Collision2D other)
         {
             if (other.gameObject.CompareTag("Mob"))
             {
-                Player_Hit();
+                if (!ishit)
+                {
+                    ishit = true;
+                    DelayAction(1f, () => ishit = false);
+                    PlayState = playerState.Hit;
+                }
             }
             
             if (other.gameObject.CompareTag("Exp"))
@@ -53,7 +78,24 @@ namespace DogGuns_Games.vamsir
             }
             
         }
-
+        public void setPlayerState(playerState state)
+        {
+            switch (state)
+            {
+                case playerState.Idle:
+                    Player_Idle();
+                    break;
+                case playerState.Move:
+                    PlayerMovement();
+                    break;
+                case playerState.Hit:
+                    Player_Hit();
+                    break;
+                case playerState.Attack:
+                    Player_attack(AttackAngle);
+                    break;
+            }
+        }
 
         public virtual void Player_attack( Vector3 attackAngle)
         {
@@ -65,10 +107,23 @@ namespace DogGuns_Games.vamsir
 
         public virtual void Player_Hit()
         {
+            
         }
 
         public virtual void Player_Idle()
         {
         }
+        
+        public virtual void PlayerMovement()
+        {
+        }
+        
+        public UniTask DelayAction(float delay, Action action)
+        {
+            return UniTask.Delay(TimeSpan.FromSeconds(delay)).ContinueWith(() => action());
+        }
+
+       
+      
     }
 }

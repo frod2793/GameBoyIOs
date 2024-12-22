@@ -107,8 +107,9 @@ namespace DogGuns_Games.vamsir
         private async UniTask PlayerAttack(Vector3 attackAngle)
         {
             _isAttack = true;
-            // _playerAnimator.SetTrigger("Attack");
-            player.Player_attack(attackAngle);
+            player.AttackAngle = attackAngle;
+            player.PlayState = Player_Base.playerState.Attack;
+            
             
             await UniTask.Delay(100);
             _isAttack = false;
