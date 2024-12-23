@@ -35,7 +35,6 @@ namespace DogGuns_Games.vamsir
             Play_State.OnGameResume += Resume;
     
         }
-
         private void OnDestroy()
         {
             Play_State.OnGameStart -= PlayerInit;
@@ -43,8 +42,7 @@ namespace DogGuns_Games.vamsir
             Play_State.OnGameResume -= Resume;
             
         }
-
-
+        
         private void PlayerInit()
         {
             player = FindFirstObjectByType<Player_Base>();
@@ -62,7 +60,6 @@ namespace DogGuns_Games.vamsir
             _isGameStart = true;
         }
         
-
         private void FixedUpdate()
         {
             if (_isGameStart)
@@ -78,7 +75,6 @@ namespace DogGuns_Games.vamsir
             {
                 PlayerInit();
             }
-           
             
             Vector3 moveVector = (Vector3.right * variableJoystick.Horizontal + Vector3.up * variableJoystick.Vertical);
             float deltaSpeed = player.MoveSpeed * Time.deltaTime;
@@ -90,8 +86,7 @@ namespace DogGuns_Games.vamsir
             {
                 PlayerAttack(moveVector).Forget();
             }
-
-
+            
             if (moveVector != Vector3.zero)
             {
                 float angle = Mathf.Atan2(moveVector.y, moveVector.x) * Mathf.Rad2Deg;

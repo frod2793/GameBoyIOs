@@ -45,6 +45,13 @@ namespace DogGuns_Games.vamsir
             if (ismove)
             {
                 // 플레이어 방향으로 이동 dotween
+                // 플레이어 위치에 도달하면 멈춤
+                if (player.transform.position == transform.position)
+                { 
+                    transform.DOKill();
+                    return;
+                }
+                
                 if (!Equals(player, null))
                 {
                     Vector3 direction = (player.transform.position - transform.position).normalized;

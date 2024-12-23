@@ -19,6 +19,8 @@ namespace DogGuns_Games.vamsir
             objectPool = new ObjectPool<Bone_Bullet>(Create_Bullet,
                 OnGet, OnRelease, OnDestory, maxSize: poolSize_BulletCount);
 
+            Bullet_Parent = GameObject.FindWithTag("WeaponPool");
+            
             AttackPower = 50f;
         }
 

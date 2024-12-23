@@ -1,14 +1,19 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DogGuns_Games.vamsir
 {
     public class Weaphon_base : MonoBehaviour
     {
+        
+        
         public float AttackPower { get; set; }
         public float CoolTime { get; set; }
         public float AttackSpeed { get; set; }
         public float AttackRange { get; set; }
 
+        public int weaphonIndex;//현재 무기 인덱스 
+        
         public enum WeaphonState
         {
             Idle,

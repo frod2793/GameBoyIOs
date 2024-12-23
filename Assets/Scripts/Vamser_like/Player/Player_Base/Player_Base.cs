@@ -2,6 +2,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DogGuns_Games.vamsir
 {
@@ -23,9 +24,10 @@ namespace DogGuns_Games.vamsir
         public float ItemGainRange{ get; set; }
         public float Reroll { get; set; }
 
+        public float Level { get; set; }
         public Vector3 AttackAngle { get; set; }
-        
-        public int CharacterIndex { get; set; } //현재 캐릭터 인덱스
+
+        public int characterIndex; //현재 캐릭터 인덱스
         
         public bool ishit = false;
         public Weaphon_base WeaphonBase { get; set; }

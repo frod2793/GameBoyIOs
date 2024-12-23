@@ -8,6 +8,11 @@ namespace DogGuns_Games
     {
         public PlayerData scritpableobj_playerData;
 
+        public int SelectWeaponIndex
+        {
+            get => scritpableobj_playerData.selelcWeaponIndex;
+            set => scritpableobj_playerData.selelcWeaponIndex = value;
+        }
         public int SelectCharacterIndex
         {
             get => scritpableobj_playerData.selectCharacterIndex;
