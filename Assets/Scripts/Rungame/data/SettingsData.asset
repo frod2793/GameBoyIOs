@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundSoundVolume: 0.5
   effectSoundVolume: 0.5
-  ConSmall_toggle: 1
-  ConNormal_Toggle: 0
-  ConBigBtn_Toggle: 0
+  conSmallToggle: 1
+  conNormalToggle: 0
+  conBigBtnToggle: 0
+  joystickType: 0
+  joystickSize: 1
+  joystickPos: {x: 1127.168, y: 806.0931}

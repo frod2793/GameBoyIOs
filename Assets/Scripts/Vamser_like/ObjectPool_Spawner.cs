@@ -20,8 +20,10 @@ namespace DogGuns_Games.vamsir
         private Transform mobParent;
 
         private int _mobCount = 0;
+        public int MobCount => _mobCount;
 
         private int _mobSpawnWave = 0;
+        public int MobSpawnWave => _mobSpawnWave;
 
 
         [SerializeField] public IObjectPool<EXP_Obj> ExpObjectPool;

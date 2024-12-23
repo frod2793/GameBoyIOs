@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -39,6 +40,7 @@ namespace DogGuns_Games.vamsir
         {
             BtnSetting();
             JoystickSetting();
+            UpdateUI().Forget();
         }
 
         private void Pause()
@@ -78,6 +80,18 @@ namespace DogGuns_Games.vamsir
                 _gameManager.Open_OptionPopUp();
                 settingBtn.enabled = false;
             });
+        }
+        
+        private async UniTask UpdateUI()
+        {
+            while (true)
+            {
+                mobWaveText.text = $"Wave {_gameManager.MobSpawnWave()}";
+                coinText.text = $"{_gameManager.CoinCount()}";
+                mobCountText.text = $"{_gameManager.Mobcount()}";
+                playerLevelText.text = $"Lv. {_gameManager.PlayerLevel()}";
+                await UniTask.Yield();
+            }
         }
     }
 }
