@@ -33,6 +33,8 @@ namespace DogGuns_Games.vamsir
             Play_State.OnGameStart += PlayerInit;
             Play_State.OnGamePause += Pause;
             Play_State.OnGameResume += Resume;
+            
+            
     
         }
         private void OnDestroy()
@@ -47,6 +49,7 @@ namespace DogGuns_Games.vamsir
         {
             player = FindFirstObjectByType<Player_Base>();
             _playerAnimator = player.GetComponent<Animator>();
+            cameraTransform = Camera.main.transform;
             _isGameStart = true;
         }
 
@@ -71,7 +74,7 @@ namespace DogGuns_Games.vamsir
 
         private void PlayerMovement()
         {
-            if (Equals(player, null))
+            if (player  == null)
             {
                 PlayerInit();
             }

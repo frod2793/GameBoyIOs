@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4729861070751391221}
   - component: {fileID: 3171245049777179146}
   - component: {fileID: 4679003710477872776}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: WeaPhon_Bone
   m_TagString: Player_Attack
   m_Icon: {fileID: 0}
@@ -104,3 +104,4 @@ MonoBehaviour:
   weaphonState: 0
   poolSize_BulletCount: 10
   bonePrefab: {fileID: 1450392623949166087, guid: 4c3e8fd5331c03f4eb9f8ae4ccb22182, type: 3}
+  Bullet_Parent: {fileID: 0}

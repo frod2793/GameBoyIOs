@@ -15,12 +15,12 @@ namespace DogGuns_Games.vamsir
         public override void OnEnable()
         {
             base.OnEnable();
-
+            //발사체 오브젝트 풀 설정 
             objectPool = new ObjectPool<Bone_Bullet>(Create_Bullet,
                 OnGet, OnRelease, OnDestory, maxSize: poolSize_BulletCount);
 
             Bullet_Parent = GameObject.FindWithTag("WeaponPool");
-            
+
             AttackPower = 50f;
         }
 

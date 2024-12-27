@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8995850725629666990}
   - component: {fileID: 6735505719767251672}
   - component: {fileID: 3357545769698321406}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: player_DogGun
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: aeb5e4e24acdcf340ae813706eb1d555, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -103,6 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e8002305a577734b9aabec3b7e18685, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterIndex: 0
+  ishit: 0
 --- !u!95 &8995850725629666990
 Animator:
   serializedVersion: 7
@@ -138,7 +140,7 @@ CircleCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -180,7 +182,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0

@@ -37,7 +37,7 @@ namespace DogGuns_Games
             switch (FuncNum)
             {
                 case 0:
-                    runGame();
+                    Vamsirlike();
                     break;
                 case 1:
                     groundGame();
@@ -56,9 +56,9 @@ namespace DogGuns_Games
             gameObject.SetActive(false);
         }
 
-        private void runGame()
+        private void Vamsirlike()
         {
-            SceneLoader.Instace.LoadScene("RunGame");
+            SceneLoader.Instace.LoadScene("VamSerlike");
             Debug.Log("런게임");
         }
 

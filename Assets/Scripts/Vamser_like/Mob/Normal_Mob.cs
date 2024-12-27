@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ namespace DogGuns_Games.vamsir
         private void Start()
         {
             Mob_Speed = 0.5f;
-            Mob_Hp = 100f;
+            this.Mob_Hp = 100f;
             Mob_AttackDamage = 10f;
             Mob_AttackSpeed = 1f;
             Mob_AttackRange = 1f;
@@ -44,6 +45,10 @@ namespace DogGuns_Games.vamsir
         {
             if (ismove)
             {
+                if (player == null)
+                {
+                    player = FindFirstObjectByType<Player_Base>();
+                }
                 // 플레이어 방향으로 이동 dotween
                 // 플레이어 위치에 도달하면 멈춤
                 if (player.transform.position == transform.position)
@@ -66,13 +71,29 @@ namespace DogGuns_Games.vamsir
         }
 
 
-        private void OnCollisionEnter2D(Collision2D other)
+        private void OnCollisionStay2D(Collision2D other)
         {
+            if (other.gameObject.CompareTag("Player_Attack") && !Mob_IsHit)
+            {
+                HitCooltime(other).Forget();
+            }
+        }
+        
+        private async UniTask HitCooltime(Collision2D other)
+        {   
+            Mob_IsHit = true;
+            if (player_Weaphon == null)
+            {
+                player_Weaphon = FindFirstObjectByType<Weaphon_base>();
+            }
+
+            Debug.Log(other.gameObject.tag);
+
             if (other.gameObject.CompareTag("Player_Attack"))
             {
+            
                 Debug.Log("Hit");
-                //  SetMobState(MobState.Stun);
-                Mob_Hp -= player_Weaphon.AttackPower;
+                this.Mob_Hp -= player_Weaphon.AttackPower;
                 if (Mob_Hp <= 0)
                 {
                     SetMobState(MobState.Die);
@@ -82,7 +103,11 @@ namespace DogGuns_Games.vamsir
                     SetMobState(MobState.Stun);
                 }
             }
+
+            await UniTask.DelayFrame(60); //  프레임 지연 
+            Mob_IsHit = false;
         }
+
 
 
         protected override void Mob_Idle()

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2752415986043711644}
   - component: {fileID: 6867104784603527472}
   - component: {fileID: 2080499839996863037}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: normal_mob
   m_TagString: Mob
   m_Icon: {fileID: 0}
@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectPool_Spawner: {fileID: 0}
+  ismove: 0
   mobState: 0
   player: {fileID: 0}
   player_Weaphon: {fileID: 0}
@@ -119,7 +120,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
