@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 52504532600647814}
   - component: {fileID: 904601317635732907}
   - component: {fileID: 69510856890358246}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: WeaPhon_Bone_Bullet
   m_TagString: Player_Attack
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
