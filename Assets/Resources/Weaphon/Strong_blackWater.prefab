@@ -102,7 +102,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f71909a3c8e9f20468b465255d3f9178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackPower: 15
+  attackPower: 30
+  coolTime: 0.5
+  attackSpeed: 0
+  attackRange: 0
+  mobStunTime: 1
   weaphonIndex: 1
   weaphonState: 0
 --- !u!58 &6130841383784017638

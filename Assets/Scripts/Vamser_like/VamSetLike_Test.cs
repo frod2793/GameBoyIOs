@@ -25,7 +25,7 @@ namespace DogGuns_Games.vamsir
             {
                 Player_Data_Manager_Dontdesytoy.Instance.SelectCharacterIndex = Character_Index;
                 Player_Data_Manager_Dontdesytoy.Instance.SelectWeaponIndex = Weapon_Index;
-                vamserLikeGameManager.ChangeCharacterandWeaponandSpawn();
+                vamserLikeGameManager.ChangeCharacterAndWeaponandSpawn();
             }
         }
       

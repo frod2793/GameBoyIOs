@@ -8,9 +8,11 @@ namespace DogGuns_Games.vamsir
     {
         private Player_Base[] _playerBases;
         private Weaphon_base[] _weaphonBases;
+        [Header("<color=green> 캐릭터 및 무기가 스폰 될시 부모 오브젝트")]
         [SerializeField] private GameObject inGameObjectParent;
 
         private Vector3 _spawnPosition = new Vector3(0, 0, 0);
+        [Header("<color=green> 옵션 팝업 매니저")]
         [SerializeField] private OptionPopupManager optionPopupManager;
         public SettingsData_oBJ settingsData;
 
@@ -18,9 +20,6 @@ namespace DogGuns_Games.vamsir
 
         private void Awake()
         {
-            //  Player_Data_Manager_Dontdesytoy.Instance.SelectCharacterIndex = 0; //임시 
-            //  Player_Data_Manager_Dontdesytoy.Instance.SelectWeaponIndex = 0; //임시
-
             _objectPoolSpawner = FindFirstObjectByType<ObjectPool_Spawner>();
 
             Play_State.OnGameStart += GameStart;
@@ -73,7 +72,7 @@ namespace DogGuns_Games.vamsir
         }
 
 
-        public void ChangeCharacterandWeaponandSpawn()
+        public void ChangeCharacterAndWeaponandSpawn()
         {
             for (int i = 0; i < inGameObjectParent.transform.childCount; i++)
             {

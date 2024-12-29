@@ -100,7 +100,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d050ef204462564d8ac6e832a632164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackPower: 25
+  coolTime: 0.05
+  attackSpeed: 5
+  attackRange: 0
+  mobStunTime: 0.5
   weaphonIndex: 0
+  isShooting: 1
   weaphonState: 0
   poolSize_BulletCount: 10
   bonePrefab: {fileID: 1450392623949166087, guid: 4c3e8fd5331c03f4eb9f8ae4ccb22182, type: 3}
