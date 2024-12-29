@@ -13,29 +13,34 @@ namespace DogGuns_Games.vamsir
         [Header("<color=green>플레이어 무기")] [SerializeField]
         private Weaphon_base player_Weaphon;
 
+//피격 물체가 피사체인지 구분
+        private bool isHitByShoot = false;
 
         private void Awake()
         {
             DOTween.SetTweensCapacity(500, 50);
         }
 
-        private void Start()
+        private void Init()
         {
+            player = FindFirstObjectByType<Player_Base>();
+            player_Weaphon = FindFirstObjectByType<Weaphon_base>();
             Mob_Speed = 0.5f;
-            this.Mob_Hp = 100f;
+            Mob_Hp = 100f;
             Mob_AttackDamage = 10f;
             Mob_AttackSpeed = 1f;
             Mob_AttackRange = 1f;
-            Mob_StunTime = 1f;
             Mob_IsDie = false;
+            Mob_IsHit = false;
+            isHitByShoot = player_Weaphon.isShooting;
         }
 
 
         public override void OnEnable()
         {
             base.OnEnable();
-            player = FindFirstObjectByType<Player_Base>();
-            player_Weaphon = FindFirstObjectByType<Weaphon_base>();
+
+            Init();
 
             SetMobState(MobState.Move);
         }
@@ -49,14 +54,15 @@ namespace DogGuns_Games.vamsir
                 {
                     player = FindFirstObjectByType<Player_Base>();
                 }
+
                 // 플레이어 방향으로 이동 dotween
                 // 플레이어 위치에 도달하면 멈춤
                 if (player.transform.position == transform.position)
-                { 
+                {
                     transform.DOKill();
                     return;
                 }
-                
+
                 if (!Equals(player, null))
                 {
                     Vector3 direction = (player.transform.position - transform.position).normalized;
@@ -70,44 +76,46 @@ namespace DogGuns_Games.vamsir
             }
         }
 
-
-        private void OnCollisionStay2D(Collision2D other)
+        private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.gameObject.CompareTag("Player_Attack") && !Mob_IsHit)
+            if (isHitByShoot && !Mob_IsHit && other.gameObject.CompareTag("Player_Attack"))
             {
                 HitCooltime(other).Forget();
             }
         }
-        
+
+        private void OnCollisionStay2D(Collision2D other)
+        {
+            if (!isHitByShoot && !Mob_IsHit && other.gameObject.CompareTag("Player_Attack"))
+            {
+                HitCooltime(other).Forget();
+            }
+        }
+
         private async UniTask HitCooltime(Collision2D other)
-        {   
+        {
             Mob_IsHit = true;
             if (player_Weaphon == null)
             {
                 player_Weaphon = FindFirstObjectByType<Weaphon_base>();
+                
             }
 
-            Debug.Log(other.gameObject.tag);
-
-            if (other.gameObject.CompareTag("Player_Attack"))
+            Debug.Log("<color=green>Hit: " + player_Weaphon.attackPower);
+            Mob_Hp -= player_Weaphon.attackPower;
+            Mob_StunTime = player_Weaphon.mobStunTime;
+            if (Mob_Hp <= 0)
             {
-            
-                Debug.Log("Hit");
-                this.Mob_Hp -= player_Weaphon.AttackPower;
-                if (Mob_Hp <= 0)
-                {
-                    SetMobState(MobState.Die);
-                }
-                else
-                {
-                    SetMobState(MobState.Stun);
-                }
+                SetMobState(MobState.Die);
+            }
+            else
+            {
+                SetMobState(MobState.Stun);
             }
 
-            await UniTask.DelayFrame(60); //  프레임 지연 
+            await UniTask.NextFrame();
             Mob_IsHit = false;
         }
-
 
 
         protected override void Mob_Idle()

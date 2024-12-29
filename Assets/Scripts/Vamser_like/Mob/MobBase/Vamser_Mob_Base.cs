@@ -8,13 +8,13 @@ namespace DogGuns_Games.vamsir
 
         
         public float Mob_Speed { get; set; }
-        public float Mob_Hp { get; set; }
+        protected float Mob_Hp { get; set; }
         public float Mob_AttackDamage { get; set; }
         public float Mob_AttackSpeed { get; set; }
         public float Mob_AttackRange { get; set; }
         public float Mob_StunTime { get; set; }
-        public bool  Mob_IsDie { get; set; }
-        public bool  Mob_IsHit { get; set; }
+        protected bool  Mob_IsDie { get; set; }
+        protected bool  Mob_IsHit { get; set; }
         
         
         public bool ismove;

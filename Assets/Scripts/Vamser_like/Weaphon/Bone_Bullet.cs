@@ -13,19 +13,17 @@ public class Bone_Bullet : MonoBehaviour
     // 공격 방향을 저장하는 벡터
     private Vector3 attackAngle;
 
-    // 총알의 이동 속도
-    private float bulletSpeed = 5;
+    // 총알의 이동 속도 총알 대미지는 Weaphon_Bone 에서처리
+    public float bulletSpeed = 5;
     
     private float rotateSpeed = 1f;
-
-    // 총알의 데미지
-    public float bulletDamage = 10f;
-
+   
     private bool isActive = false;
 
     void OnEnable()
     {
         isActive = true;
+        
         MoveAndRotateBullet().Forget();
     }
 

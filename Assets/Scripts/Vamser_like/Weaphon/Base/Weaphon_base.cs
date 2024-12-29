@@ -1,18 +1,22 @@
 using UnityEngine;
 using UnityEngine.Serialization;
-
+using Cysharp.Threading.Tasks;
 namespace DogGuns_Games.vamsir
 {
     public class Weaphon_base : MonoBehaviour
     {
+        public float attackPower;
+        public float coolTime;
+        public float attackSpeed;
 
+        public float attackRange;
 
-        public float AttackPower;
-        public float CoolTime { get; set; }
-        public float AttackSpeed { get; set; }
-        public float AttackRange { get; set; }
+        //피격 대상에게 부여할 스턴 시간
+        public float mobStunTime;
 
-        public int weaphonIndex;//현재 무기 인덱스 
+        public int weaphonIndex; //현재 무기 인덱스 
+//투사체 무기인지 구분 
+        public bool isShooting;
         
         public enum WeaphonState
         {
