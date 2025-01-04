@@ -1,4 +1,5 @@
-using System;
+
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
@@ -9,7 +10,9 @@ namespace DogGuns_Games.vamsir
 {
     public class VamserLike_UI : MonoBehaviour
     {
-        [SerializeField] private TMP_Text mobWaveText;
+        [Header("<color=green>Text UI")] [SerializeField]
+        private TMP_Text mobWaveText;
+
         [SerializeField] private TMP_Text coinText;
         [SerializeField] private TMP_Text mobCountText;
         [SerializeField] private TMP_Text playerLevelText;
@@ -17,12 +20,13 @@ namespace DogGuns_Games.vamsir
         [FormerlySerializedAs("SettingBtn")] [SerializeField]
         private Button settingBtn;
 
-        [Header("<color=green>조이스틱</color>")] [SerializeField]
+        [Header("<color=green>조이스틱")] [SerializeField]
         private VariableJoystick variableJoystick;
 
         [SerializeField] private Transform joystickTransform;
 
         VamserLike_GameManager _gameManager;
+        private CancellationTokenSource _cancellationTokenSource;
 
         private void Awake()
         {
@@ -39,8 +43,9 @@ namespace DogGuns_Games.vamsir
         private void GameStart()
         {
             BtnSetting();
-            JoystickSetting();
-            UpdateUI().Forget();
+            JoystickSetting();  
+            _cancellationTokenSource = new CancellationTokenSource(); 
+            UpdateUI(_cancellationTokenSource.Token).Forget();
         }
 
         private void Pause()
@@ -64,7 +69,6 @@ namespace DogGuns_Games.vamsir
                 variableJoystick = FindFirstObjectByType<VariableJoystick>();
             }
 
-            Vector2 originJoystickPos = joystickTransform.position;
             joystickTransform.localScale = new Vector3(_gameManager.settingsData.joystickSize,
                 _gameManager.settingsData.joystickSize, 1);
             variableJoystick.SetMode((JoystickType)_gameManager.settingsData.joystickType);
@@ -81,17 +85,22 @@ namespace DogGuns_Games.vamsir
                 settingBtn.enabled = false;
             });
         }
-        
-        private async UniTask UpdateUI()
+
+        private async UniTask UpdateUI(CancellationToken cancellationToken)
         {
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 mobWaveText.text = $"Wave {_gameManager.MobSpawnWave()}";
                 coinText.text = $"{_gameManager.CoinCount()}";
                 mobCountText.text = $"{_gameManager.Mobcount()}";
                 playerLevelText.text = $"Lv. {_gameManager.PlayerLevel()}";
-                await UniTask.Yield();
+                await UniTask.DelayFrame(1, PlayerLoopTiming.FixedUpdate, cancellationToken); 
             }
+        }
+
+        private void OnDestroy()
+        {
+            _cancellationTokenSource?.Cancel();
         }
     }
 }

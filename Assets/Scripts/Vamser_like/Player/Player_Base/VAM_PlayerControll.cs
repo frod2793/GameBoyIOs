@@ -3,7 +3,7 @@ using System.Collections;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace DogGuns_Games.vamsir
 {
@@ -11,6 +11,9 @@ namespace DogGuns_Games.vamsir
     {
         [Header("<color=green>Player Object")] [SerializeField]
         private Player_Base player;
+
+        [Header("<color=green>Player HP_IU")] [SerializeField]
+        private Slider playerHpSliderPrefab;
 
         private Animator _playerAnimator;
 
@@ -33,36 +36,42 @@ namespace DogGuns_Games.vamsir
             Play_State.OnGameStart += PlayerInit;
             Play_State.OnGamePause += Pause;
             Play_State.OnGameResume += Resume;
-            
-            
-    
         }
+
         private void OnDestroy()
         {
             Play_State.OnGameStart -= PlayerInit;
             Play_State.OnGamePause -= Pause;
             Play_State.OnGameResume -= Resume;
-            
         }
-        
+
         private void PlayerInit()
         {
-            player = FindFirstObjectByType<Player_Base>();
-            _playerAnimator = player.GetComponent<Animator>();
-            cameraTransform = Camera.main.transform;
+            player ??= FindFirstObjectByType<Player_Base>();
+            _playerAnimator ??= player.GetComponent<Animator>();
+            cameraTransform ??= Camera.main.transform;
+            Set_playerHpSlider();
             _isGameStart = true;
+        }
+
+        private void Set_playerHpSlider()
+        {
+            Slider playerHpSlider = Instantiate(playerHpSliderPrefab, player.transform);
+            playerHpSlider.transform.localPosition = new Vector3(0, -0.4f, 0);
+            playerHpSlider.maxValue = player.Health;
+            playerHpSlider.value = player.Health;
         }
 
         private void Pause()
         {
             _isGameStart = false;
         }
-        
+
         private void Resume()
         {
             _isGameStart = true;
         }
-        
+
         private void FixedUpdate()
         {
             if (_isGameStart)
@@ -74,11 +83,11 @@ namespace DogGuns_Games.vamsir
 
         private void PlayerMovement()
         {
-            if (player  == null)
+            if (player == null)
             {
                 PlayerInit();
             }
-            
+
             Vector3 moveVector = (Vector3.right * variableJoystick.Horizontal + Vector3.up * variableJoystick.Vertical);
             float deltaSpeed = player.MoveSpeed * Time.deltaTime;
             player.transform.DOMove(player.transform.position + moveVector * deltaSpeed, moveDuration);
@@ -89,7 +98,7 @@ namespace DogGuns_Games.vamsir
             {
                 PlayerAttack(moveVector).Forget();
             }
-            
+
             if (moveVector != Vector3.zero)
             {
                 float angle = Mathf.Atan2(moveVector.y, moveVector.x) * Mathf.Rad2Deg;
@@ -107,7 +116,6 @@ namespace DogGuns_Games.vamsir
             _isAttack = true;
             player.AttackAngle = attackAngle;
             player.PlayState = Player_Base.playerState.Attack;
-            
             
             await UniTask.Delay(100);
             _isAttack = false;

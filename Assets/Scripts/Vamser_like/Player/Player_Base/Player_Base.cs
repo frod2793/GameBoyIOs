@@ -76,7 +76,19 @@ namespace DogGuns_Games.vamsir
                
                EXP_Obj expObj = other.gameObject.GetComponent<EXP_Obj>();
                
-               expObj.objectPool_Spawner.ExpObjectPool.Release(expObj);
+               expObj.objectPoolSpawner.ExpObjectPool.Release(expObj);
+            }
+            
+            if (other.gameObject.CompareTag("Coin"))
+            {
+                Debug.Log("Coin");
+                
+                Coin_Obj coinObj = other.gameObject.GetComponent<Coin_Obj>();
+
+                Player_Data_Manager_Dontdesytoy.Instance.scritpableobj_playerData.currency1 += 1;
+
+                
+                coinObj.objectPoolSpawner.CoinObjectPool.Release(coinObj);
             }
             
         }

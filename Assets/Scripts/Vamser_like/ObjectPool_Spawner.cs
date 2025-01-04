@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using UnityEngine.Pool;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace DogGuns_Games.vamsir
@@ -16,24 +14,27 @@ namespace DogGuns_Games.vamsir
         [Header("<color=green>몹 프리팹")] [SerializeField]
         private Vamser_Mob_Base mobPrefab;
 
-        [FormerlySerializedAs("Mob_Parent")] [Header("<color=green>몹 오브젝트 스폰 위치")] [SerializeField]
+        [Header("<color=green>몹 오브젝트 스폰 위치")] [SerializeField]
         private Transform mobParent;
 
-        private int _mobCount = 0;
+        private int _mobCount;
         public int MobCount => _mobCount;
 
-        private int _mobSpawnWave = 0;
+        private int _mobSpawnWave;
         public int MobSpawnWave => _mobSpawnWave;
 
-
-        [SerializeField] public IObjectPool<EXP_Obj> ExpObjectPool;
+        public IObjectPool<EXP_Obj> ExpObjectPool;
+        public IObjectPool<Coin_Obj> CoinObjectPool;
 
         [Header("<color=green>경험치 오브젝트")] [SerializeField]
         private EXP_Obj expPrefab;
 
         [SerializeField] private EXP_Obj bigExpPrefab;
 
-        Camera mainCamera;
+        [Header("<color=green>코인 오브잭트")] [SerializeField]
+        private Coin_Obj coinPrefab;
+
+        Camera _mainCamera;
 
         private void Awake()
         {
@@ -43,14 +44,15 @@ namespace DogGuns_Games.vamsir
             ExpObjectPool = new ObjectPool<EXP_Obj>(Create_EXP,
                 OnGet_EXP, OnRelease_EXP, OnDestory_EXP, maxSize: poolSizeMobCount);
 
-
-            mainCamera = Camera.main;
+            CoinObjectPool = new LinkedPool<Coin_Obj>(CreateCoin, OnGet_Coin, Onrelease_Coin, OnDestory_Coin,
+                maxSize: poolSizeMobCount);
+            _mainCamera = Camera.main;
         }
+
 
         private void Start()
         {
             Play_State.OnGameStart += GameStart;
-          
         }
 
         private void GameStart()
@@ -65,7 +67,6 @@ namespace DogGuns_Games.vamsir
 
                 _mobSpawnWave = 1;
             }
-           
         }
 
 
@@ -88,7 +89,6 @@ namespace DogGuns_Games.vamsir
                 _mobCount++;
             }
         }
-
 
         #region Mob
 
@@ -113,6 +113,11 @@ namespace DogGuns_Games.vamsir
             EXP_Obj exp = ExpObjectPool.Get();
             exp.transform.position = obj.transform.position;
             exp.gameObject.SetActive(true);
+
+            // 몹이 죽었을때 코인 생성
+            Coin_Obj coin = CoinObjectPool.Get();
+            coin.transform.position = obj.transform.position;
+            coin.gameObject.SetActive(true);
         }
 
         private void OnDestory(Vamser_Mob_Base obj)
@@ -122,35 +127,87 @@ namespace DogGuns_Games.vamsir
 
         #endregion
 
+        #region EXP
+
         private EXP_Obj Create_EXP()
         {
-            // 큰 경험치 작은경험치 를 랜덤으로 생성 하는대 큰 경험치는 30%확률로 생성 
-            EXP_Obj exp = Random.Range(0, 100) < 30
-                ? Instantiate(bigExpPrefab.gameObject, mobParent).GetComponent<EXP_Obj>()
-                : Instantiate(expPrefab.gameObject, mobParent).GetComponent<EXP_Obj>();
-            exp.objectPool_Spawner = this;
-            return exp;
+            return CreateObject(Random.Range(0, 100) < 30 ? bigExpPrefab : expPrefab);
         }
 
         private void OnGet_EXP(EXP_Obj obj)
         {
-            obj.gameObject.SetActive(true);
+            OnGetObject(obj);
         }
 
         private void OnRelease_EXP(EXP_Obj obj)
         {
-            obj.gameObject.SetActive(false);
+            OnReleaseObject(obj);
         }
 
         private void OnDestory_EXP(EXP_Obj obj)
         {
+            OnDestroyObject(obj);
+        }
+
+        #endregion
+
+        #region Coin
+
+        private Coin_Obj CreateCoin()
+        {
+            return CreateObject(coinPrefab);
+        }
+
+        private void OnGet_Coin(Coin_Obj obj)
+        {
+            OnGetObject(obj);
+        }
+
+        private void Onrelease_Coin(Coin_Obj obj)
+        {
+            OnReleaseObject(obj);
+        }
+
+        private void OnDestory_Coin(Coin_Obj obj)
+        {
+            OnDestroyObject(obj);
+        }
+
+        #endregion
+
+        private T CreateObject<T>(T prefab) where T : MonoBehaviour
+        {
+            T obj = Instantiate(prefab.gameObject, mobParent).GetComponent<T>();
+            if (obj is EXP_Obj expObj)
+            {
+                expObj.objectPoolSpawner = this;
+            }
+            else if (obj is Coin_Obj coinObj)
+            {
+                coinObj.objectPoolSpawner = this;
+            }
+
+            return obj;
+        }
+
+        private void OnGetObject<T>(T obj) where T : MonoBehaviour
+        {
+            obj.gameObject.SetActive(true);
+        }
+
+        private void OnReleaseObject<T>(T obj) where T : MonoBehaviour
+        {
+            obj.gameObject.SetActive(false);
+        }
+
+        private void OnDestroyObject<T>(T obj) where T : MonoBehaviour
+        {
             Destroy(obj.gameObject);
         }
 
-
         private void MoveObjectOffScreen(Vamser_Mob_Base obj)
         {
-            if (mainCamera != null)
+            if (_mainCamera != null)
             {
                 // 뷰포트 밖의 랜덤 위치 생성
                 float x = Random.Range(-2.0f, 2.0f);
@@ -162,7 +219,7 @@ namespace DogGuns_Games.vamsir
 
                 // 뷰포트 위치를 월드 위치로 변환
                 Vector3 offScreenPosition =
-                    mainCamera.ViewportToWorldPoint(new Vector3(x, y, mainCamera.nearClipPlane));
+                    _mainCamera.ViewportToWorldPoint(new Vector3(x, y, _mainCamera.nearClipPlane));
 
                 // 객체의 위치 설정
                 obj.transform.position = offScreenPosition;

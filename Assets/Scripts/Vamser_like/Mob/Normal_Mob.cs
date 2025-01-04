@@ -1,4 +1,4 @@
-using System;
+
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -13,8 +13,8 @@ namespace DogGuns_Games.vamsir
         [Header("<color=green>플레이어 무기")] [SerializeField]
         private Weaphon_base player_Weaphon;
 
-//피격 물체가 피사체인지 구분
-        private bool isHitByShoot = false;
+        //피격 물체가 발사체인지 구분
+        private bool _isHitByShoot;
 
         private void Awake()
         {
@@ -32,7 +32,7 @@ namespace DogGuns_Games.vamsir
             Mob_AttackRange = 1f;
             Mob_IsDie = false;
             Mob_IsHit = false;
-            isHitByShoot = player_Weaphon.isShooting;
+            _isHitByShoot = player_Weaphon.isShooting;
         }
 
 
@@ -48,37 +48,39 @@ namespace DogGuns_Games.vamsir
 
         private void FixedUpdate()
         {
-            if (ismove)
-            {
-                if (player == null)
-                {
-                    player = FindFirstObjectByType<Player_Base>();
-                }
-
-                // 플레이어 방향으로 이동 dotween
-                // 플레이어 위치에 도달하면 멈춤
-                if (player.transform.position == transform.position)
-                {
-                    transform.DOKill();
-                    return;
-                }
-
-                if (!Equals(player, null))
-                {
-                    Vector3 direction = (player.transform.position - transform.position).normalized;
-                    float distance = Vector3.Distance(player.transform.position, transform.position);
-                    transform.DOMove(transform.position + direction * distance, distance / Mob_Speed);
-                }
-            }
-            else
+            if (!ismove)
             {
                 transform.DOKill();
+                return;
             }
+
+            // 플레이어가 없으면 찾아서 대입 
+            player ??= FindFirstObjectByType<Player_Base>();
+            
+            if (player == null)
+            {
+                return;
+            }
+
+            // 플레이어 방향으로 이동 dotween
+            // 플레이어 위치에 도달하면 멈춤
+            Vector3 direction = (player.transform.position - transform.position).normalized;
+            float distance = Vector3.Distance(player.transform.position, transform.position);
+
+        
+            //플레이어와의 거리가 5이하면 이동하지 않음
+            if (distance < 0.3f)
+            {
+                transform.DOKill();
+                return;
+            }
+
+            transform.DOMove(transform.position + direction * distance, distance / Mob_Speed);
         }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (isHitByShoot && !Mob_IsHit && other.gameObject.CompareTag("Player_Attack"))
+            if (_isHitByShoot && !Mob_IsHit && other.gameObject.CompareTag("Player_Attack"))
             {
                 HitCooltime(other).Forget();
             }
@@ -86,7 +88,7 @@ namespace DogGuns_Games.vamsir
 
         private void OnCollisionStay2D(Collision2D other)
         {
-            if (!isHitByShoot && !Mob_IsHit && other.gameObject.CompareTag("Player_Attack"))
+            if (!_isHitByShoot && !Mob_IsHit && other.gameObject.CompareTag("Player_Attack"))
             {
                 HitCooltime(other).Forget();
             }
@@ -98,7 +100,6 @@ namespace DogGuns_Games.vamsir
             if (player_Weaphon == null)
             {
                 player_Weaphon = FindFirstObjectByType<Weaphon_base>();
-                
             }
 
             Debug.Log("<color=green>Hit: " + player_Weaphon.attackPower);
