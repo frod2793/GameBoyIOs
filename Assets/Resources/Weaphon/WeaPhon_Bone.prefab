@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d050ef204462564d8ac6e832a632164, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackPower: 25
+  attackPower: 50
   coolTime: 0.05
   attackSpeed: 5
   attackRange: 0

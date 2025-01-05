@@ -1,5 +1,6 @@
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DogGuns_Games
 {
@@ -14,6 +15,9 @@ namespace DogGuns_Games
         public int level; // 플레이어 레벨
         public int selectCharacterIndex; // 선택한 캐릭터 인덱스
         public int selelcWeaponIndex; // 선택한 무기 인덱스
+        public int totalmobKillCount; // 죽인 몹 수
+        public int nowPlayMObkillCOunt; // 현재 죽인 몹 수
+        
         // 기본값으로 초기화
         public void InitializePlayerData(string playerName, string uid)
         {

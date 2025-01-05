@@ -105,6 +105,7 @@ namespace DogGuns_Games.vamsir
             {
                 Mob_IsDie = true;
                 objectPool_Spawner.MobObjectPool.Release(this);
+                Player_Data_Manager_Dontdesytoy.Instance.scritpableobj_playerData.nowPlayMObkillCOunt++;
                 Debug.Log("Die : " + name);
             }
         }

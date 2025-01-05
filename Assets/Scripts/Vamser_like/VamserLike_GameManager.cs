@@ -1,4 +1,6 @@
 
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 namespace DogGuns_Games.vamsir
@@ -32,6 +34,7 @@ namespace DogGuns_Games.vamsir
         private void GameStart()
         {
             Play_State.instance.isPlay = true;
+            Player_Data_Manager_Dontdesytoy.Instance.scritpableobj_playerData.nowPlayMObkillCOunt = 0;
             SpawnPlayer();
         }
 
@@ -87,6 +90,14 @@ namespace DogGuns_Games.vamsir
             SpawnPlayer();
         }
 
+        public void WaveTextFadeEffect(TMP_Text mobWaveText)
+        {
+            mobWaveText.DOFade(1, 1).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                mobWaveText.DOFade(0, 1).SetEase(Ease.Linear).SetDelay(1f);
+            });
+         
+        }
 
         public void Open_OptionPopUp()
         {
@@ -98,7 +109,7 @@ namespace DogGuns_Games.vamsir
 
         public int Mobcount()
         {
-            return _objectPoolSpawner.MobCount;
+            return Player_Data_Manager_Dontdesytoy.Instance.scritpableobj_playerData.nowPlayMObkillCOunt;
         }
 
         public int MobSpawnWave()

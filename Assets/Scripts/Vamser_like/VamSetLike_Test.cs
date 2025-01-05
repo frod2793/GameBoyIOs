@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-
+#if (UNITY_EDITOR) 
 namespace DogGuns_Games.vamsir
 {
     [CustomEditor(typeof(VamserLike_GameManager))]
@@ -33,3 +33,4 @@ namespace DogGuns_Games.vamsir
         
     }
 }
+#endif

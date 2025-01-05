@@ -1,6 +1,7 @@
 
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -39,7 +40,10 @@ namespace DogGuns_Games.vamsir
             Play_State.OnGamePause += Pause;
             Play_State.OnGameResume += Resume;
         }
-
+        private void OnDestroy()
+        {
+            _cancellationTokenSource?.Cancel();
+        }
         private void GameStart()
         {
             BtnSetting();
@@ -90,17 +94,20 @@ namespace DogGuns_Games.vamsir
         {
             while (!cancellationToken.IsCancellationRequested)
             {
-                mobWaveText.text = $"Wave {_gameManager.MobSpawnWave()}";
+                if (mobWaveText.text != $"Wave {_gameManager.MobSpawnWave()}")
+                {
+                    mobWaveText.text = $"Wave {_gameManager.MobSpawnWave()}";
+                    _gameManager.WaveTextFadeEffect(mobWaveText);
+                }
                 coinText.text = $"{_gameManager.CoinCount()}";
                 mobCountText.text = $"{_gameManager.Mobcount()}";
                 playerLevelText.text = $"Lv. {_gameManager.PlayerLevel()}";
                 await UniTask.DelayFrame(1, PlayerLoopTiming.FixedUpdate, cancellationToken); 
             }
         }
+        
+     
 
-        private void OnDestroy()
-        {
-            _cancellationTokenSource?.Cancel();
-        }
+     
     }
 }

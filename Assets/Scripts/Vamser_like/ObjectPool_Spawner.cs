@@ -6,36 +6,34 @@ namespace DogGuns_Games.vamsir
 {
     public class ObjectPool_Spawner : MonoBehaviour
     {
-        public IObjectPool<Vamser_Mob_Base> MobObjectPool;
+        #region 변수
 
+        public IObjectPool<Vamser_Mob_Base> MobObjectPool;
+        public IObjectPool<EXP_Obj> ExpObjectPool;
+        public IObjectPool<Coin_Obj> CoinObjectPool;
+        
         [Header("<color=green>몹 오브젝트")] [SerializeField]
         private int poolSizeMobCount = 20;
-
         [Header("<color=green>몹 프리팹")] [SerializeField]
         private Vamser_Mob_Base mobPrefab;
 
         [Header("<color=green>몹 오브젝트 스폰 위치")] [SerializeField]
         private Transform mobParent;
-
         private int _mobCount;
         public int MobCount => _mobCount;
-
         private int _mobSpawnWave;
         public int MobSpawnWave => _mobSpawnWave;
-
-        public IObjectPool<EXP_Obj> ExpObjectPool;
-        public IObjectPool<Coin_Obj> CoinObjectPool;
-
+        
         [Header("<color=green>경험치 오브젝트")] [SerializeField]
         private EXP_Obj expPrefab;
-
         [SerializeField] private EXP_Obj bigExpPrefab;
-
         [Header("<color=green>코인 오브잭트")] [SerializeField]
         private Coin_Obj coinPrefab;
-
+        [SerializeField] private float coinSpawnPercent = 25;
+        
         Camera _mainCamera;
-
+        
+        #endregion
         private void Awake()
         {
             MobObjectPool = new ObjectPool<Vamser_Mob_Base>(Create_Mob,
@@ -73,7 +71,7 @@ namespace DogGuns_Games.vamsir
         private void CheckMob()
         {
             if (_mobCount <= 0)
-            {
+            {   //몹이 모두 죽었을때 3초후 리스폰
                 Invoke(nameof(ReSpawn), 3);
             }
         }
@@ -110,14 +108,27 @@ namespace DogGuns_Games.vamsir
             _mobCount--;
             CheckMob();
             // 몹이 죽었을때 경험치 생성
+            SpawnExp(obj);
+
+            // 몹이 죽었을때 코인 생성
+            SpawnCoin(obj);
+        }
+
+        private void SpawnExp(Vamser_Mob_Base obj)
+        {
             EXP_Obj exp = ExpObjectPool.Get();
             exp.transform.position = obj.transform.position;
             exp.gameObject.SetActive(true);
+        }
 
-            // 몹이 죽었을때 코인 생성
-            Coin_Obj coin = CoinObjectPool.Get();
-            coin.transform.position = obj.transform.position;
-            coin.gameObject.SetActive(true);
+        private void SpawnCoin(Vamser_Mob_Base obj)
+        {
+            if (SpawnRandom(coinSpawnPercent))
+            {
+                Coin_Obj coin = CoinObjectPool.Get();
+                coin.transform.position = obj.transform.position;
+                coin.gameObject.SetActive(true);
+            }
         }
 
         private void OnDestory(Vamser_Mob_Base obj)
@@ -131,7 +142,8 @@ namespace DogGuns_Games.vamsir
 
         private EXP_Obj Create_EXP()
         {
-            return CreateObject(Random.Range(0, 100) < 30 ? bigExpPrefab : expPrefab);
+            //TODO:큰 경험치는 일정 웨이브 이후 생성 
+            return CreateObject(expPrefab);
         }
 
         private void OnGet_EXP(EXP_Obj obj)
@@ -232,5 +244,11 @@ namespace DogGuns_Games.vamsir
                 Debug.LogWarning("Main Camera가 설정되지 않았습니다.");
             }
         }
+        
+        private bool SpawnRandom(float percent)
+        {
+            return Random.Range(0, 100) < percent;
+        }
+        
     }
 }
