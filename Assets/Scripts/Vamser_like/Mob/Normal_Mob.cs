@@ -32,6 +32,7 @@ namespace DogGuns_Games.vamsir
             Mob_AttackRange = 1f;
             Mob_IsDie = false;
             Mob_IsHit = false;
+            Mob_StunTime = 0.1f;
             _isHitByShoot = player_Weaphon.isShooting;
         }
 
@@ -48,17 +49,20 @@ namespace DogGuns_Games.vamsir
 
         private void FixedUpdate()
         {
+            if (player_Weaphon == null)
+            {
+                player_Weaphon = FindFirstObjectByType<Weaphon_base>();
+                _isHitByShoot = player_Weaphon.isShooting;
+            }
             if (!ismove)
             {
                 transform.DOKill();
                 return;
             }
-
-            // 플레이어가 없으면 찾아서 대입 
-            player ??= FindFirstObjectByType<Player_Base>();
             
             if (player == null)
-            {
+            {  
+                player = FindFirstObjectByType<Player_Base>();
                 return;
             }
 
@@ -66,8 +70,7 @@ namespace DogGuns_Games.vamsir
             // 플레이어 위치에 도달하면 멈춤
             Vector3 direction = (player.transform.position - transform.position).normalized;
             float distance = Vector3.Distance(player.transform.position, transform.position);
-
-        
+            
             //플레이어와의 거리가 5이하면 이동하지 않음
             if (distance < 0.3f)
             {
@@ -80,48 +83,55 @@ namespace DogGuns_Games.vamsir
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (_isHitByShoot && !Mob_IsHit && other.gameObject.CompareTag("Player_Attack"))
+            if (_isHitByShoot)
             {
-                HitCooltime(other).Forget();
+                HandleCollision(other);
             }
         }
 
         private void OnCollisionStay2D(Collision2D other)
         {
-            if (!_isHitByShoot && !Mob_IsHit && other.gameObject.CompareTag("Player_Attack"))
+            if (!_isHitByShoot)
+            {
+                HandleCollision(other);
+            }
+        }
+
+        private void HandleCollision(Collision2D other)
+        {
+            if (!Mob_IsHit && other.gameObject.CompareTag("Player_Attack"))
             {
                 HitCooltime(other).Forget();
+                Debug.Log("_isHitByShoot: "+_isHitByShoot);
             }
         }
 
         private async UniTask HitCooltime(Collision2D other)
         {
             Mob_IsHit = true;
-            if (player_Weaphon == null)
-            {
-                player_Weaphon = FindFirstObjectByType<Weaphon_base>();
-            }
 
-            Debug.Log("<color=green>Hit: " + player_Weaphon.attackPower);
-            Mob_Hp -= player_Weaphon.attackPower;
-            Mob_StunTime = player_Weaphon.mobStunTime;
+            float attackPower = player_Weaphon.attackPower;
+            float stunTime = player_Weaphon.mobStunTime;
+
+            await UniTask.Yield();
+            Mob_Hp -= attackPower;
+
             if (Mob_Hp <= 0)
             {
                 SetMobState(MobState.Die);
             }
             else
             {
+                Mob_StunTime = stunTime;
                 SetMobState(MobState.Stun);
             }
 
-            await UniTask.NextFrame();
             Mob_IsHit = false;
         }
 
-
         protected override void Mob_Idle()
         {
-            Debug.Log("Idle");
+        //    Debug.Log("Idle");
         }
 
         protected override void Mob_Move()
@@ -131,8 +141,7 @@ namespace DogGuns_Games.vamsir
 
         protected override void Mob_Stun()
         {
-            Debug.Log("Stun");
-            //3초간 스턴
+         //   Debug.Log("Stun");
 
             ismove = false;
 
@@ -146,14 +155,14 @@ namespace DogGuns_Games.vamsir
 
         protected override void Mob_Attack()
         {
-            Debug.Log("Attack");
+        //    Debug.Log("Attack");
         }
 
         protected override void Mob_Die()
         {
             base.Mob_Die();
             transform.DOKill();
-            Debug.Log("Die");
+        //    Debug.Log("Die");
         }
     }
 }

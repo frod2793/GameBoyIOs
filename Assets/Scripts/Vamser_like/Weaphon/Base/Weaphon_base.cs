@@ -15,7 +15,7 @@ namespace DogGuns_Games.vamsir
         public float mobStunTime;
 
         public int weaphonIndex; //현재 무기 인덱스 
-//투사체 무기인지 구분 
+        //투사체 무기인지 구분 
         public bool isShooting;
         
         public enum WeaphonState

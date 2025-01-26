@@ -5235,8 +5235,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 399, y: 652}
+  m_AnchoredPosition: {x: -91.501, y: 0.0011368}
+  m_SizeDelta: {x: 396, y: 643.48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1064257346
 Animator:
@@ -5248,7 +5248,7 @@ Animator:
   m_GameObject: {fileID: 1064257344}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: cdb13cc6ba99f284f901bd6142d7421a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2efb443fa1c26c943b822407546ef92e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5280,7 +5280,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8764137987431119355, guid: 17023a074d8968444bb7c3042c766af1, type: 3}
+  m_Sprite: {fileID: -4202050787753642964, guid: 06c8cd5e27168bf4c8a8c2182c04011a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6652,7 +6652,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -240.3406, y: 0}
+  m_AnchoredPosition: {x: -240.34058, y: 0}
   m_SizeDelta: {x: -240.3406, y: 197.23}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &1448742195
@@ -7084,7 +7084,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 102.2, y: -71.3}
+  m_AnchoredPosition: {x: 102.20001, y: -71.3}
   m_SizeDelta: {x: 325.92, y: 48.15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1482941457
@@ -8801,8 +8801,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1806, y: 902}
+  m_AnchoredPosition: {x: -38.6, y: 0}
+  m_SizeDelta: {x: 1192.4, y: 902}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1806655495
 MonoBehaviour:

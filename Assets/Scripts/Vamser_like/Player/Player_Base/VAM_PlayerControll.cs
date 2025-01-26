@@ -47,10 +47,13 @@ namespace DogGuns_Games.vamsir
 
         private void PlayerInit()
         {
-            player ??= FindFirstObjectByType<Player_Base>();
-            _playerAnimator ??= player.GetComponent<Animator>();
-            cameraTransform ??= Camera.main.transform;
-            Set_playerHpSlider();
+            if (player == null)
+            {
+                player = FindFirstObjectByType<Player_Base>();
+                _playerAnimator = player.GetComponent<Animator>();
+                cameraTransform = Camera.main.transform;
+                Set_playerHpSlider();
+            }
             _isGameStart = true;
         }
 
