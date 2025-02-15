@@ -21,10 +21,14 @@ namespace DogGuns_Games.vamsir
         private VariableJoystick variableJoystick;
 
         [Header("<color=green>camera")] [SerializeField]
-        private Transform cameraTransform;
+        private Camera cameraTransform;
 
         [Header("<color=green>Move Duration")] [SerializeField]
         private float moveDuration = 0.1f;
+        
+        
+        [Header("<color=green>Map Range")] 
+        [SerializeField] private SpriteRenderer mapRange;
 
 
         bool _isGameStart = false;
@@ -51,7 +55,7 @@ namespace DogGuns_Games.vamsir
             {
                 player = FindFirstObjectByType<Player_Base>();
                 _playerAnimator = player.GetComponent<Animator>();
-                cameraTransform = Camera.main.transform;
+                cameraTransform = Camera.main;
                 Set_playerHpSlider();
             }
             _isGameStart = true;
@@ -93,11 +97,20 @@ namespace DogGuns_Games.vamsir
 
             Vector3 moveVector = (Vector3.right * variableJoystick.Horizontal + Vector3.up * variableJoystick.Vertical);
             float deltaSpeed = player.MoveSpeed * Time.deltaTime;
-            player.transform.DOMove(player.transform.position + moveVector * deltaSpeed, moveDuration);
+            Vector3 targetPosition = player.transform.position + moveVector * deltaSpeed;
+
+            // 맵 범위의 경계를 가져옴
+            Bounds mapBounds = mapRange.bounds;
+
+            // 맵 범위 내에서 목표 위치를 클램프
+            targetPosition.x = Mathf.Clamp(targetPosition.x, mapBounds.min.x, mapBounds.max.x);
+            targetPosition.y = Mathf.Clamp(targetPosition.y, mapBounds.min.y, mapBounds.max.y);
+
+            player.transform.DOMove(targetPosition, moveDuration);
             _playerAnimator.SetFloat("Walk", moveVector.magnitude);
 
-            // 조이스틱 조작 시 공격 
-            if (moveVector.magnitude > 0 && _isAttack == false)
+            // 조이스틱 컨트롤이 공격을 트리거
+            if (moveVector.magnitude > 0 && !_isAttack)
             {
                 PlayerAttack(moveVector).Forget();
             }
@@ -129,9 +142,21 @@ namespace DogGuns_Games.vamsir
         /// </summary>
         private void FallowCamera()
         {
-            Vector3 cameraPosition = new Vector3(player.transform.position.x, player.transform.position.y,
-                cameraTransform.position.z);
-            cameraTransform.DOMove(cameraPosition, moveDuration);
+            // 카메라가 맵 경계를 벗어나지 않도록 설정
+            Vector3 cameraPosition = new Vector3(player.transform.position.x, player.transform.position.y, cameraTransform.transform.position.z);
+
+            // 맵 범위의 경계를 가져옴
+            Bounds mapBounds = mapRange.bounds;
+
+            // 카메라의 절반 크기를 계산
+            float cameraHalfWidth = cameraTransform.orthographicSize * cameraTransform.aspect;
+            float cameraHalfHeight = cameraTransform.orthographicSize;
+
+            // 맵 범위 내에서 카메라 위치를 클램프
+            cameraPosition.x = Mathf.Clamp(cameraPosition.x, mapBounds.min.x + cameraHalfWidth, mapBounds.max.x - cameraHalfWidth);
+            cameraPosition.y = Mathf.Clamp(cameraPosition.y, mapBounds.min.y + cameraHalfHeight, mapBounds.max.y - cameraHalfHeight);
+
+            cameraTransform.transform.DOMove(cameraPosition, moveDuration);
         }
     }
 }
