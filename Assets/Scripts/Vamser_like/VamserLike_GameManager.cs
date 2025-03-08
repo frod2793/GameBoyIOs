@@ -76,7 +76,7 @@ namespace DogGuns_Games.vamsir
         }
 
 
-        public void ChangeCharacterAndWeaponandSpawn()
+        public void ChangeCharacterAndWeapon_Spawn()
         {
             for (int i = 0; i < inGameObjectParent.transform.childCount; i++)
             {
@@ -107,7 +107,7 @@ namespace DogGuns_Games.vamsir
             Play_State.instance.PlayState = Play_State.GameState.Pause;
         }
 
-        public int Mobcount()
+        public int Mob_Count()
         {
             return Player_Data_Manager_Dontdesytoy.Instance.scritpableobj_playerData.nowPlayMObkillCOunt;
         }

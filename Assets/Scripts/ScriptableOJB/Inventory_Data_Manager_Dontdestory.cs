@@ -1,21 +1,24 @@
+using System.Collections.Generic;
 using BackEnd.BackndNewtonsoft.Json;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using System;
 
 namespace DogGuns_Games.Lobby
 {
     public class Inventory_Data_Manager_Dontdestory : MonoBehaviour
     {
-        Item_Data _scritpableobjItemData;
+        [SerializeField] private TextAsset itemDataJsonFile;
         public Inventory_Data _scritpableobjInventoryData;
-
-
         public string inventorydata_string;
 
-        #region DontDestroyOnLoad
-
+        // Cache fields
+        private Item_Data _scritpableobjItemData;
+        private Dictionary<int, Item_Data> _itemDataCache = new Dictionary<int, Item_Data>();
+        private bool _isDataLoaded = false;
+        
+        #region Singleton Implementation
         private static Inventory_Data_Manager_Dontdestory _instance;
-
         public static Inventory_Data_Manager_Dontdestory Instance
         {
             get
@@ -29,57 +32,109 @@ namespace DogGuns_Games.Lobby
                         _instance = container.AddComponent<Inventory_Data_Manager_Dontdestory>();
                     }
                 }
-
                 return _instance;
             }
         }
 
-        #endregion
-
         private void Awake()
         {
-            if (Instance != this)
+            if (_instance != null && _instance != this)
             {
                 Destroy(gameObject);
                 return;
             }
-
+            
+            _instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        #endregion
 
         private void Start()
         {
-            //테스트 함수
-            Demo();
-
-            if (_scritpableobjInventoryData == null)
-            {
-                _scritpableobjInventoryData = ScriptableObject.CreateInstance<Inventory_Data>();
-            }
-
+            InitializeInventory();
+            LoadItemDataFromJson();
+            
+            if (!_isDataLoaded)
+                Debug.LogWarning("Failed to load item data from JSON");
+                
             Server_Manager.Instance.Get_Inventory_Data(Server_Manager.Instance.InventoryDataInsert);
         }
         
-        
-        
-        public void GetItemToItemcode(int itemCode)
+        private void InitializeInventory()
         {
-            //todo : 모든 아이템이 정리된 josn 데이터 파일을 만든후 아이템 을 검색해서 쓸수있는 데이터 패드 개발
+            if (_scritpableobjInventoryData == null)
+                _scritpableobjInventoryData = ScriptableObject.CreateInstance<Inventory_Data>();
+        }
+
+        private void LoadItemDataFromJson()
+        {
+            if (itemDataJsonFile == null)
+            {
+                Debug.LogError("Item data JSON file not assigned in inspector");
+                return;
+            }
+
+            try
+            {
+                JsonItemData[] jsonItems = JsonConvert.DeserializeObject<JsonItemData[]>(itemDataJsonFile.text);
+                
+                if (jsonItems == null || jsonItems.Length == 0)
+                {
+                    Debug.LogWarning("No items found in JSON data");
+                    return;
+                }
+                
+                _itemDataCache.Clear();
+                
+                foreach (var jsonItem in jsonItems)
+                {
+                    Item_Data itemData = ScriptableObject.CreateInstance<Item_Data>();
+                    itemData.itemName = jsonItem.itemName;
+                    itemData.itemCode = jsonItem.itemCode;
+                    itemData.itemtype = jsonItem.itemtype;
+                    itemData.itemCount = jsonItem.itemCount;
+                    itemData.itemcoinType = jsonItem.itemcoinType;
+                    itemData.itemcoinCount = jsonItem.itemcoinCount;
+                    
+                    _itemDataCache[itemData.itemCode] = itemData;
+                }
+                
+                _isDataLoaded = true;
+                Debug.Log($"Successfully loaded {_itemDataCache.Count} items from JSON data");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Error parsing JSON data: {e.Message}");
+            }
         }
         
+        public Item_Data GetItemByItemCode(int itemCode)
+        {
+            if (!_isDataLoaded)
+            {
+                Debug.LogWarning("Item data not loaded yet");
+                return null;
+            }
+            
+            if (_itemDataCache.TryGetValue(itemCode, out Item_Data item))
+            {
+                _scritpableobjItemData = item;
+                return item;
+            }
+            
+            Debug.LogWarning($"Item with code {itemCode} not found");
+            return null;
+        }
 
-        /// <summary>
-        ///  인벤토리 데이터 업데이트
-        /// </summary>
-        /// <param name="inventoryData"></param>
         public void Update_Inventory_Data(Inventory_Data inventoryData)
         {
             _scritpableobjInventoryData = inventoryData;
-            // List를 JSON으로 변환
+            
+            #if UNITY_EDITOR
+            // Only generate debugging JSON in editor builds
             inventorydata_string = JsonConvert.SerializeObject(_scritpableobjInventoryData, Formatting.Indented);
-
-            // JSON 데이터를 로그에 출력
             Debug.Log("<color=green>" + inventorydata_string + "</color>");
+            #endif
         }
 
         public void UpdateItemData(Item_Data itemData)
@@ -87,65 +142,51 @@ namespace DogGuns_Games.Lobby
             _scritpableobjItemData = itemData;
         }
 
-        /// <summary>
-        /// 인벤토리 데이터 로컬에 저장
-        /// </summary>
         public void SaveInventoryData()
         {
-            string savePath = System.IO.Path.Combine(Application.persistentDataPath, "inventoryData.json");
-            string jsonData = JsonUtility.ToJson(_scritpableobjInventoryData, true);
-            System.IO.File.WriteAllText(savePath, jsonData);
+            if (_scritpableobjInventoryData == null)
+                return;
+                
+            try 
+            {
+                string savePath = System.IO.Path.Combine(Application.persistentDataPath, "inventoryData.json");
+                string jsonData = JsonUtility.ToJson(_scritpableobjInventoryData, true);
+                System.IO.File.WriteAllText(savePath, jsonData);
+                Debug.Log($"Saved inventory data to {savePath}");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to save inventory data: {e.Message}");
+            }
         }
 
-        /// <summary>
-        ///  아이템 데이터 로컬에 저장
-        /// </summary>
         public void SaveItemData()
         {
-            string savePath = System.IO.Path.Combine(Application.persistentDataPath, "itemData.json");
-            string jsonData = JsonUtility.ToJson(_scritpableobjItemData, true);
-            System.IO.File.WriteAllText(savePath, jsonData);
+            if (_scritpableobjItemData == null)
+                return;
+                
+            try
+            {
+                string savePath = System.IO.Path.Combine(Application.persistentDataPath, "itemData.json");
+                string jsonData = JsonUtility.ToJson(_scritpableobjItemData, true);
+                System.IO.File.WriteAllText(savePath, jsonData);
+                Debug.Log($"Saved item data to {savePath}");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to save item data: {e.Message}");
+            }
         }
 
-
-        private static bool IsNullOrEmpty(Object value)
+        [System.Serializable]
+        private class JsonItemData
         {
-            return ReferenceEquals(value, null);
-        }
-
-        /// <summary>
-        /// 테스트 함수
-        /// </summary>
-        public void Demo()
-        {
-            // 새로운 Inventory_Data 객체 생성
-            _scritpableobjInventoryData = ScriptableObject.CreateInstance<Inventory_Data>();
-
-            // 새로운 Item_Data 객체 생성
-            Item_Data itemData = ScriptableObject.CreateInstance<Item_Data>();
-            itemData.itemName = "Sword";
-            itemData.itemCode = 1;
-            itemData.itemtype = "Weapon";
-            itemData.itemCount = 1;
-
-            // 아이템을 인벤토리에 추가
-            _scritpableobjInventoryData.AddItem(itemData);
-
-            // 또 다른 Item_Data 객체 생성
-            Item_Data itemData2 = ScriptableObject.CreateInstance<Item_Data>();
-            itemData2.itemName = "Shield";
-            itemData2.itemCode = 2;
-            itemData2.itemtype = "Armor";
-            itemData2.itemCount = 1;
-
-            // 아이템을 인벤토리에 추가
-            _scritpableobjInventoryData.AddItem(itemData2);
-
-            // List를 JSON으로 변환
-            inventorydata_string = JsonConvert.SerializeObject(_scritpableobjInventoryData, Formatting.Indented);
-
-            // JSON 데이터를 로그에 출력
-            Debug.Log("<color=green>" + inventorydata_string + "</color>");
+            public string itemName;
+            public int itemCode;
+            public string itemtype;
+            public int itemCount;
+            public string itemcoinType;
+            public int itemcoinCount;
         }
     }
 }

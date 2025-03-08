@@ -1,7 +1,6 @@
 
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -100,7 +99,7 @@ namespace DogGuns_Games.vamsir
                     _gameManager.WaveTextFadeEffect(mobWaveText);
                 }
                 coinText.text = $"{_gameManager.CoinCount()}";
-                mobCountText.text = $"{_gameManager.Mobcount()}";
+                mobCountText.text = $"{_gameManager.Mob_Count()}";
                 playerLevelText.text = $"Lv. {_gameManager.PlayerLevel()}";
                 await UniTask.DelayFrame(1, PlayerLoopTiming.FixedUpdate, cancellationToken); 
             }

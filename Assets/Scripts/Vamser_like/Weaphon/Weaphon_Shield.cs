@@ -5,15 +5,16 @@ namespace DogGuns_Games.vamsir
 {
     public class Weaphon_Shield : Weaphon_base
     {
+        
+        [Header("<color=green> 방패 아이템 관련 변수")]
         [SerializeField]private GameObject shield;
         [SerializeField] private Collider2D shieldCollider;
         
-        bool isAnimShield; // 중복 호출 방지 플래그
+        bool _isAnimShield; // 중복 호출 방지 플래그
         
         public override void OnEnable()
         {
             base.OnEnable();
-         //   shieldCollider = shield.GetComponent<Collider2D>();
             shieldCollider.enabled = false;
         }
 
@@ -29,16 +30,16 @@ namespace DogGuns_Games.vamsir
         public override void Weaphon_Attack(Vector3 attackAngle)
         {
             base.Weaphon_Attack(attackAngle);
-            ShieldmoveAnimation();
+            Shieldmove_anime();
         }
 
-        private void ShieldmoveAnimation()
+        private void Shieldmove_anime()
         {
-            if (isAnimShield)
+            if (_isAnimShield)
             {
                 return;
             }
-            isAnimShield = true;
+            _isAnimShield = true;
             shield.transform.DOLocalMove(new Vector3(0, 0, 0), 0.5f)
                 .SetEase(Ease.OutBounce)
                 .From(new Vector3(0, 1, 0))
@@ -48,7 +49,7 @@ namespace DogGuns_Games.vamsir
                 })
                 .OnComplete(() => 
                 {
-                    isAnimShield = false;
+                    _isAnimShield = false;
                 });
         }
     }
