@@ -59,6 +59,14 @@ namespace DogGuns_Games.Lobby
 
             Server_Manager.Instance.Get_Inventory_Data(Server_Manager.Instance.InventoryDataInsert);
         }
+        
+        
+        
+        public void GetItemToItemcode(int itemCode)
+        {
+            //todo : 모든 아이템이 정리된 josn 데이터 파일을 만든후 아이템 을 검색해서 쓸수있는 데이터 패드 개발
+        }
+        
 
         /// <summary>
         ///  인벤토리 데이터 업데이트
