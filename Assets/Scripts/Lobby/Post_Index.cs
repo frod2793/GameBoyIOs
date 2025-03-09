@@ -11,13 +11,28 @@ public class Post_Index : MonoBehaviour
     [SerializeField] private TMP_Text posttitle;
     [SerializeField] private TMP_Text postdate;
     [SerializeField] private Button postbutton;
+    [SerializeField] private Button postexpendbutton;
 
-    public void SetPostIndex(string name, string title, string date,UnityEvent action)
+    public void SetPostIndex(string name, string title, string date, UnityEvent action)
     {
-        postname.text = name;
-        posttitle.text = title;
-        postdate.text = date;
-        postbutton.onClick.AddListener(() => action.Invoke());
-
+        if (postname != null)
+        {
+            postname.text = name;
+        }
+    
+        if (posttitle != null)
+        {
+            posttitle.text = title;
+        }
+    
+        if (postdate != null)
+        {
+            postdate.text = date;
+        }
+    
+        if (postexpendbutton != null && action != null)
+        {
+            postexpendbutton.onClick.AddListener(() => action.Invoke());
+        }
     }
 }
