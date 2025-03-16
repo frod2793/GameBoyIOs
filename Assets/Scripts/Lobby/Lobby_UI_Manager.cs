@@ -30,10 +30,13 @@ namespace DogGuns_Games.Lobby
         [SerializeField] private Button closeCharacterSelectButton;
 
         [Header("<color=green>우편함 매니저</color>")]
-        [FormerlySerializedAs("messingerManager")] 
         [SerializeField] private Post_Manager postManager;
         [SerializeField] private Button openMessingerButton;
 
+        [Header("<color=green>퀘스트 관리</color>")]
+        [SerializeField] private Quest_Panel_Manager questPanelManager;
+        [SerializeField] private Button openQuestPanelButton;
+        
         [Header("<color=green>재화 표시</color>")]
         [SerializeField] private TMP_Text Gold;
         [SerializeField] private TMP_Text dia;
@@ -100,6 +103,10 @@ namespace DogGuns_Games.Lobby
 
             if (openMessingerButton != null && postManager != null)
                 openMessingerButton.onClick.AddListener(postManager.OpenPostBoxPanel);
+            else if (openQuestPanelButton != null && postManager != null)
+            {
+                 openQuestPanelButton.onClick.AddListener(questPanelManager.OpenQuestPanel);     
+            }
             else
                 Debug.LogError(string.Format(ERROR_NULL_REFERENCE, "우편함 버튼 또는 매니저"));
         }

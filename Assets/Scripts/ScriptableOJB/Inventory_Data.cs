@@ -3,8 +3,6 @@ using UnityEngine;
 
 namespace DogGuns_Games
 {
-
-
     [CreateAssetMenu(fileName = "Inventory_Data", menuName = "GameData/Inventory_Data")]
     public class Inventory_Data : ScriptableObject
     {

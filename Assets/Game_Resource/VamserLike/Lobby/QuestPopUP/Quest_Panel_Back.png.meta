@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7dadb072f401a614f81f3a2489865623
+guid: 4b3c7417de61747109ca2a6d3addd75c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3356822794878068856
-    second: all_Confirm_0
+      213: -8690590215885605414
+    second: Quest_Panel_Back_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -124,7 +124,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: iOS
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: all_Confirm_0
+      name: Quest_Panel_Back_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 208
-        height: 96
+        width: 1112
+        height: 1608
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,8 +154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 887db59047b2a61d0800000000000000
-      internalID: -3356822794878068856
+      spriteID: ad537ad4e32d46780800000000000000
+      internalID: -8690590215885605414
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      all_Confirm_0: -3356822794878068856
+      Quest_Panel_Back_0: -8690590215885605414
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
