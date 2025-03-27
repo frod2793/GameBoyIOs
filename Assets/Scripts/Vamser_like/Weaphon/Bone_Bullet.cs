@@ -19,6 +19,7 @@ public class Bone_Bullet : MonoBehaviour
     private float rotateSpeed = 1f;
    
     private bool isActive = false;
+    private bool isNecclassary = false;
 
     void OnEnable()
     {
@@ -26,6 +27,24 @@ public class Bone_Bullet : MonoBehaviour
         
         MoveAndRotateBullet().Forget();
     }
+    
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Mob"))
+        {
+            if (isNecclassary)
+            {
+                BulletExplosion();
+            }
+            else
+            {
+                isActive = false;
+                objectPool_Spawner.objectPool.Release(this);
+            }
+        
+        }
+    }
+    
 
     // 총알 이동과 회전 함수 (UniTask 사용)
     private async UniTaskVoid MoveAndRotateBullet()
@@ -59,10 +78,21 @@ public class Bone_Bullet : MonoBehaviour
       
         }
     }
-
+    
     // 총알 발사 방향 설정 함수
     public void Thow_Bullet(Vector3 direction)
     {
         attackAngle = direction.normalized;
     }
+    
+    private void BulletExplosion()
+    {
+        // 총알 폭발 이펙트 생성
+        
+        // 콜라이더 범위를 2배로 순간적으로 늘렸다가 원상 복귀 시킨다 
+        
+        // 총알 오브젝트 풀로 반환
+        objectPool_Spawner.objectPool.Release(this);
+    }
+    
 }

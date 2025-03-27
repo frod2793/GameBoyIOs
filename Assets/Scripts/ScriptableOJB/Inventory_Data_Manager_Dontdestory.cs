@@ -17,35 +17,47 @@ namespace DogGuns_Games.Lobby
         private Dictionary<int, Item_Data> _itemDataCache = new Dictionary<int, Item_Data>();
         private bool _isDataLoaded = false;
         
-        #region Singleton Implementation
+        #region 싱글톤 할당
+        
         private static Inventory_Data_Manager_Dontdestory _instance;
+        private static readonly object Lock = new object();
+
         public static Inventory_Data_Manager_Dontdestory Instance
         {
             get
             {
-                if (_instance == null)
+                lock (Lock) // 스레드 안전성 확보
                 {
-                    _instance = FindAnyObjectByType<Inventory_Data_Manager_Dontdestory>();
                     if (_instance == null)
                     {
-                        GameObject container = new GameObject(nameof(Inventory_Data_Manager_Dontdestory));
-                        _instance = container.AddComponent<Inventory_Data_Manager_Dontdestory>();
+                        _instance = FindFirstObjectByType<Inventory_Data_Manager_Dontdestory>();
+
+                        if (_instance == null)
+                        {
+                            GameObject obj = new GameObject("Inventory_Data_Manager_Dontdestory");
+                            _instance = obj.AddComponent<Inventory_Data_Manager_Dontdestory>();
+                            DontDestroyOnLoad(obj);
+                        }
                     }
+                    return _instance;
                 }
-                return _instance;
             }
         }
 
         private void Awake()
         {
-            if (_instance != null && _instance != this)
+            lock (Lock)
             {
-                Destroy(gameObject);
-                return;
+                if (_instance == null)
+                {
+                    _instance = this;
+                    DontDestroyOnLoad(gameObject);
+                }
+                else if (_instance != this)
+                {
+                    Destroy(gameObject); // 중복 제거
+                }
             }
-            
-            _instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         #endregion
 
