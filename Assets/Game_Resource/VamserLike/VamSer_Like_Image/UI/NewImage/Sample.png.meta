@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: aeb5e4e24acdcf340ae813706eb1d555
+guid: 555d8d0a298a14f87bda2362375c6842
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8169338073561737249
-    second: "\uAC74\uD76C_\uC0D8\uD50C 1_0"
+      213: 2641698482785147981
+    second: Group 1_0
+  - first:
+      213: -9081263467114537878
+    second: Group 1_1
+  - first:
+      213: 304971421478580809
+    second: Group 1_2
+  - first:
+      213: -3345504643224878737
+    second: Group 1_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -110,6 +119,19 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
     buildTarget: iOS
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -126,13 +148,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uAC74\uD76C_\uC0D8\uD50C 1_0"
+      name: Group 1_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 11
-        width: 116
-        height: 97
+        x: 0
+        y: 92
+        width: 166
+        height: 73
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +163,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fd7574b1e4ea0ae80800000000000000
-      internalID: -8169338073561737249
+      spriteID: d4cd81616c239a420800000000000000
+      internalID: 2641698482785147981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Group 1_1
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 65
+        width: 788
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6cd7e2cdfed8f180800000000000000
+      internalID: -9081263467114537878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Group 1_2
+      rect:
+        serializedVersion: 2
+        x: 968
+        y: 0
+        width: 166
+        height: 165
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94270eb54e97b3400800000000000000
+      internalID: 304971421478580809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Group 1_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 166
+        height: 73
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f61492290416291d0800000000000000
+      internalID: -3345504643224878737
       vertices: []
       indices: 
       edges: []
@@ -161,7 +249,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uAC74\uD76C_\uC0D8\uD50C 1_0": -8169338073561737249
+      Group 1_0: 2641698482785147981
+      Group 1_1: -9081263467114537878
+      Group 1_2: 304971421478580809
+      Group 1_3: -3345504643224878737
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

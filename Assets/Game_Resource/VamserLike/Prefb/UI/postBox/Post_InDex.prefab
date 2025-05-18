@@ -445,7 +445,7 @@ MonoBehaviour:
   postname: {fileID: 0}
   posttitle: {fileID: 6417141241766516848}
   postdate: {fileID: 0}
-  postbutton: {fileID: 846684164732487583}
+  getReiwordbutton: {fileID: 846684164732487583}
   postexpendbutton: {fileID: 2656348500655588688}
 --- !u!114 &2656348500655588688
 MonoBehaviour:
